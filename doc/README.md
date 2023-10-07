@@ -3,3 +3,9 @@ Project Requirements:
   - Database: MongoDB
   - Cloud deployment: Heroku
   - Optional frontend: React
+  - Create an API server
+  - Implement CRUD operations on a related set of data stored in a database
+  - deploy the project to the cloud using CI/CD
+  - a dozen or more endpoints
+  - unit tests for each endpoint as well as all other functions
+  - thoroughly document each endpoint for Swagger
