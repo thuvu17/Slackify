@@ -1,4 +1,4 @@
-# Slackify Design Document 📃
+# Design Document
 
 ## Front End
 - Do not show the cover and singer at first, if they like the music(thumb up), the information reveals.
