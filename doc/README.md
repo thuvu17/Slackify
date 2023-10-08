@@ -19,7 +19,7 @@ Slackify is a web application designed to enhance your workout experience by gen
   - Thoroughly document each endpoint for Swagger
 
 ### Our Team
-- Windy Lei
+- Yongwen Lei
 - Quan Phung
 - Thu Vu
 - Joy Zhu
