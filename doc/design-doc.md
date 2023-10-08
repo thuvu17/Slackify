@@ -14,3 +14,13 @@
 - Database:
   - Accounts
   - Playlists
+  
+## Endpoints
+- Retrieve account list
+- Search for songs based on user requirements
+- Song streaming
+- Create playlist
+- Update playlist
+- Delete playlist
+- Authenticate login
+- Register
