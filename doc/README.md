@@ -17,7 +17,8 @@ Slackify is a web application designed to enhance your workout experience by gen
   - A dozen or more endpoints
   - Unit tests for each endpoint as well as all other functions
   - Thoroughly document each endpoint for Swagger
-
+  - Use Spotify API Get Track's Audio Features
+  - Start with simple front end first, make sure it’s functional. We can work on prettify it next semester
 ### Our Team
 - Yongwen Lei
 - Quan Phung
