@@ -4,6 +4,7 @@ Slackify is a web application designed to enhance your workout experience by gen
 
 ## Table of Contents
 - [Project Requirements](README.md#project-requirements)
+- [Semester Goals](README.md#semester-goals)
 - [Our Team](README.md#about-us)
 
 ### Project Requirements
@@ -20,10 +21,11 @@ Slackify is a web application designed to enhance your workout experience by gen
   - Use Spotify API Get Track's Audio Features
   - Start with simple front end first, make sure it’s functional. We can work on prettify it next semester
 
-### Goal for this semester
+### Semester Goals
   - Basic front end
   - Some part for back end
   - Presentation for design documentation
+
 ### Our Team
 - Yongwen Lei
 - Quan Phung
