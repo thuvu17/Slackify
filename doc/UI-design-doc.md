@@ -1,6 +1,6 @@
 # UI DESIGN
 
-- Attached is UI design for webpages.
+Attached is UI design for webpages.
 
 - Before logging in
   - Index page: page with pictures + all information about the website + endpoints to login/register
