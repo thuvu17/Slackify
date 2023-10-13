@@ -7,7 +7,7 @@ Attached is UI design for webpages.
 
 ![Index page](https://github.com/thuvu17/slackify/assets/70633148/fd787ec2-9340-4b45-b9ff-987b7656cc19)
 <p align="center">
-  _Image1: Handrawn Index Page Design_
+  Image1: Handrawn Index Page Design
 </p>
 
 - After logged in
@@ -18,6 +18,6 @@ Attached is UI design for webpages.
 
 ![HomePage recommendations](https://github.com/thuvu17/slackify/assets/70633148/0bc70813-d4fa-4f20-b44a-a8d4929bda9b)
 <p align="center">
-  _Image2: Handrawn Home Page for Recommended Music Design_
+  Image2: Handrawn Home Page for Recommended Music Design
 </p>
 
