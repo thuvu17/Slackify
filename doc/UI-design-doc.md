@@ -9,9 +9,9 @@ Attached is UI design for webpages.
 
 - After logged in
   - Homepage: recommendations
+  - Account page: username, profile pic, other stats etc.
+  - Search
+  - Your library: user playlists
 
 ![HomePage recommendations](https://github.com/thuvu17/slackify/assets/70633148/0bc70813-d4fa-4f20-b44a-a8d4929bda9b)
 
-    - Account page: username, profile pic, other stats etc.
-    - Search
-    - Your library: user playlists
