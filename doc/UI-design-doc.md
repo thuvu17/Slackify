@@ -9,11 +9,14 @@ Attached is UI design for webpages.
 <p align="center">
   Image1: Handrawn Index Page Design
 </p>
+
   - Login/register page
-  ![WeChat Image_20231015141859](https://github.com/thuvu17/slackify/assets/71156345/ae5d9962-5339-4cc0-b472-f474170c04cb)
+  
+![WeChat Image_20231015141859](https://github.com/thuvu17/slackify/assets/71156345/ae5d9962-5339-4cc0-b472-f474170c04cb)
 <p align="center">
   Image2: Login/register Page Design
 </p>
+
 - After logged in
   - Homepage: recommendations
   - Account page: username, profile pic, other stats etc.
