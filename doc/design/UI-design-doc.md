@@ -12,7 +12,7 @@ Attached is UI design for webpages.
 
   - Login/register page
   
-![WeChat Image_20231015141859](https://github.com/thuvu17/slackify/assets/71156345/ae5d9962-5339-4cc0-b472-f474170c04cb)
+![Login_Register_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/325abade-f1f9-49f9-b236-e1afbea6bfab)
 <p align="center">
   Image2: Login/register Page Design
 </p>
@@ -28,3 +28,12 @@ Attached is UI design for webpages.
   Image3: Handrawn Home Page for Recommended Music Design
 </p>
 
+![Account_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/1914865a-bcd9-4485-8c73-f37f686a77a6)
+<p align="center">
+  Image4: Account Page Design
+</p>
+
+![Search_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/612efea8-8383-439c-beef-92b8f894fbbf)
+<p align="center">
+  Image2: Search Page Design
+</p>
