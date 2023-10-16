@@ -35,5 +35,5 @@ Attached is UI design for webpages.
 
 ![Search_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/612efea8-8383-439c-beef-92b8f894fbbf)
 <p align="center">
-  Image2: Search Page Design
+  Image5: Search Page Design
 </p>
