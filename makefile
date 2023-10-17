@@ -1,6 +1,6 @@
 LINTER = flake8
 API_DIR = server
-DB_DIR = db
+DB_DIR = data
 REQ_DIR = .
 
 PKG = $(API_DIR)
@@ -8,7 +8,7 @@ PYTESTFLAGS = -vv --verbose --cov-branch --cov-report term-missing --tb=short -W
 
 FORCE:
 
-prod: tests github
+prod: all_tests github
 
 github: FORCE
 	- git commit -a
@@ -18,6 +18,7 @@ all_tests: lint unit
 
 unit: FORCE
 	cd $(API_DIR); pytest $(PYTESTFLAGS) --cov=$(PKG)
+	cd $(DB_DIR); pytest $(PYTESTFLAGS) --cov=$(PKG)
 
 lint: FORCE
 	$(LINTER) $(API_DIR)/*.py
