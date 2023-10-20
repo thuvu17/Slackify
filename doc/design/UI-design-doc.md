@@ -37,3 +37,9 @@ Attached is UI design for webpages.
 <p align="center">
   Image5: Search Page Design
 </p>
+
+![Library](https://github.com/thuvu17/slackify/assets/70633148/67e0a90a-7a71-42e1-8d1d-f257c709b26c)
+<p align="center">
+  Image6: Account Playlist Design
+</p>
+
