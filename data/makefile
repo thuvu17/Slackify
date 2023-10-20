@@ -6,5 +6,5 @@
 # 	pydoc3 -w ./$<
 # 	git add $@
 
-PKG = server
+PKG = data
 include ../common.mk
