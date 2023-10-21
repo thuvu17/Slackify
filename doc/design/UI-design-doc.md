@@ -43,7 +43,7 @@ Attached is UI design for webpages.
   Image6: Account Playlist Design
 </p>
 
-Workflow for Front-End Development
+**Workflow for Front-End Development**
 - Server-side Less compilation is the default mode. Before logging in, the website will provide information about the product(Slackify).
 - Client-side Less compilation is recommended to use to develop themes. After logging in or signing up with specific accounts, account information show up with recommended music.
 - Server mode is automatically changed to the client mode after logging in.
