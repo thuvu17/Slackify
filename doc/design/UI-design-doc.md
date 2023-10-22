@@ -47,3 +47,13 @@ Attached is UI design for webpages.
 - Server-side Less compilation is the default mode. Before logging in, the website will provide information about the product(Slackify).
 - Client-side Less compilation is recommended to use to develop themes. After logging in or signing up with specific accounts, account information show up with recommended music.
 - Server mode is automatically changed to the client mode after logging in.
+
+**Make the website Responsive and Adaptive**
+Ideally the website will adapt to the window size change or device screen size.
+
+Below are the sketches of the website layout when on mobile devices.
+
+![Mobile_Home_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/f0a031ff-1d83-42cc-aecc-b38cd9dbc8fc)
+<p align="center">
+  Image6: Mobile Version - Home Page Design (left), Home Page Design with Menu Displaying (right)
+</p>
