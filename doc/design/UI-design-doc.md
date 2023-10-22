@@ -48,6 +48,8 @@ Attached is UI design for webpages.
 - Client-side Less compilation is recommended to use to develop themes. After logging in or signing up with specific accounts, account information show up with recommended music.
 - Server mode is automatically changed to the client mode after logging in.
 
+  
+
 **Make the website Responsive and Adaptive**
 Ideally the website will adapt to the window size change or device screen size.
 
