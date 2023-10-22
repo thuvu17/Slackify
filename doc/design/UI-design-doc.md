@@ -1,5 +1,11 @@
 # UI DESIGN
 
+**Workflow for Front-End Development**
+- Server-side Less compilation is the default mode. Before logging in, the website will provide information about the product(Slackify).
+- Client-side Less compilation is recommended to use to develop themes. After logging in or signing up with specific accounts, account information show up with recommended music.
+- Server mode is automatically changed to the client mode after logging in.
+
+## Desktop Version Website Design
 Attached is UI design for webpages.
 
 - Before logging in
@@ -43,18 +49,18 @@ Attached is UI design for webpages.
   Image6: Account Playlist Design
 </p>
 
-**Workflow for Front-End Development**
-- Server-side Less compilation is the default mode. Before logging in, the website will provide information about the product(Slackify).
-- Client-side Less compilation is recommended to use to develop themes. After logging in or signing up with specific accounts, account information show up with recommended music.
-- Server mode is automatically changed to the client mode after logging in.
-
-  
-
+## Mobile Version Website Design
 **Make the website Responsive and Adaptive**
 - Ideally the website will adapt to the window size change or device screen size.
 - Below are the sketches of the website layout when on mobile devices.
 
 ![Mobile_Home_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/f0a031ff-1d83-42cc-aecc-b38cd9dbc8fc)
 <p align="center">
-  Image6: Mobile Version - Home Page Design (left), Home Page Design with Menu Displaying (right)
+  Image7: Mobile Version - Home Page Design (left), Home Page Design with Menu Displaying (right)
+</p>
+
+
+![Mobile_Login_Register_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/01607867-7dec-4eeb-b1b9-5cc5f768b290)
+<p align="center">
+  Image7: Mobile Version - Login/register Page Design
 </p>
