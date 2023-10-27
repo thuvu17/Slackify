@@ -67,8 +67,11 @@ Attached is UI design for mobile version.
   Image8: Mobile Version - Login/register Page Design
 </p>
 
-<img width="221" alt="截屏2023-10-27 下午3 03 47" src="https://github.com/thuvu17/slackify/assets/70633148/832c407d-f8d9-44f4-b639-6fa870add85e">
+<p align="middle">
+  <img width="221" alt="截屏2023-10-27 下午3 03 47" src="https://github.com/thuvu17/slackify/assets/70633148/832c407d-f8d9-44f4-b639-6fa870add85e">
+  <img width="194" alt="截屏2023-10-27 下午3 35 37" src="https://github.com/thuvu17/slackify/assets/70633148/94bf3849-0620-4f2e-a72d-a46a8bc4b306">
+</p>
 <p align="center">
-  Image9: Mobile Version - Recommended Music Page Design
+  Image9: Mobile Version - Recommended Music Page Design (left), Recommended Music Page Design with Menu Displaying (right)
 </p>
 
