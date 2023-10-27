@@ -79,6 +79,6 @@ Attached is UI design for mobile version.
   <img width="221" alt="截屏2023-10-27 下午3 45 55" src="https://github.com/thuvu17/slackify/assets/70633148/b7090600-6f35-456e-bfb9-74e421bb351d">
 </p>
 <p align="center">
-  Image10: Mobile Version - Seach Page
+  Image10: Mobile Version - Search Page
 </p>
 
