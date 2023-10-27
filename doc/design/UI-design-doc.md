@@ -54,6 +54,8 @@ Attached is UI design for webpages.
 - Ideally the website will adapt to the window size change or device screen size.
 - Below are the sketches of the website layout when on mobile devices.
 
+Attached is UI design for mobile version.
+
 ![Mobile_Home_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/f0a031ff-1d83-42cc-aecc-b38cd9dbc8fc)
 <p align="center">
   Image7: Mobile Version - Home Page Design (left), Home Page Design with Menu Displaying (right)
@@ -62,5 +64,11 @@ Attached is UI design for webpages.
 
 ![Mobile_Login_Register_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/01607867-7dec-4eeb-b1b9-5cc5f768b290)
 <p align="center">
-  Image7: Mobile Version - Login/register Page Design
+  Image8: Mobile Version - Login/register Page Design
 </p>
+
+<img width="221" alt="截屏2023-10-27 下午3 03 47" src="https://github.com/thuvu17/slackify/assets/70633148/832c407d-f8d9-44f4-b639-6fa870add85e">
+<p align="center">
+  Image9: Mobile Version - Recommended Music Page Design
+</p>
+
