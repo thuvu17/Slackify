@@ -27,15 +27,19 @@ songs = {
 def get_songs() -> dict:
     return songs
 
+
 def already_exist(song_data: dict):
     for song in songs:
-        if songs[song]['name'] == song_data['name'] and songs[song]['artist'] == song_data['artist']:
-            return True
+        if songs[song]['name'] == song_data['name']:
+            if songs[song]['artist'] == song_data['artist']:
+                return True
     return False
 
 
 def add_song(song_id: str, song_data: dict):
-    # Check if a song with same name + artist is already in the database
-    if already_exist(song_data): 
-        raise ValueError("A song with the same name and artist already existed!")
+    # Check if a song with same name + artist
+    # is already in the database
+    if already_exist(song_data):
+        raise ValueError("A song with the same name \
+                         sand artist already existed!")
     songs[song_id] = song_data

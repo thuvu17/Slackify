@@ -23,9 +23,11 @@ def test_get_songs():
 def test_already_exist():
     assert data_songs.already_exist(DUP_SONG_DATA) is True
 
+
 def test_add_song_dup_name_and_artist():
     with pytest.raises(ValueError):
         data_songs.add_song("XYZ789", DUP_SONG_DATA)
+
 
 NEW_SONG_DATA = {
     'name': "Rolling in the deep",
@@ -34,6 +36,7 @@ NEW_SONG_DATA = {
     'genre': 'Soul',
     'bpm': 105,
 }
+
 
 def test_add_song():
     data_songs.add_song("NEW000", NEW_SONG_DATA)
