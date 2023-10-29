@@ -82,3 +82,7 @@ Attached is UI design for mobile version.
   Image10: Mobile Version - Search Page
 </p>
 
+![Mobile_Account_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/d7a276e8-b6b2-4cdc-85e1-81cbd2557f9e)
+<p align="center">
+  Image11: Mobile Version - Account Page Design
+</p>
