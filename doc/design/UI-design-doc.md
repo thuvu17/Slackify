@@ -86,3 +86,8 @@ Attached is UI design for mobile version.
 <p align="center">
   Image11: Mobile Version - Account Page Design
 </p>
+
+![Mobile_Library_Page_Design](https://github.com/thuvu17/slackify/assets/71156345/e70c56c2-7858-41cd-bf90-15bb3fe2c9d9)
+<p align="center">
+  Image12: Mobile Version - Library Page Design
+</p>
