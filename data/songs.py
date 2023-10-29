@@ -29,7 +29,7 @@ def get_songs() -> dict:
 
 def already_exist(song_data: dict):
     for song in songs:
-        if song['name'] == song_data['name'] and song['artist'] == song_data['artist']:
+        if songs[song]['name'] == song_data['name'] and songs[song]['artist'] == song_data['artist']:
             return True
     return False
 
