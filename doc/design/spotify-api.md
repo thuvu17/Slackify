@@ -50,3 +50,14 @@
     - Spotify API normally returns JSON in the response body
     - See https://developer.mozilla.org/en-US/docs/Web/HTTP/Status for response codes
 
+## API End-point for Slackify
+- Get Track API 
+    - Reference: https://developer.spotify.com/documentation/web-api/reference/get-track
+- Get Tracks' Audio Features
+    - Reference: https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features
+- Save Tracks for Current User
+    - Reference: https://developer.spotify.com/documentation/web-api/reference/save-tracks-user
+- Get Recommendations
+    - Reference: https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+
+    
