@@ -36,3 +36,17 @@
         "expires_in": 3600
         }
         ```
+## API Calls
+- The Spotify Web API is a restful API with different endpoints which return JSON metadata about music artists, albums, and tracks, directly from the Spotify Data Catalogue.
+- Base URL of the API is https://api.spotify.com
+- Requests
+| Method        | Action           
+| ------------- |:-------------:
+| GET           | Retrieves resources 
+| POST          | Created resources     
+| PUT           | Changes and/or replaces resources or collections
+| DELETE        | Deletes resources     
+- Response
+    - Spotify API normally returns JSON in the response body
+    - See https://developer.mozilla.org/en-US/docs/Web/HTTP/Status for response codes
+
