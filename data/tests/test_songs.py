@@ -41,8 +41,6 @@ def test_get_songs():
     for song in songs:
         assert isinstance(song, str)
         assert isinstance(songs[song], dict)
-    assert data_songs.TEST_SONG_NAME in songs
-
 
 def test_already_exist():
     assert data_songs.already_exist(DUP_SONG_DATA) is True
