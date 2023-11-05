@@ -17,18 +17,22 @@ def temp_song():
     ret = data_songs.add_song(name, DUP_SONG_DATA)
     return name
 
+
 def test_get_test_name():
     name = data_songs._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
+
 
 def test_gen_id():
     _id = data_songs._gen_id()
     assert isinstance(_id, str)
     assert len(_id) == data_songs.ID_LEN
 
+
 def test_get_test_song():
     assert isinstance(data_songs.get_test_song(), dict)
+
 
 def test_get_songs():
     songs = data_songs.get_songs()
