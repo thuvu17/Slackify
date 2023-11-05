@@ -2,7 +2,6 @@
 This is the file containing all of the endpoints for our flask app.
 The endpoint called `endpoints` will return all available endpoints.
 """
-
 from http import HTTPStatus
 
 from flask import Flask, request
@@ -136,6 +135,7 @@ game_fields = api.model('NewGame', {
     gm.NUM_PLAYERS: fields.Integer,
 })
 
+
 @api.route(f'{GAMES_EP}')
 class Games(Resource):
     """
@@ -152,7 +152,6 @@ class Games(Resource):
             MENU: GAME_MENU_EP,
             RETURN: MAIN_MENU_EP,
         }
-
 
     @api.expect(game_fields)
     @api.response(HTTPStatus.OK, 'Success')
