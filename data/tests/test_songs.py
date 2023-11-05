@@ -2,6 +2,7 @@ import pytest
 
 import data.songs as data_songs
 
+
 DUP_SONG_DATA = {
     'name': data_songs.TEST_SONG_NAME,
     'artist': data_songs.TEST_ARTIST_NAME,
@@ -10,6 +11,24 @@ DUP_SONG_DATA = {
     'bpm': 116,
 }
 
+@pytest.fixture(scope='function')
+def temp_song():
+    name = data_songs._get_test_name()
+    ret = data_songs.add_song(name, DUP_SONG_DATA)
+    return name
+
+def test_get_test_name():
+    name = data_songs._get_test_name()
+    assert isinstance(name, str)
+    assert len(name) > 0
+
+def test_gen_id():
+    _id = data_songs._gen_id()
+    assert isinstance(_id, str)
+    assert len(_id) == data_songs.ID_LEN
+
+def test_get_test_song():
+    assert isinstance(data_songs.get_test_song(), dict)
 
 def test_get_songs():
     songs = data_songs.get_songs()
@@ -18,6 +37,7 @@ def test_get_songs():
     for song in songs:
         assert isinstance(song, str)
         assert isinstance(songs[song], dict)
+    assert data_songs.TEST_SONG_NAME in songs
 
 
 def test_already_exist():
