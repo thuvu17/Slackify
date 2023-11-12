@@ -54,7 +54,12 @@ def add_game(name: str, num_players: int) -> str:
     games[name] = {NUM_PLAYERS: num_players}
     return _gen_id()
 
-
+def del_game(name: str):
+    if name in games:
+        del games[name]
+    else:
+        raise ValueError(f'Delete failure: {name} not in database.')
+        
 def get_name(game):
     return game.get(NAME, '')
 
