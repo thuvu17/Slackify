@@ -15,6 +15,7 @@ MONGO_ID = '_id'
 def connect_db():
     global client
     password = os.environ.get("SLACKIFY_DB_PW")
+    password = "slackifydbpassword"
     print("Connecting to Mongo in the cloud.")
     client = pm.MongoClient(f'mongodb+srv://tnv2002:{password}'
                             + '@cluster0.r9gin96.mongodb.net/'
