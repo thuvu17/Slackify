@@ -48,6 +48,8 @@ jobs:
 
       - name: Run Python tests.
         run: make all_tests
+        env:
+          SLACKIFY_DB_PW: ${{ secrets.SLACKIFY_DB_PW }} 
         
           # - name: Deploy to PythonAnywhere
           # run: ./deploy.sh
