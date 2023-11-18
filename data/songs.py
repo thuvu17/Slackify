@@ -77,7 +77,6 @@ def del_song(name: str):
 #        raise ValueError(f'Delete failure: {name} not in database.')
 
 
-
 def add_song(song_id: str, song_data: dict) -> bool:
     # Check if a song with same name + artist
     # is already in the database
