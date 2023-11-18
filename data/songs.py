@@ -71,7 +71,7 @@ def already_exist(song_data: dict, song_id: str):
 
 def del_song(name: str):
     if already_exist(name, "NEW000"):
-        dbc.del_one(SONGS_COLLECT, {NAME: name})
+        return dbc.del_one(SONGS_COLLECT, {NAME: name})
     else:
         return (f'Delete failure: {name} not in database.')
 #        raise ValueError(f'Delete failure: {name} not in database.')

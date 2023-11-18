@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\.github",
+    "\\.github\\workflows",
+    "\\data",
+    "\\db",
+    "\\server",
+    "\\server\\tests"
+  ],
+  "SelectedNode": "\\data\\games.py",
+  "PreviewInSolutionExplorer": false
+}
