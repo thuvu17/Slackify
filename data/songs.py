@@ -3,6 +3,10 @@ songs.py: the interface to our song data.
 """
 import random
 
+import data.db_connect as dbc
+
+SONGS_COLLECT = 'songs'
+
 ID_LEN = 24
 BIG_NUM = 100000000000000
 MOCK_ID = '0'*ID_LEN
@@ -12,29 +16,13 @@ ARTIST = 'artist'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
-
+SONG_ID = 'song_id'
 
 # TEST_SONG_NAME = 'Beat It'
 # TEST_ARTIST_NAME = 'Michael Jackson'
 
 # Test songs
 songs = {}
-# songs = {
-#     'ABC123': {
-#         'name': 'Billie Jean',
-#         'artist': 'Michael Jackson',
-#         'album': 'idk',
-#         'genre': 'Pop',
-#         'bpm': 116,
-#     },
-#     'BCD456': {
-#         'name': TEST_SONG_NAME,
-#         'artist': TEST_ARTIST_NAME,
-#         'album': 'idk2',
-#         'genre': 'Pop',
-#         'bpm': 125,
-#     },
-# }
 
 
 def _get_test_name():
@@ -62,26 +50,24 @@ def _gen_id() -> str:
 
 
 def get_songs() -> dict:
-    return songs
+    dbc.connect_db()
+    return dbc.fetch_all_as_dict(NAME, SONGS_COLLECT)
 
 
 def already_exist(song_data: dict, song_id: str):
-    if song_id in get_songs():
+    dbc.connect_db()
+    fetched_song = dbc.fetch_one(SONGS_COLLECT, {SONG_ID: song_id})
+    if song_id in fetched_song:
         for song in songs:
             if songs[song] == song_id:
                 if songs[song] == song_data:
                     return True
     return False
-#     for song in songs:
-#     if songs[song]['name'] == song_data['name']:
-#         if songs[song]['artist'] == song_data['artist']:
-#        return True
-#     return False
 
 
 def del_song(name: str):
-    if name in songs:
-        del songs[name]
+    if already_exist(name, "NEW000"):
+        dbc.del_one(SONGS_COLLECT, {NAME: name})
     else:
         raise ValueError(f'Delete failure: {name} not in database.')
 
@@ -92,5 +78,16 @@ def add_song(song_id: str, song_data: dict) -> str:
     if already_exist(song_data, song_id):
         raise ValueError("A song with the same name \
                          sand artist already existed!")
-    songs[song_id] = song_data
-    return _gen_id()
+    song = {}
+    song[song_id] = song_data
+    dbc.connect_db()
+    _id = dbc.insert_one(SONGS_COLLECT, song)
+    return _id is not None
+
+
+def main():
+    print(get_songs())
+
+
+if __name__ == '__main__':
+    main()
