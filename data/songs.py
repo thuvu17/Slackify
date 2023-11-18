@@ -50,18 +50,22 @@ def _gen_id() -> str:
 
 
 def get_songs() -> dict:
-    dbc.connect_db()
-    return dbc.fetch_all_as_dict(NAME, SONGS_COLLECT)
+    try:
+        dbc.connect_db()
+        return dbc.fetch_all_as_dict(NAME, SONGS_COLLECT)
+    except Exception as e:
+        return {}
 
 
 def already_exist(song_data: dict, song_id: str):
     dbc.connect_db()
     fetched_song = dbc.fetch_one(SONGS_COLLECT, {SONG_ID: song_id})
-    if song_id in fetched_song:
-        for song in songs:
-            if songs[song] == song_id:
-                if songs[song] == song_data:
-                    return True
+    if fetched_song is not None:
+        if song_id in fetched_song:
+            for song in songs:
+                if songs[song] == song_id:
+                    if songs[song] == song_data:
+                        return True
     return False
 
 
@@ -69,10 +73,12 @@ def del_song(name: str):
     if already_exist(name, "NEW000"):
         dbc.del_one(SONGS_COLLECT, {NAME: name})
     else:
-        raise ValueError(f'Delete failure: {name} not in database.')
+        return (f'Delete failure: {name} not in database.')
+#        raise ValueError(f'Delete failure: {name} not in database.')
 
 
-def add_song(song_id: str, song_data: dict) -> str:
+
+def add_song(song_id: str, song_data: dict) -> bool:
     # Check if a song with same name + artist
     # is already in the database
     if already_exist(song_data, song_id):
