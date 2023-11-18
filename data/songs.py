@@ -53,7 +53,7 @@ def get_songs() -> dict:
     try:
         dbc.connect_db()
         return dbc.fetch_all_as_dict(NAME, SONGS_COLLECT)
-    except Exception as e:
+    except Exception:
         return {}
 
 
