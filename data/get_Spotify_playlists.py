@@ -16,4 +16,3 @@ def get_featured_playlist():
     response = requests.get(featured_playlists_url,headers=headers)
     playlists = response.json().get('playlists').get('items')
     return playlists
-
