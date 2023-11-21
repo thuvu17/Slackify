@@ -14,11 +14,15 @@ MONGO_ID = '_id'
 
 def connect_db():
     global client
-    password = os.environ.get("SLACKIFY_DB_PW")
-    print("Connecting to Mongo in the cloud.")
-    client = pm.MongoClient(f'mongodb+srv://tnv2002:{password}'
-                            + '@cluster0.r9gin96.mongodb.net/'
-                            + '?retryWrites=true&w=majority')
+    if client is None:
+        password = os.environ.get("SLACKIFY_DB_PW")
+        print("Connecting to Mongo in the cloud.")
+        client = pm.MongoClient(f'mongodb+srv://tnv2002:{password}'
+                                + '@cluster0.r9gin96.mongodb.net/'
+                                + '?retryWrites=true&w=majority')
+    else:
+        print("Connecting to Mongo locally.")
+        client = pm.MongoClient()
 
 
 def insert_one(collection, doc, db=SLACKIFY_DB):
