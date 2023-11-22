@@ -58,9 +58,10 @@ def fetch_all(collection, db=SLACKIFY_DB):
     return ret
 
 
-def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
+def fetch_all_as_dict(collection, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find():
+        id = str(doc[MONGO_ID])
         del doc[MONGO_ID]
-        ret[doc[key]] = doc
+        ret[id] = doc
     return ret

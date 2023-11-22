@@ -11,20 +11,24 @@ ID_LEN = 24
 BIG_NUM = 100000000000000
 MOCK_ID = '0'*ID_LEN
 NAME = 'name'
-SONG_NAME = 'song_name'
 ARTIST = 'artist'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
-SONG_ID = 'song_id'
 
-# TEST_SONG_NAME = 'Beat It'
-# TEST_ARTIST_NAME = 'Michael Jackson'
+# db = slackifyDB
+# collection = songs
+# {
+#     'name'
+#     'artist'
+#     'bpm'
+# }
 
 # Test songs
 songs = {}
 
 
+# Return random song name
 def _get_test_name():
     name = 'test'
     rand_part = random.randint(0, BIG_NUM)
@@ -34,10 +38,9 @@ def _get_test_name():
 def get_test_song():
     test_song = {}
     test_song[NAME] = _get_test_name()
-    test_song[SONG_NAME] = "Generic song name"
     test_song[ARTIST] = "Popular artist"
-    test_song[ALBUM] = "idk"
-    test_song[GENRE] = "Pop"
+    test_song[ALBUM] = "Some album"
+    test_song[GENRE] = "Some genre"
     test_song[BPM] = 116
     return test_song
 
@@ -52,41 +55,34 @@ def _gen_id() -> str:
 def get_songs() -> dict:
     try:
         dbc.connect_db()
-        return dbc.fetch_all_as_dict(NAME, SONGS_COLLECT)
+        return dbc.fetch_all_as_dict(SONGS_COLLECT)
     except Exception:
         return {}
 
 
-def already_exist(song_data: dict, song_id: str):
+# Take in the name + artist of a song that you want to find in DB
+# Return fetched song as doc if found, else return false
+def already_exist(song_name: str, song_artist: str):
     dbc.connect_db()
-    fetched_song = dbc.fetch_one(SONGS_COLLECT, {SONG_ID: song_id})
-    if fetched_song is not None:
-        if song_id in fetched_song:
-            for song in songs:
-                if songs[song] == song_id:
-                    if songs[song] == song_data:
-                        return True
-    return False
+    fetched_song = dbc.fetch_one(SONGS_COLLECT, {NAME: song_name, ARTIST: song_artist})
+    return fetched_song is not None
 
 
-def del_song(name: str):
-    if already_exist(name, "NEW000"):
-        return dbc.del_one(SONGS_COLLECT, {NAME: name})
+def del_song(song_name: str, song_artist: str):
+    if already_exist(song_name, song_artist):
+        return dbc.del_one(SONGS_COLLECT, {NAME: song_name, ARTIST: song_artist})
     else:
-        return (f'Delete failure: {name} not in database.')
-#        raise ValueError(f'Delete failure: {name} not in database.')
+        raise ValueError(f'Delete failure: {song_name} by {song_artist} not in database.')
 
 
-def add_song(song_id: str, song_data: dict) -> bool:
+def add_song(song_data: dict) -> bool:
     # Check if a song with same name + artist
     # is already in the database
-    if already_exist(song_data, song_id):
+    if already_exist(song_data[NAME], song_data[ARTIST]):
         raise ValueError("A song with the same name \
                          sand artist already existed!")
-    song = {}
-    song[song_id] = song_data
     dbc.connect_db()
-    _id = dbc.insert_one(SONGS_COLLECT, song)
+    _id = dbc.insert_one(SONGS_COLLECT, song_data)
     return _id is not None
 
 

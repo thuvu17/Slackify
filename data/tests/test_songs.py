@@ -3,23 +3,13 @@ import pytest
 import data.songs as data_songs
 
 
-# DUP_SONG_DATA = {
-#    'name': data_songs.TEST_SONG_NAME,
-#    'artist': data_songs.TEST_ARTIST_NAME,
-#    'album': 'idk',
-#    'genre': 'Pop',
-#    'bpm': 116,
-# }
-DUP_SONG_DATA = {}
-
-
 @pytest.fixture(scope='function')
 def temp_song():
-    name = data_songs._get_test_name()
-    ret = data_songs.add_song(name, DUP_SONG_DATA)
-    yield name
-    if data_songs.already_exist(DUP_SONG_DATA, "NEW000"):
-        data_songs.del_song(DUP_SONG_DATA, "NEW000")
+    song = data_songs.get_test_song()
+    ret = data_songs.add_song(song)
+    yield song
+    if data_songs.already_exist(song['name'], song['artist']):
+        data_songs.del_song(song['name'], song['artist'])
 
 
 def test_get_test_name():
@@ -47,41 +37,35 @@ def test_get_songs(temp_song):
         assert isinstance(songs[song], dict)
 
 
-def test_already_exist():
-    assert data_songs.already_exist(DUP_SONG_DATA, "XYZ789") is False
-
-
-def test_add_song_dup_name_and_artist():
-    #    with pytest.raises(ValueError):
-    return data_songs.add_song("XYZ789", DUP_SONG_DATA)
-
-
-NEW_SONG_DATA = {
-    'name': "Rolling in the deep",
-    'artist': "Adele",
-    'album': '21',
-    'genre': 'Soul',
-    'bpm': 105,
-}
+def test_add_song_dup_name_and_artist(temp_song):
+    with pytest.raises(ValueError):
+        data_songs.add_song(temp_song)
 
 
 def test_add_song():
-    #     data_songs.add_song("NEW000", NEW_SONG_DATA)
-    #     assert data_songs.already_exist(NEW_SONG_DATA,"NEW000") is False
     new_name = data_songs._get_test_name()
-    ret = data_songs.add_song("NEW000", NEW_SONG_DATA)
-    assert data_songs.already_exist(new_name, "NEW000") is False
+    new_song = {
+        'name': new_name,
+        'artist': 'Some artist',
+        'album': 'Some album',
+        'genre': 'Some genre',
+        'bpm': 10000,
+    }
+    ret = data_songs.add_song(new_song)
+    assert data_songs.already_exist(new_song['name'], new_song['artist'])
     assert isinstance(ret, bool)
-    data_songs.del_song(new_name)
+    data_songs.del_song(new_song['name'], new_song['artist'])
 
 
 def test_del_song(temp_song):
-    name = temp_song
-    data_songs.del_song(name)
-    assert data_songs.already_exist(name, "NEW000") is False
+    name = temp_song['name']
+    artist = temp_song['artist']
+    data_songs.del_song(name, artist)
+    assert data_songs.already_exist(name, artist) is False
 
 
 def test_del_song_not_there():
     name = data_songs._get_test_name()
-#     with pytest.raises(ValueError):
-    return data_songs.del_song(name)
+    artist = "unknown"
+    with pytest.raises(ValueError):
+        data_songs.del_song(name, artist)
