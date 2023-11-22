@@ -2,7 +2,7 @@
 This module interfaces to our user data.
 """
 
-LEVEL = 'level'
+EMAIL = 'email'
 MIN_USER_NAME_LEN = 2
 
 
@@ -12,15 +12,15 @@ def get_users():
         - No arguments.
         - Returns a dictionary of users keyed on user name (a str).
         - Each user name must be the key for a dictionary.
-        - That dictionary must at least include a LEVEL member that has an int
+        - That dictionary must at least include a EMAIL member that is a string
         value.
     """
     users = {
-        "Callahan": {
-            LEVEL: 0,
+        "Windy": {
+            EMAIL: "pretty_windy@gmail.com",
         },
-        "Reddy": {
-            LEVEL: 1,
+        "Joy": {
+            EMAIL: "pretty_joy@gmail.com",
         },
     }
     return users
