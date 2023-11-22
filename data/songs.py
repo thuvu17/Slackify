@@ -64,15 +64,18 @@ def get_songs() -> dict:
 # Return fetched song as doc if found, else return false
 def already_exist(song_name: str, song_artist: str):
     dbc.connect_db()
-    fetched_song = dbc.fetch_one(SONGS_COLLECT, {NAME: song_name, ARTIST: song_artist})
+    fetched_song = dbc.fetch_one(SONGS_COLLECT, \
+                                 {NAME: song_name, ARTIST: song_artist})
     return fetched_song is not None
 
 
 def del_song(song_name: str, song_artist: str):
     if already_exist(song_name, song_artist):
-        return dbc.del_one(SONGS_COLLECT, {NAME: song_name, ARTIST: song_artist})
+        return dbc.del_one(SONGS_COLLECT, \
+                           {NAME: song_name, ARTIST: song_artist})
     else:
-        raise ValueError(f'Delete failure: {song_name} by {song_artist} not in database.')
+        raise ValueError(f'Delete failure: {song_name} by \
+                         {song_artist} not in database.')
 
 
 def add_song(song_data: dict) -> bool:
