@@ -71,6 +71,7 @@ def fetch_all_as_dict(collection, db=SLACKIFY_DB):
         ret[id] = doc
     return ret
 
+
 def fetch_for_user(key, collection, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find():
