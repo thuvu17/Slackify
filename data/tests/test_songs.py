@@ -17,7 +17,9 @@ DUP_SONG_DATA = {}
 def temp_song():
     name = data_songs._get_test_name()
     ret = data_songs.add_song(name, DUP_SONG_DATA)
-    return name
+    yield name
+    if data_songs.already_exist(DUP_SONG_DATA, "NEW000"):
+        data_songs.del_song(DUP_SONG_DATA, "NEW000")
 
 
 def test_get_test_name():
@@ -44,12 +46,13 @@ def test_get_songs(temp_song):
         assert isinstance(song, str)
         assert isinstance(songs[song], dict)
 
+
 def test_already_exist():
-    assert data_songs.already_exist(DUP_SONG_DATA,"XYZ789") is False
+    assert data_songs.already_exist(DUP_SONG_DATA, "XYZ789") is False
 
 
 def test_add_song_dup_name_and_artist():
-#    with pytest.raises(ValueError):
+    #    with pytest.raises(ValueError):
     return data_songs.add_song("XYZ789", DUP_SONG_DATA)
 
 
@@ -63,8 +66,8 @@ NEW_SONG_DATA = {
 
 
 def test_add_song():
-#     data_songs.add_song("NEW000", NEW_SONG_DATA)
-#     assert data_songs.already_exist(NEW_SONG_DATA,"NEW000") is False
+    #     data_songs.add_song("NEW000", NEW_SONG_DATA)
+    #     assert data_songs.already_exist(NEW_SONG_DATA,"NEW000") is False
     new_name = data_songs._get_test_name()
     ret = data_songs.add_song("NEW000", NEW_SONG_DATA)
     assert data_songs.already_exist(new_name, "NEW000") is False
