@@ -199,6 +199,6 @@ class Songs(Resource):
             song_added = songs.add_song(new_song)
             if not song_added:
                 raise wz.ServiceUnavailable('We have a technical problem.')
-            return new_song
+            return song_added
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
