@@ -122,13 +122,14 @@ class Users(Resource):
         """
         This method returns all users.
         """
-        return {
-            TYPE: DATA,
-            TITLE: 'Current Songs',
-            DATA: users.get_users(),
-            MENU: USER_MENU_EP,
-            RETURN: MAIN_MENU_EP,
-        }
+        return users.get_users()
+        # return {
+        #    TYPE: DATA,
+        #    TITLE: 'Current Songs',
+        #    DATA: users.get_users(),
+        #    MENU: USER_MENU_EP,
+        #    RETURN: MAIN_MENU_EP,
+        # }
 
 
 @api.route(f'{DEL_SONG_EP}/<name>/<artist>')
