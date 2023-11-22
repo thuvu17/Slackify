@@ -74,8 +74,8 @@ def del_song(song_name: str, song_artist: str):
         return dbc.del_one(SONGS_COLLECT,
                            {NAME: song_name, ARTIST: song_artist})
     else:
-        raise ValueError(f"Delete failure: {song_name} by " 
-        + f"{song_artist} not in database.")
+        raise ValueError(f"Delete failure: {song_name} by "
+                         + f"{song_artist} not in database.")
 
 
 def add_song(song_data: dict) -> bool:
@@ -83,7 +83,7 @@ def add_song(song_data: dict) -> bool:
     # is already in the database
     if already_exist(song_data[NAME], song_data[ARTIST]):
         raise ValueError("A song with the same name "
-            + "and artist already existed!")
+                         + "and artist already existed!")
     dbc.connect_db()
     _id = dbc.insert_one(SONGS_COLLECT, song_data)
     return _id is not None

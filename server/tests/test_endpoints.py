@@ -87,6 +87,6 @@ def test_games_add_db_failure(mock_add):
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
-                   + 'skip')
+                  + 'skip')
 def test_that_doesnt_work():
     assert False
