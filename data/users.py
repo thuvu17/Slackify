@@ -18,7 +18,7 @@ def get_users():
     value.
     """
     dbc.connect_db()
-    return dbc.fetch_for_user(EMAIL, USER_COLLECT)
+    return dbc.fetch_all_as_dict(EMAIL, USER_COLLECT)
 
 
 def get_old_users():

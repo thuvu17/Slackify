@@ -55,7 +55,7 @@ def _gen_id() -> str:
 def get_songs() -> dict:
     try:
         dbc.connect_db()
-        return dbc.fetch_all_as_dict(SONGS_COLLECT)
+        return dbc.fetch_all_songs_as_dict(SONGS_COLLECT)
     except Exception:
         return {}
 

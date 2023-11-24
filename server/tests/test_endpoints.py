@@ -11,9 +11,9 @@ from unittest.mock import patch
 
 import pytest
 
-import data.games as gm
+import data.songs as songs
 
-import server.endpoints as ep
+import server.endpoints_song as ep
 
 TEST_CLIENT = ep.app.test_client()
 
@@ -34,55 +34,55 @@ def test_list_users():
     assert ep.DATA in resp_json
 
 
-def test_games_get():
-    resp = TEST_CLIENT.get(ep.GAMES_EP)
+def test_songs_get():
+    resp = TEST_CLIENT.get(ep.SONGS_EP)
     assert resp.status_code == OK
     resp_json = resp.get_json()
     assert isinstance(resp_json, dict)
 
 
-@patch('data.games.del_game', autospec=True)
-def test_games_del(mock_del):
+@patch('data.songs.del_song', autospec=True)
+def test_songs_del(mock_del):
     """
-    Testing we do the right thing with a call to del_game that succeeds.
+    Testing we do the right thing with a call to del_song that succeeds.
     """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_GAME_EP}/AnyName')
+    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
     assert resp.status_code == OK
 
 
-@patch('data.games.del_game', side_effect=ValueError(), autospec=True)
-def test_games_bad_del(mock_del):
+@patch('data.songs.del_song', side_effect=ValueError(), autospec=True)
+def test_songs_bad_del(mock_del):
     """
-    Testing we do the right thing with a value error from del_game.
+    Testing we do the right thing with a value error from del_song.
     """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_GAME_EP}/AnyName')
+    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
     assert resp.status_code == NOT_FOUND
 
 
-@patch('data.games.add_game', return_value=gm.MOCK_ID, autospec=True)
-def test_games_add(mock_add):
+@patch('data.songs.add_song', return_value=songs.MOCK_ID, autospec=True)
+def test_songs_add(mock_add):
     """
-    Testing we do the right thing with a good return from add_game.
+    Testing we do the right thing with a good return from add_song.
     """
-    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
+    resp = TEST_CLIENT.post(ep.SONGS_EP, json=songs.get_test_song())
     assert resp.status_code == OK
 
 
-@patch('data.games.add_game', side_effect=ValueError(), autospec=True)
-def test_games_bad_add(mock_add):
+@patch('data.songs.add_song', side_effect=ValueError(), autospec=True)
+def test_songs_bad_add(mock_add):
     """
-    Testing we do the right thing with a value error from add_game.
+    Testing we do the right thing with a value error from add_song.
     """
-    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
+    resp = TEST_CLIENT.post(ep.SONGS_EP, json=songs.get_test_song())
     assert resp.status_code == NOT_ACCEPTABLE
 
 
-@patch('data.games.add_game', return_value=None)
-def test_games_add_db_failure(mock_add):
+@patch('data.songs.add_song', return_value=None)
+def test_songs_add_db_failure(mock_add):
     """
-    Testing we do the right thing with a null ID return from add_game.
+    Testing we do the right thing with a null ID return from add_song.
     """
-    resp = TEST_CLIENT.post(ep.GAMES_EP, json=gm.get_test_game())
+    resp = TEST_CLIENT.post(ep.SONGS_EP, json=songs.get_test_song())
     assert resp.status_code == SERVICE_UNAVAILABLE
 
 

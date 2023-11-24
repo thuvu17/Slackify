@@ -63,7 +63,7 @@ def fetch_all(collection, db=SLACKIFY_DB):
     return ret
 
 
-def fetch_all_as_dict(collection, db=SLACKIFY_DB):
+def fetch_all_songs_as_dict(collection, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find():
         id = str(doc[MONGO_ID])
@@ -72,7 +72,7 @@ def fetch_all_as_dict(collection, db=SLACKIFY_DB):
     return ret
 
 
-def fetch_for_user(key, collection, db=SLACKIFY_DB):
+def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find():
         del doc[MONGO_ID]
