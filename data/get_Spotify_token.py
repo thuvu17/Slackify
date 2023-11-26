@@ -14,7 +14,5 @@ data = {
 
 def get_token():
     auth_response = requests.post(auth_url, data=data)
-    result = auth_response.json().get('access_token')
-    json_result = json.loads(result.content)
-    token = json_result["access_token"]
+    token = auth_response.json().get('access_token')
     return token
