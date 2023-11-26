@@ -1,5 +1,4 @@
 import requests
-import json
 
 # Requesting Token from Spotify
 client_id = '7641947490644dc6a87899c4e8878443'
