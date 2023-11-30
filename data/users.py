@@ -3,7 +3,7 @@ This module interfaces to our user data.
 """
 import data.db_connect as dbc
 
-EMAIL = 'email'
+EMAIL = "email"
 MIN_USER_NAME_LEN = 2
 USER_COLLECT = "users"
 
