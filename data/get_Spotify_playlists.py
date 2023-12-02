@@ -1,5 +1,5 @@
 import requests
-import get_Spotify_token
+import data.get_Spotify_token as get_Spotify_token
 
 # Requesting featured playlists from Spotify
 access_token = get_Spotify_token.get_token()
