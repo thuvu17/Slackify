@@ -28,6 +28,7 @@ SONG_MENU_EP = '/song_menu'
 SONG_MENU_NM = 'Song Menu'
 SONG_ID = 'Song ID'
 USERS_EP = '/users'
+DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
 USER_MENU_NM = 'User Menu'
 TYPE = 'Type'
@@ -113,6 +114,12 @@ class UserMenu(Resource):
                }
 
 
+user_fields = api.model('NewUser', {
+    users.NAME: fields.String,
+    users.EMAIL: fields.String,
+})
+
+
 @api.route(f'{USERS_EP}')
 class Users(Resource):
     """
@@ -131,17 +138,56 @@ class Users(Resource):
            RETURN: MAIN_MENU_EP,
         }
 
+    @api.expect(user_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a user.
+        """
+        name = request.json[users.NAME]
+        email = request.json[users.EMAIL]
+        new_user = {
+            'name': name,
+            'email': email,
+        }
+        try:
+            user_added = users.add_user(new_user)
+            if not user_added:
+                raise wz.ServiceUnavailable('We have a technical problem.')
+            return {'User added': f'{user_added}'}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{DEL_USER_EP}/<email>')
+class DelUser(Resource):
+    """
+    Deletes a user by email.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, email):
+        """
+        Deletes a user by name and artist.
+        """
+        try:
+            users.del_user(email)
+            return {'User with email ' + f'{email}': 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
 
 @api.route(f'{DEL_SONG_EP}/<name>/<artist>')
 class DelSong(Resource):
     """
-    Deletes a SONG by name.
+    Deletes a song by name.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
     def delete(self, name, artist):
         """
-        Deletes a SONG by name and artist.
+        Deletes a song by name and artist.
         """
         try:
             songs.del_song(name, artist)
