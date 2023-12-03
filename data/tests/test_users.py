@@ -15,13 +15,15 @@ def temp_user():
 def test_get_test_name():
     name = usrs._get_test_name()
     assert isinstance(name, str)
-    assert len(name) > 0
+    assert len(name) > 2
 
 
 def test_get_test_email():
-    name = usrs._get_test_email()
-    assert isinstance(name, str)
-    assert len(name) > 0
+    email = usrs._get_test_email()
+    assert isinstance(email, str)
+    assert len(email) > 0
+    assert '@' in email
+
 
 
 def test_get_test_user():
