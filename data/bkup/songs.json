@@ -1,0 +1,4 @@
+{"_id":{"$oid":"655d8b84d8f72f9402c32770"},"name":"test87331884029568","artist":"Some artist","album":"Some album","genre":"Some genre","bpm":10000}
+{"_id":{"$oid":"655d8b94402aa859add80789"},"name":"test87641645961248","artist":"Some artist","album":"Some album","genre":"Some genre","bpm":10000}
+{"_id":{"$oid":"656a4c1f687b211af995bacd"},"name":"abc","artist":"def","album":"g","genre":"pop","bpm":10}
+{"_id":{"$oid":"656ba4a5cc0bd84374ebdd6f"},"name":"string","artist":"string","album":"string","genre":"sth","bpm":0}
