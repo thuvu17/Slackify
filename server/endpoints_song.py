@@ -18,23 +18,27 @@ api = Api(app)
 DELETE = 'delete'
 DEFAULT = 'Default'
 MENU = 'menu'
-MAIN_MENU_EP = '/MainMenu'
-MAIN_MENU_NM = "Welcome to Slackify!"
-HELLO_EP = '/hello'
-HELLO_RESP = 'hello'
-SONGS_EP = '/songs'
-DEL_SONG_EP = f'{SONGS_EP}/{DELETE}'
-SONG_MENU_EP = '/song_menu'
-SONG_MENU_NM = 'Song Menu'
 SONG_ID = 'Song ID'
-USERS_EP = '/users'
-DEL_USER_EP = f'{USERS_EP}/{DELETE}'
-USER_MENU_EP = '/user_menu'
-USER_MENU_NM = 'User Menu'
 TYPE = 'Type'
 DATA = 'Data'
 TITLE = 'Title'
 RETURN = 'Return'
+
+# EP names
+MAIN_MENU_NM = "Welcome to Slackify!"
+USER_MENU_NM = 'User Menu'
+SONG_MENU_NM = 'Song Menu'
+HELLO_RESP = 'hello'
+
+# Endpoints
+HELLO_EP = '/hello'
+MAIN_MENU_EP = '/MainMenu'
+USERS_EP = '/users'
+SONGS_EP = '/songs'
+DEL_USER_EP = f'{USERS_EP}/{DELETE}'
+USER_MENU_EP = '/user_menu'
+DEL_SONG_EP = f'{SONGS_EP}/{DELETE}'
+SONG_MENU_EP = '/song_menu'
 
 
 @api.route(HELLO_EP)
