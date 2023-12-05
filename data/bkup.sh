@@ -3,6 +3,8 @@
 
 . ./common.sh
 
+chmod 755 bkup.sh
+
 for collection in ${slackify_collections[@]}; do
     echo "Backing up $collection"
     $EXP --collection=$collection --db=$DB --out=$BKUP_DIR/$collection.json $CONNECT_STR --username $USER --password $SLACKIFY_DB_PW

@@ -4,7 +4,7 @@
 echo "Importing from common.sh"
 
 DB=slackifyDB
-USER=Thu
+USER=tnv2002
 CONNECT_STR="mongodb+srv://cluster0.r9gin96.mongodb.net/"
 if [ -z $DATA_DIR ]
 then
