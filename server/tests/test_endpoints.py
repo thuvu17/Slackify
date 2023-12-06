@@ -13,6 +13,8 @@ import pytest
 
 import data.songs as songs
 
+import data.users as usrs
+
 import server.endpoints_song as ep
 
 TEST_CLIENT = ep.app.test_client()
@@ -32,6 +34,58 @@ def test_list_users():
     assert ep.TITLE in resp_json
     assert ep.TYPE in resp_json
     assert ep.DATA in resp_json
+
+
+def test_users_get():
+    resp = TEST_CLIENT.get(ep.USERS_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
+@patch('data.users.del_user', autospec=True)
+def test_users_del(mock_del):
+    """
+    Testing we do the right thing with a call to del_user that succeeds.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_USER_EP}/AnyEmail')
+    assert resp.status_code == OK
+
+
+@patch('data.users.del_user', side_effect=ValueError(), autospec=True)
+def test_users_bad_del(mock_del):
+    """
+    Testing we do the right thing with a value error from del_user.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_USER_EP}/AnyEmail')
+    assert resp.status_code == NOT_FOUND
+
+
+@patch('data.users.add_user', return_value=usrs.EMAIL, autospec=True)
+def test_users_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_user.
+    """
+    resp = TEST_CLIENT.post(ep.USERS_EP, json=usrs.get_test_user())
+    assert resp.status_code == OK
+
+
+@patch('data.users.add_user', side_effect=ValueError(), autospec=True)
+def test_users_bad_add(mock_add):
+    """
+    Testing we do the right thing with a value error from add_user.
+    """
+    resp = TEST_CLIENT.post(ep.USERS_EP, json=usrs.get_test_user())
+    assert resp.status_code == NOT_ACCEPTABLE
+
+
+@patch('data.users.add_user', return_value=None)
+def test_users_add_db_failure(mock_add):
+    """
+    Testing we do the right thing with a null ID return from add_user.
+    """
+    resp = TEST_CLIENT.post(ep.USERS_EP, json=usrs.get_test_user())
+    assert resp.status_code == SERVICE_UNAVAILABLE
 
 
 def test_songs_get():

@@ -4,10 +4,11 @@
     "\\.github",
     "\\.github\\workflows",
     "\\data",
+    "\\data\\tests",
     "\\db",
     "\\server",
     "\\server\\tests"
   ],
-  "SelectedNode": "\\data\\songs.py",
+  "SelectedNode": "\\data\\tests\\test_users.py",
   "PreviewInSolutionExplorer": false
 }
