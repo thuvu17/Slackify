@@ -86,3 +86,11 @@ def del_user(user_email: str):
     else:
         raise ValueError(f"Delete failure: User with email {user_email} "
                          "not in database.")
+
+
+def auth_user(user_email: str, user_name: str):
+    dbc.connect_db()
+    fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
+    if fetched_user:
+        return fetched_user['name'] == user_name
+    return False
