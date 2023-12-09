@@ -100,7 +100,6 @@ def del_user(user_email: str):
 def auth_user(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
-    print(fetched_user)
     if fetched_user:
         return fetched_user['password'] == password
     return False
