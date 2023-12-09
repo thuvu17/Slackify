@@ -96,10 +96,10 @@ def test_del_user_not_there():
 
 def test_auth_user(temp_user):
     right_email = temp_user['email']
-    right_name = temp_user['name']
+    right_password = temp_user['password']
     wrong_email = "somewrongemail"
-    wrong_name = "songwrongname"
-    assert usrs.auth_user(right_email, right_name) is True
-    assert usrs.auth_user(wrong_email, right_name) is False
-    assert usrs.auth_user(right_email, wrong_name) is False
-    assert usrs.auth_user(wrong_email, wrong_name) is False
+    wrong_password = "songwrongpassword"
+    assert usrs.auth_user(right_email, right_password) is True
+    assert usrs.auth_user(wrong_email, right_password) is False
+    assert usrs.auth_user(right_email, wrong_password) is False
+    assert usrs.auth_user(wrong_email, wrong_password) is False

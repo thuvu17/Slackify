@@ -7,6 +7,7 @@ import data.db_connect as dbc
 
 NAME = 'name'
 EMAIL = 'email'
+PASSWORD = 'password'
 BIG_NUM = 100000000000000
 MIN_USER_NAME_LEN = 2
 USER_COLLECT = "users"
@@ -27,10 +28,18 @@ def _get_test_email():
     return name + str(rand_part) + email_suffix
 
 
+# Return random user password
+def _get_test_password():
+    name = 'test'
+    rand_part = random.randint(0, BIG_NUM)
+    return name + str(rand_part)
+
+
 def get_test_user():
     test_user = {}
     test_user[NAME] = _get_test_name()
     test_user[EMAIL] = _get_test_email()
+    test_user[PASSWORD] = _get_test_password()
     return test_user
 
 
@@ -88,9 +97,10 @@ def del_user(user_email: str):
                          "not in database.")
 
 
-def auth_user(user_email: str, user_name: str):
+def auth_user(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
+    print(fetched_user)
     if fetched_user:
-        return fetched_user['name'] == user_name
+        return fetched_user['password'] == password
     return False
