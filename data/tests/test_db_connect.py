@@ -64,6 +64,6 @@ def test_fetch_one_not_there(temp_rec):
     assert ret is None
 
 
-def test_fetch_all_as_array(temp_rec_playlist):
-    ret = dbc.fetch_all_as_array(TEST_COLLECT_PL, {EMAIL: TEST_EMAIL}, NAME)
+def test_fetch_all_as_list(temp_rec_playlist):
+    ret = dbc.fetch_all_as_list(TEST_COLLECT_PL, {EMAIL: TEST_EMAIL}, NAME)
     assert ret is not None

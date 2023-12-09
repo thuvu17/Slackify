@@ -80,7 +80,7 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
     return ret
 
 
-def fetch_all_as_array(collection, filt, key, db=SLACKIFY_DB):
+def fetch_all_as_list(collection, filt, key, db=SLACKIFY_DB):
     """
     Find with a filter and return all docs found with a key as a list.
     """

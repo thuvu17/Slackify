@@ -48,7 +48,7 @@ def get_playlists(user_email):
     value.
     """
     dbc.connect_db()
-    return dbc.fetch_all_as_dict(EMAIL, PLAYLISTS_COLLECT)
+    return dbc.fetch_all_as_list(PLAYLISTS_COLLECT, {EMAIL: user_email}, NAME)
 
 
 # Return fetched playlist as doc if found, else return false
@@ -66,6 +66,8 @@ def add_playlist(user_email: str, playlist_name: str) -> bool:
         raise ValueError("A playlist with the same name already existed!")
     if len(playlist_name) < MIN_NAME_LEN:
         raise ValueError("Minimum playlist name length is 1 character!")
+    if '@' not in user_email:
+        raise ValueError("Invalid user email!")
     playlist_data = {EMAIL: user_email, NAME: playlist_name, SONGS: []}
     dbc.connect_db()
     _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)
