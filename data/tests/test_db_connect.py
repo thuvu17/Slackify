@@ -12,12 +12,25 @@ TEST_ARTIST = 'Hello'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
+
 TEST_INSERT = {
     NAME: TEST_NAME,
     ARTIST: TEST_ARTIST,
     ALBUM: 'unknown',
     GENRE: 'unknown',
     BPM: 0,
+    }
+
+# specifically for playlist tests
+TEST_COLLECT_PL = 'playlists'
+EMAIL = 'email'
+TEST_EMAIL = 'random@email.com'
+SONGS = 'songs'
+SONGS_ID = 'randomSongID'
+TEST_INSERT_PL = {
+    NAME: TEST_NAME,
+    EMAIL: TEST_EMAIL,
+    SONGS: [SONGS_ID],
     }
 
 
@@ -31,6 +44,16 @@ def temp_rec():
                                                   ARTIST: TEST_ARTIST})
 
 
+@pytest.fixture(scope='function')
+def temp_rec_playlist():
+    dbc.connect_db()
+    dbc.client[TEST_DB][TEST_COLLECT_PL].insert_one(TEST_INSERT_PL)
+    # yield to our test function
+    yield
+    dbc.client[TEST_DB][TEST_COLLECT_PL].delete_one({NAME: TEST_NAME,
+                                                  EMAIL: TEST_EMAIL})
+
+
 def test_fetch_one(temp_rec):
     ret = dbc.fetch_one(TEST_COLLECT, {NAME: TEST_NAME, ARTIST: TEST_ARTIST})
     assert ret is not None
@@ -39,3 +62,8 @@ def test_fetch_one(temp_rec):
 def test_fetch_one_not_there(temp_rec):
     ret = dbc.fetch_one(TEST_COLLECT, {NAME: 'not a field value in db!'})
     assert ret is None
+
+
+def test_fetch_all_as_array(temp_rec_playlist):
+    ret = dbc.fetch_all_as_array(TEST_COLLECT_PL, {EMAIL: TEST_EMAIL}, NAME)
+    assert ret is not None

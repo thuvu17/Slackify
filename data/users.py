@@ -59,7 +59,7 @@ def get_old_users():
     return users
 
 
-# Return fetched song as doc if found, else return false
+# Return fetched user as doc if found, else return false
 def already_exist(user_email: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
@@ -67,7 +67,7 @@ def already_exist(user_email: str):
 
 
 def add_user(user_data: dict) -> bool:
-    # Check if a song with same name + artist
+    # Check if a user with same email
     # is already in the database
     if already_exist(user_data[EMAIL]):
         raise ValueError("A user with the same email already existed!")

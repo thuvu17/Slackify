@@ -78,3 +78,14 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
         del doc[MONGO_ID]
         ret[doc[key]] = doc
     return ret
+
+
+def fetch_all_as_array(collection, filt, key, db=SLACKIFY_DB):
+    """
+    Find with a filter and return all docs found with a key as a list.
+    """
+    ret = []
+    for doc in client[db][collection].find(filt):
+        if key in doc:
+            ret.append(doc[key])
+    return ret
