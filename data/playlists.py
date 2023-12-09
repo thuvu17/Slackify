@@ -52,14 +52,14 @@ def get_playlists(user_email):
 
 
 # Return fetched playlist as doc if found, else return false
-def already_exist(user_email:str, playlist_name: str):
+def already_exist(user_email: str, playlist_name: str):
     dbc.connect_db()
-    fetched_playlist = dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email, 
+    fetched_playlist = dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
                                      NAME: playlist_name})
     return fetched_playlist is not None
 
 
-def add_playlist(user_email:str, playlist_name: str) -> bool:
+def add_playlist(user_email: str, playlist_name: str) -> bool:
     # Check if a playlist with same name + playlist
     # is already in the database
     if already_exist(user_email, playlist_name):
@@ -72,9 +72,10 @@ def add_playlist(user_email:str, playlist_name: str) -> bool:
     return _id is not None
 
 
-def del_playlist(user_email:str, playlist_name: str):
+def del_playlist(user_email: str, playlist_name: str):
     if already_exist(user_email, playlist_name):
-        return dbc.del_one(PLAYLISTS_COLLECT, {EMAIL: user_email, NAME: playlist_name})
+        return dbc.del_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
+                           NAME: playlist_name})
     else:
         raise ValueError(f"Delete failure: Playlist {playlist_name} "
                          "not in database.")
