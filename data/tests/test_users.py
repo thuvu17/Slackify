@@ -51,9 +51,11 @@ def test_get_users():
 def test_add_user():
     new_name = usrs._get_test_name()
     new_email = usrs._get_test_email()
+    new_password = usrs._get_test_password()
     new_user = {
         'name': new_name,
         'email': new_email,
+        'password': new_password,
     }
     ret = usrs.add_user(new_user)
     assert usrs.already_exist(new_user['email'])
@@ -69,9 +71,11 @@ def test_add_user_dup_email(temp_user):
 def test_add_user_lt_2_char():
     new_name = 'w'
     new_email = usrs._get_test_email()
+    new_password = usrs._get_test_password()
     new_user = {
         'name': new_name,
         'email': new_email,
+        'password': new_password,
     }
     with pytest.raises(ValueError):
         usrs.add_user(new_user)
