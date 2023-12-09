@@ -25,6 +25,12 @@ def test_get_test_email():
     assert '@' in email
 
 
+def test_get_test_password():
+    password = usrs._get_test_password()
+    assert isinstance(password, str)
+    assert len(password) > 8
+
+
 def test_get_test_user():
     assert isinstance(usrs.get_test_user(), dict)
 
