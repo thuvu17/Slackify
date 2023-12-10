@@ -9,7 +9,7 @@ PLAYLISTS_COLLECT = 'playlists'
 
 NAME = 'name'
 EMAIL = 'email'
-SONGS = 'playlists'
+SONGS = 'songs'
 MIN_NAME_LEN = 1
 
 BIG_NUM = 100000000000000

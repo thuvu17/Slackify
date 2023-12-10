@@ -11,11 +11,13 @@ import werkzeug.exceptions as wz
 
 import data.songs as songs
 import data.users as users
+import data.playlists as plists
 
 app = Flask(__name__)
 api = Api(app)
 
 DELETE = 'delete'
+GET = 'get'
 DEFAULT = 'Default'
 MENU = 'menu'
 SONG_ID = 'Song ID'
@@ -28,6 +30,7 @@ RETURN = 'Return'
 MAIN_MENU_NM = "Welcome to Slackify!"
 USER_MENU_NM = 'User Menu'
 SONG_MENU_NM = 'Song Menu'
+PLAYLIST_MENU_NM = 'Playlist Menu'
 HELLO_RESP = 'hello'
 
 # Endpoints
@@ -39,7 +42,10 @@ DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
 DEL_SONG_EP = f'{SONGS_EP}/{DELETE}'
 SONG_MENU_EP = '/song_menu'
+PLAYLIST_MENU_EP = '/playlist_menu'
 PLAYLISTS_EP = '/playlists'
+GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
+DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
 
 
 @api.route(HELLO_EP)
@@ -128,7 +134,7 @@ user_fields = api.model('NewUser', {
 @api.route(f'{USERS_EP}')
 class Users(Resource):
     """
-    This class supports fetching a list of all songs.
+    This class supports fetching a list of all users.
     """
     def get(self):
         """
@@ -137,7 +143,7 @@ class Users(Resource):
         # return users.get_users()
         return {
            TYPE: DATA,
-           TITLE: 'Current Songs',
+           TITLE: 'Current Users',
            DATA: users.get_users(),
            MENU: USER_MENU_EP,
            RETURN: MAIN_MENU_EP,
@@ -152,9 +158,11 @@ class Users(Resource):
         """
         name = request.json[users.NAME]
         email = request.json[users.EMAIL]
+        password = request.json[users.PASSWORD]
         new_user = {
             'name': name,
             'email': email,
+            'password': password,
         }
         try:
             user_added = users.add_user(new_user)
@@ -254,3 +262,70 @@ class Songs(Resource):
             return {'Song added': f'{song_added}'}
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{DEL_PLAYLIST_EP}/<email>/<name>')
+class DelPlaylist(Resource):
+    """
+    Deletes a playlist by user email and playlist name.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
+    def delete(self, email, name):
+        """
+        Deletes a playlist by user_email and playlist name.
+        """
+        try:
+            plists.del_playlist(email, name)
+            return {f'Playlist {name}': 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
+playlist_fields = api.model('NewPlaylist', {
+    plists.EMAIL: fields.String,
+    plists.NAME: fields.String,
+    plists.SONGS: fields.List(fields.String),
+})
+
+
+@api.route(f'{PLAYLISTS_EP}')
+class Playlists(Resource):
+    """
+    This class supports various operations on playlists, such as
+    listing them, and creating a playlist.
+    """
+    @api.expect(playlist_fields)
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def post(self):
+        """
+        Add a playlist.
+        """
+        email = request.json[plists.EMAIL]
+        name = request.json[plists.NAME]
+        try:
+            playlist_added = plists.add_playlist(email, name)
+            if not playlist_added:
+                raise wz.ServiceUnavailable('We have a technical problem.')
+            return {f'Playlist {name} added': f'{playlist_added}'}
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{GET_PLAYLISTS_EP}/<email>')
+class GetPlaylists(Resource):
+    """
+    This class lists playlists for a specific user.
+    """
+    def get(self, email):
+        """
+        This method returns all playlists for a user.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: f'Current Playlists for {email}',
+            DATA: plists.get_playlists(email),
+            MENU: PLAYLIST_MENU_EP,
+            RETURN: MAIN_MENU_EP,
+        }
