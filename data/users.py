@@ -10,6 +10,7 @@ EMAIL = 'email'
 PASSWORD = 'password'
 BIG_NUM = 100000000000000
 MIN_USER_NAME_LEN = 2
+MIN_PW_LEN = 8
 USER_COLLECT = "users"
 
 
@@ -84,6 +85,8 @@ def add_user(user_data: dict) -> bool:
         raise ValueError("Minimum user name length is 2 characters!")
     if '@' not in user_data[EMAIL]:
         raise ValueError("Please enter a valid email!")
+    if len(user_data['password']) < MIN_PW_LEN:
+        raise ValueError("Minimum password length is 8 characters!")
     dbc.connect_db()
     _id = dbc.insert_one(USER_COLLECT, user_data)
     return _id is not None
@@ -98,6 +101,8 @@ def del_user(user_email: str):
 
 
 def auth_user(user_email: str, password: str):
+    if len(password) < MIN_PW_LEN:
+        raise ValueError("Minimum password length is 8 characters!")
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     if fetched_user:

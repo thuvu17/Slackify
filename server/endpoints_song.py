@@ -11,6 +11,7 @@ import werkzeug.exceptions as wz
 
 import data.songs as songs
 import data.users as users
+import data.playlists as playlists
 
 app = Flask(__name__)
 api = Api(app)
@@ -39,6 +40,7 @@ DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
 DEL_SONG_EP = f'{SONGS_EP}/{DELETE}'
 SONG_MENU_EP = '/song_menu'
+PLAYLISTS_EP = '/playlists'
 
 
 @api.route(HELLO_EP)
