@@ -4,7 +4,7 @@ The endpoint called `endpoints` will return all available endpoints.
 """
 from http import HTTPStatus
 
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask_restx import Resource, Api, fields
 
 import werkzeug.exceptions as wz
@@ -46,6 +46,7 @@ PLAYLIST_MENU_EP = '/playlist_menu'
 PLAYLISTS_EP = '/playlists'
 GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
 DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
+SIGN_IN_EP = '/sign_in'
 
 
 @api.route(HELLO_EP)
@@ -329,3 +330,20 @@ class GetPlaylists(Resource):
             MENU: PLAYLIST_MENU_EP,
             RETURN: MAIN_MENU_EP,
         }
+
+
+@api.route(f'{SIGN_IN_EP}/<email>/<password>')
+class SignIn(Resource):
+    """
+    This class takes care of signing in for users
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.UNAUTHORIZED, 'Unauthorized')
+    def get(self, email, password):
+        """
+        This method takes care of authenticating users
+        """
+        if users.auth_user(email, password):
+            return redirect(USER_MENU_EP)
+        else:
+            return redirect(SIGN_IN_EP)
