@@ -337,13 +337,16 @@ class SignIn(Resource):
     """
     This class takes care of signing in for users
     """
-    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.FOUND, 'Found')
     @api.response(HTTPStatus.UNAUTHORIZED, 'Unauthorized')
     def get(self, email, password):
         """
         This method takes care of authenticating users
         """
-        if users.auth_user(email, password):
+        try:
+            valid_user = users.auth_user(email, password)
+            if not valid_user:
+                raise wz.Unauthorized('Invalid credentials')
             return redirect(USER_MENU_EP)
-        else:
-            return redirect(SIGN_IN_EP)
+        except ValueError as e:
+            raise wz.NotAcceptable(f'{str(e)}')

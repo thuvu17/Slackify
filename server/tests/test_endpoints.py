@@ -5,6 +5,8 @@ from http.client import (
     NOT_FOUND,
     OK,
     SERVICE_UNAVAILABLE,
+    FOUND,
+    UNAUTHORIZED,
 )
 
 from unittest.mock import patch
@@ -138,6 +140,33 @@ def test_songs_add_db_failure(mock_add):
     """
     resp = TEST_CLIENT.post(ep.SONGS_EP, json=songs.get_test_song())
     assert resp.status_code == SERVICE_UNAVAILABLE
+
+
+@patch('data.users.auth_user', autospec=True)
+def test_sign_in(mock_get):
+    """
+    Testing we do the right thing with a call to sign_in that succeeds.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_IN_EP}/AnyEmail/AnyPassword')
+    assert resp.status_code == FOUND
+
+
+@patch('data.users.auth_user', return_value=False, autospec=True)
+def test_failed_sign_in(mock_get):
+    """
+    Testing we do the right thing with a call to sign_in that fails.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_IN_EP}/AnyEmail/AnyPassword')
+    assert resp.status_code == UNAUTHORIZED
+
+
+@patch('data.users.auth_user', side_effect=ValueError(), autospec=True)
+def test_bad_sign_in(mock_get):
+    """
+    Testing we do the right thing with an unacceptable call to sign_in.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_IN_EP}/AnyEmail/AnyPassword')
+    assert resp.status_code == NOT_ACCEPTABLE
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
