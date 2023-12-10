@@ -11,7 +11,6 @@ import werkzeug.exceptions as wz
 
 import data.songs as songs
 import data.users as users
-import data.playlists as playlists
 
 app = Flask(__name__)
 api = Api(app)
