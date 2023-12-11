@@ -4,7 +4,7 @@ The endpoint called `endpoints` will return all available endpoints.
 """
 from http import HTTPStatus
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, session
 from flask_restx import Resource, Api, fields
 
 import werkzeug.exceptions as wz
@@ -102,15 +102,16 @@ class MainMenu(Resource):
                 }}
 
 
-@api.route(f'{USER_MENU_EP}')
+@api.route(f'{USER_MENU_EP}/<email>')
 class UserMenu(Resource):
     """
     This will deliver our user menu.
     """
-    def get(self):
+    def get(self, email):
         """
         Gets the user menu.
         """
+        session[users.EMAIL] = email
         return {
                    TITLE: USER_MENU_NM,
                    DEFAULT: '0',
@@ -147,7 +148,6 @@ class Users(Resource):
            TYPE: DATA,
            TITLE: 'Current Users',
            DATA: users.get_users(),
-           MENU: USER_MENU_EP,
            RETURN: MAIN_MENU_EP,
         }
 
@@ -348,7 +348,7 @@ class SignIn(Resource):
             valid_user = users.auth_user(email, password)
             if not valid_user:
                 raise wz.Unauthorized('Invalid credentials')
-            return redirect(USER_MENU_EP)
+            return redirect(f'{USER_MENU_EP}/{email}')
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
@@ -374,6 +374,6 @@ class SignUp(Resource):
             valid_new_user = users.add_user(new_user)
             if not valid_new_user:
                 raise wz.BadRequest()
-            return redirect(USER_MENU_EP)
+            return redirect(f'{USER_MENU_EP}/{email}')
         except ValueError as e:
             raise wz.BadRequest(f'{str(e)}')
