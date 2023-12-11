@@ -56,6 +56,10 @@ def del_one(collection, filt, db=SLACKIFY_DB):
     client[db][collection].delete_one(filt)
 
 
+def update_doc(collection, filters, update_dict, db=SLACKIFY_DB):
+    return client[db][collection].update_one(filters, {'$set': update_dict})
+
+
 def fetch_all(collection, db=SLACKIFY_DB):
     ret = []
     for doc in client[db][collection].find():

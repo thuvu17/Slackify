@@ -9,6 +9,7 @@ NAME = 'name'
 ARTIST = 'artist'
 TEST_NAME = 'name'
 TEST_ARTIST = 'Hello'
+UPDATE = 'Update'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
@@ -66,4 +67,10 @@ def test_fetch_one_not_there(temp_rec):
 
 def test_fetch_all_as_list(temp_rec_playlist):
     ret = dbc.fetch_all_as_list(TEST_COLLECT_PL, {EMAIL: TEST_EMAIL}, NAME)
+    assert ret is not None
+
+
+def test_update_doc(temp_rec):
+    dbc.update_doc(TEST_COLLECT, {TEST_NAME: TEST_NAME}, {TEST_NAME: UPDATE})
+    ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: UPDATE})
     assert ret is not None
