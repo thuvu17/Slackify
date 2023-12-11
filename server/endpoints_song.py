@@ -238,7 +238,6 @@ class Songs(Resource):
             RETURN: MAIN_MENU_EP,
         }
 
-
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
