@@ -15,6 +15,7 @@ import data.playlists as plists
 
 app = Flask(__name__)
 api = Api(app)
+app.secret_key = 'random_test_secret_key'
 
 DELETE = 'delete'
 GET = 'get'
@@ -48,6 +49,7 @@ GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
 DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
 SIGN_IN_EP = '/sign_in'
 SIGN_UP_EP = '/sign_up'
+SIGN_OUT_EP = '/sign_out'
 
 
 @api.route(HELLO_EP)
@@ -340,9 +342,6 @@ class SignIn(Resource):
     @api.response(HTTPStatus.FOUND, 'Found')
     @api.response(HTTPStatus.UNAUTHORIZED, 'Unauthorized')
     def get(self, email, password):
-        """
-        This method takes care of authenticating users
-        """
         try:
             valid_user = users.auth_user(email, password)
             if not valid_user:
@@ -361,9 +360,6 @@ class SignUp(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     @api.response(HTTPStatus.BAD_REQUEST, 'Bad Request')
     def get(self, email, password, username):
-        """
-        This method takes care of authenticating users
-        """
         new_user = {
             users.EMAIL: email,
             users.PASSWORD: password,
@@ -376,3 +372,18 @@ class SignUp(Resource):
             return redirect(f'{USER_MENU_EP}/{email}')
         except ValueError as e:
             raise wz.BadRequest(f'{str(e)}')
+
+
+@api.route(f'{SIGN_OUT_EP}/<email>')
+class SignOut(Resource):
+    """
+    This class takes care of signing out for users
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.BAD_REQUEST, 'Bad Request')
+    def get(self, email):
+        if session[users.EMAIL] == email:
+            session.pop(users.EMAIL)
+            return "Successfully logged out"
+        else:
+            raise wz.BadRequest('Email not in session')
