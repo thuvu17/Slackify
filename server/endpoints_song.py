@@ -47,6 +47,7 @@ PLAYLISTS_EP = '/playlists'
 GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
 DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
 SIGN_IN_EP = '/sign_in'
+SIGN_UP_EP = '/sign_up'
 
 
 @api.route(HELLO_EP)
@@ -237,7 +238,7 @@ class Songs(Resource):
             RETURN: MAIN_MENU_EP,
         }
 
-    @api.expect(song_fields)
+
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
@@ -350,3 +351,29 @@ class SignIn(Resource):
             return redirect(USER_MENU_EP)
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
+
+
+@api.route(f'{SIGN_UP_EP}/<email>/<password>/<username>')
+class SignUp(Resource):
+    """
+    This class takes care of signing up for users
+    """
+    @api.response(HTTPStatus.FOUND, 'New user added')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    @api.response(HTTPStatus.BAD_REQUEST, 'Bad Request')
+    def get(self, email, password, username):
+        """
+        This method takes care of authenticating users
+        """
+        new_user = {
+            users.EMAIL: email,
+            users.PASSWORD: password,
+            users.NAME: username,
+        }
+        try:
+            valid_new_user = users.add_user(new_user)
+            if not valid_new_user:
+                raise wz.BadRequest()
+            return redirect(USER_MENU_EP)
+        except ValueError as e:
+            raise wz.BadRequest(f'{str(e)}')

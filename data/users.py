@@ -85,7 +85,7 @@ def add_user(user_data: dict) -> bool:
         raise ValueError("Minimum user name length is 2 characters!")
     if '@' not in user_data[EMAIL]:
         raise ValueError("Please enter a valid email!")
-    if len(user_data['password']) < MIN_PW_LEN:
+    if len(user_data[PASSWORD]) < MIN_PW_LEN:
         raise ValueError("Minimum password length is 8 characters!")
     dbc.connect_db()
     _id = dbc.insert_one(USER_COLLECT, user_data)

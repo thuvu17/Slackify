@@ -28,6 +28,7 @@ def test_hello():
     assert ep.HELLO_RESP in resp_json
 
 
+# ---------- USER EP TESTS -----------
 def test_list_users():
     resp = TEST_CLIENT.get(ep.USERS_EP)
     assert resp.status_code == OK
@@ -45,6 +46,7 @@ def test_users_get():
     assert isinstance(resp_json, dict)
 
 
+# Delete user
 @patch('data.users.del_user', autospec=True)
 def test_users_del(mock_del):
     """
@@ -63,6 +65,7 @@ def test_users_bad_del(mock_del):
     assert resp.status_code == NOT_FOUND
 
 
+# Add user
 @patch('data.users.add_user', return_value=usrs.EMAIL, autospec=True)
 def test_users_add(mock_add):
     """
@@ -90,6 +93,7 @@ def test_users_add_db_failure(mock_add):
     assert resp.status_code == SERVICE_UNAVAILABLE
 
 
+# ---------- SONG EP TESTS -----------
 def test_songs_get():
     resp = TEST_CLIENT.get(ep.SONGS_EP)
     assert resp.status_code == OK
@@ -97,6 +101,7 @@ def test_songs_get():
     assert isinstance(resp_json, dict)
 
 
+# Delete song
 @patch('data.songs.del_song', autospec=True)
 def test_songs_del(mock_del):
     """
@@ -115,6 +120,7 @@ def test_songs_bad_del(mock_del):
     assert resp.status_code == NOT_FOUND
 
 
+# Add song
 @patch('data.songs.add_song', return_value=songs.MOCK_ID, autospec=True)
 def test_songs_add(mock_add):
     """
@@ -142,6 +148,8 @@ def test_songs_add_db_failure(mock_add):
     assert resp.status_code == SERVICE_UNAVAILABLE
 
 
+# ---------- AUTH EP TESTS -----------
+# Sign in
 @patch('data.users.auth_user', autospec=True)
 def test_sign_in(mock_get):
     """
@@ -167,6 +175,25 @@ def test_bad_sign_in(mock_get):
     """
     resp = TEST_CLIENT.get(f'{ep.SIGN_IN_EP}/AnyEmail/AnyPassword')
     assert resp.status_code == NOT_ACCEPTABLE
+
+
+# Sign up
+@patch('data.users.add_user', autospec=True)
+def test_sign_up(mock_get):
+    """
+    Testing we do the right thing with a call to sign_up that succeeds.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_UP_EP}/AnyEmail/AnyPassword/AnyUsername')
+    assert resp.status_code == FOUND
+
+
+@patch('data.users.add_user', side_effect=ValueError(), autospec=True)
+def test_failed_sign_up(mock_get):
+    """
+    Testing we do the right thing with a call to sign_up that failed.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_UP_EP}/AnyEmail/AnyPassword/AnyUsername')
+    assert resp.status_code == BAD_REQUEST
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
