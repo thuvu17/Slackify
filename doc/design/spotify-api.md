@@ -53,6 +53,14 @@
 ## API End-point for Slackify
 - Get Track API 
     - Reference: https://developer.spotify.com/documentation/web-api/reference/get-track
+    - TrackObject is important for our project's song data as it contains:
+        - **name**: Name of the track
+        - **popularity**: The popularity of the track. The value will be between 0 and 100, with 100 being the most popular.
+        - **album**: String object of the album the track belongs to
+        - **artists**: List of Artists involved in the track
+        - **preview_url**: A link to a 30 second preview (MP3 format) of the track. Can be null
+        - **uri**: The Spotify URI for the track.
+
 - Get Tracks' Audio Features
     - Reference: https://developer.spotify.com/documentation/web-api/reference/get-several-audio-features
 - Save Tracks for Current User
