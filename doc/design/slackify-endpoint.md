@@ -6,6 +6,7 @@ This is a Flask application with various endpoints for managing users, songs, an
 
 ## HelloWorld Endpoint
 - URL: /hello
+- Input: None
 - Method: GET
 - Description: A simple test endpoint to check if the server is running.
 
