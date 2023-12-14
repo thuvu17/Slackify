@@ -71,6 +71,26 @@ def test_get_users():
         assert len(user[usrs.PASSWORD]) >= usrs.MIN_PW_LEN
 
 
+# Assertion:
+# If the temporary user has already existed in the databse, delete it
+def test_already_exist(temp_user):
+    email = temp_user['email']
+    assert usrs.already_exist(email) is True
+    usrs.del_user(email)
+
+
+def test_already_exist_not_there():
+    new_name = usrs._get_test_name()
+    new_email = usrs._get_test_email()
+    new_password = usrs._get_test_password()
+    new_user = {
+        'name': new_name,
+        'email': new_email,
+        'password': new_password,
+    }
+    assert usrs.already_exist(new_email) is False
+
+
 # Test the new user
 # If the new user already exist, delete the new user
 def test_add_user():
