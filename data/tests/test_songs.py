@@ -37,6 +37,25 @@ def test_get_songs(temp_song):
         assert isinstance(songs[song], dict)
 
 
+def test_already_exist(temp_song):
+    name = temp_song['name']
+    artist = temp_song['artist']
+    assert data_songs.already_exist(name, artist) is True
+    data_songs.del_song(name, artist)
+
+
+def test_already_exist_not_there():
+    new_name = data_songs._get_test_name()
+    new_song = {
+        'name': new_name,
+        'artist': 'Some artist',
+        'album': 'Some album',
+        'genre': 'Some genre',
+        'bpm': 10000,
+    }
+    assert data_songs.already_exist(new_song['name'], new_song['artist']) is False
+
+
 def test_add_song_dup_name_and_artist(temp_song):
     with pytest.raises(ValueError):
         data_songs.add_song(temp_song)
