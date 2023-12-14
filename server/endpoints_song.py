@@ -113,7 +113,6 @@ class UserMenu(Resource):
         """
         Gets the user menu.
         """
-        session[users.EMAIL] = email
         return {
                    TITLE: USER_MENU_NM,
                    DEFAULT: '0',
@@ -346,6 +345,7 @@ class SignIn(Resource):
             valid_user = users.auth_user(email, password)
             if not valid_user:
                 raise wz.Unauthorized('Invalid credentials')
+            session[users.EMAIL] = email
             return redirect(f'{USER_MENU_EP}/{email}')
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
@@ -382,8 +382,8 @@ class SignOut(Resource):
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.BAD_REQUEST, 'Bad Request')
     def get(self, email):
-        if session[users.EMAIL] == email:
+        try:
             session.pop(users.EMAIL)
             return "Successfully logged out"
-        else:
-            raise wz.BadRequest('Email not in session')
+        except KeyError as e:
+            raise wz.BadRequest(f'{str(e)}')

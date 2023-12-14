@@ -19,6 +19,8 @@ import data.users as usrs
 
 import server.endpoints_song as ep
 
+from flask import session
+
 TEST_CLIENT = ep.app.test_client()
 
 
@@ -193,6 +195,27 @@ def test_failed_sign_up(mock_get):
     Testing we do the right thing with a call to sign_up that failed.
     """
     resp = TEST_CLIENT.get(f'{ep.SIGN_UP_EP}/AnyEmail/AnyPassword/AnyUsername')
+    assert resp.status_code == BAD_REQUEST
+
+
+# Sign out
+def test_sign_out():
+    """
+    Testing we do the right thing with a call to sign_out that succeeds.
+    """
+    valid_test_email = "test@gmail.com"
+    valid_test_password = "testpassword"
+    resp = TEST_CLIENT.get(
+        f'{ep.SIGN_IN_EP}/{valid_test_email}/{valid_test_password}')
+    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/{valid_test_email}')
+    assert resp.status_code == OK
+
+
+def test_failed_sign_out():
+    """
+    Testing we do the right thing with a call to sign_out that fails.
+    """
+    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/InvalidEmail')
     assert resp.status_code == BAD_REQUEST
 
 
