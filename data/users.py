@@ -21,7 +21,7 @@ def _get_test_name():
     return name + str(rand_part)
 
 
-# Return random user name
+# Return random user email
 def _get_test_email():
     name = 'test'
     rand_part = random.randint(0, BIG_NUM)
@@ -36,6 +36,7 @@ def _get_test_password():
     return name + str(rand_part)
 
 
+# Return a test user based on random user name, user email, and password
 def get_test_user():
     test_user = {}
     test_user[NAME] = _get_test_name()
@@ -44,6 +45,7 @@ def get_test_user():
     return test_user
 
 
+# Connect to MongoDB and get users from MongoDB database
 def get_users():
     """
     Our contract:
@@ -57,18 +59,6 @@ def get_users():
     return dbc.fetch_all_as_dict(EMAIL, USER_COLLECT)
 
 
-def get_old_users():
-    users = {
-        "Windy": {
-            EMAIL: "pretty_windy@gmail.com",
-        },
-        "Joy": {
-            EMAIL: "pretty_joy@gmail.com",
-        },
-    }
-    return users
-
-
 # Return fetched user as doc if found, else return false
 def already_exist(user_email: str):
     dbc.connect_db()
@@ -76,9 +66,8 @@ def already_exist(user_email: str):
     return fetched_user is not None
 
 
+# Check if a user with same email is already in the database
 def add_user(user_data: dict) -> bool:
-    # Check if a user with same email
-    # is already in the database
     if already_exist(user_data[EMAIL]):
         raise ValueError("A user with the same email already existed!")
     if len(user_data[NAME]) < 2:
@@ -92,6 +81,8 @@ def add_user(user_data: dict) -> bool:
     return _id is not None
 
 
+# Delete the user if it is already in the database
+# Raise ValueError for user not in the database
 def del_user(user_email: str):
     if already_exist(user_email):
         return dbc.del_one(USER_COLLECT, {EMAIL: user_email})
@@ -100,6 +91,10 @@ def del_user(user_email: str):
                          "not in database.")
 
 
+# Check if a user types in password that matches the one in the database
+# Else return False
+# If the length of password is smaller than the required length,
+# Raise ValueError
 def auth_user(user_email: str, password: str):
     if len(password) < MIN_PW_LEN:
         raise ValueError("Minimum password length is 8 characters!")
