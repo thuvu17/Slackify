@@ -1,6 +1,9 @@
 """
 This is the file containing all of the endpoints for our flask app.
 The endpoint called `endpoints` will return all available endpoints.
+
+Please review the documentation for endpoints on
+https://github.com/thuvu17/slackify/blob/master/doc/design/slackify-endpoint.md
 """
 from http import HTTPStatus
 
