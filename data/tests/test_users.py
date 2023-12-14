@@ -79,6 +79,8 @@ def test_already_exist(temp_user):
     usrs.del_user(email)
 
 
+# For tested user that is new in the database
+# Assertion: False
 def test_already_exist_not_there():
     new_name = usrs._get_test_name()
     new_email = usrs._get_test_email()
