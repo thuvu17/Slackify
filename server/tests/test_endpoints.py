@@ -17,6 +17,8 @@ import data.songs as songs
 
 import data.users as usrs
 
+import data.playlists as plists
+
 import server.endpoints_song as ep
 
 from flask import session
@@ -217,6 +219,61 @@ def test_failed_sign_out():
     """
     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/InvalidEmail')
     assert resp.status_code == BAD_REQUEST
+
+
+# ---------- PLAYLIST EP TESTS -----------
+def test_playlists_get():
+    resp = TEST_CLIENT.get(f'{ep.GET_PLAYLISTS_EP}/AnyEmail')
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
+# Delete playlist
+@patch('data.playlists.del_playlist', autospec=True)
+def test_playlists_del(mock_del):
+    """
+    Testing we do the right thing with a call to del_playlist that succeeds.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.del_playlist', side_effect=ValueError(), autospec=True)
+def test_playlists_bad_del(mock_del):
+    """
+    Testing we do the right thing with a value error from del_playlist.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    assert resp.status_code == NOT_FOUND
+
+
+# Add playlist
+@patch('data.playlists.add_playlist', return_value=plists.MOCK_ID, autospec=True)
+def test_playlists_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_playlist.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.add_playlist', side_effect=ValueError(), autospec=True)
+def test_playlists_bad_add(mock_add):
+    """
+    Testing we do the right thing with a value error from add_playlist.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == NOT_ACCEPTABLE
+
+
+@patch('data.playlists.add_playlist', return_value=None)
+def test_playlists_add_db_failure(mock_add):
+    """
+    Testing we do the right thing with a null ID return from add_playlist.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == SERVICE_UNAVAILABLE
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '

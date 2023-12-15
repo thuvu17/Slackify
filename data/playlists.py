@@ -12,7 +12,9 @@ EMAIL = 'email'
 SONGS = 'songs'
 MIN_NAME_LEN = 1
 
+ID_LEN = 24
 BIG_NUM = 100000000000000
+MOCK_ID = '0'*ID_LEN
 
 
 # Return random playlist name
