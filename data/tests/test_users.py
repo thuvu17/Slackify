@@ -13,6 +13,7 @@ def temp_user():
         usrs.del_user(user['email'])
 
 
+# ---------- GET FUNCTION TESTS -----------
 # Assertion:
 # User name is a string
 # Length of user name is larger than 2
@@ -49,7 +50,14 @@ def test_get_test_password():
 # Assertion:
 # User is a dictionary
 def test_get_test_user():
-    assert isinstance(usrs.get_test_user(), dict)
+    user = usrs.get_test_user()
+    assert isinstance(user, dict)
+    assert usrs.NAME in user
+    assert usrs.PASSWORD in user
+    assert usrs.EMAIL in user
+    assert isinstance(user[usrs.PASSWORD], str)
+    assert isinstance(user[usrs.NAME], str)
+    assert isinstance(user[usrs.EMAIL], str)
 
 
 # Assertion:
@@ -86,20 +94,14 @@ def test_already_exist(temp_user):
     usrs.del_user(email)
 
 
-# For tested user that is new in the database
+# For tested user that is not in the database
 # Assertion: False
 def test_already_exist_not_there():
-    new_name = usrs._get_test_name()
     new_email = usrs._get_test_email()
-    new_password = usrs._get_test_password()
-    new_user = {
-        'name': new_name,
-        'email': new_email,
-        'password': new_password,
-    }
     assert usrs.already_exist(new_email) is False
 
 
+# ---------- ADD FUNCTION TESTS -----------
 # Test the new user
 # If the new user already exist, delete the new user
 def test_add_user():
@@ -137,10 +139,38 @@ def test_add_user_lt_2_char():
         usrs.add_user(new_user)
 
 
-# Test adding new user with an invalid email
-def test_add_user_invalid_email():
+# Test adding new user with an invalid email containing no '@'
+def test_add_user_invalid_email_v1():
     new_name = usrs._get_test_name()
     new_email = 'randomstring'
+    new_password = usrs._get_test_password()
+    new_user = {
+        'name': new_name,
+        'email': new_email,
+        'password': new_password,
+    }
+    with pytest.raises(ValueError):
+        usrs.add_user(new_user)
+
+
+# Test adding new user with email containing invalid domain
+def test_add_user_invalid_email_v2():
+    new_name = usrs._get_test_name()
+    new_email = 'random@string'
+    new_password = usrs._get_test_password()
+    new_user = {
+        'name': new_name,
+        'email': new_email,
+        'password': new_password,
+    }
+    with pytest.raises(ValueError):
+        usrs.add_user(new_user)
+
+
+# Test adding new user with email containing invalid prefix
+def test_add_user_invalid_email_v3():
+    new_name = usrs._get_test_name()
+    new_email = '@randomstring.com'
     new_password = usrs._get_test_password()
     new_user = {
         'name': new_name,
@@ -166,6 +196,7 @@ def test_add_user_invalid_password():
         usrs.add_user(new_user)
 
 
+# ---------- DELETE FUNCTION TESTS -----------
 # Assertion:
 # The user is new in the database
 def test_del_user(temp_user):
