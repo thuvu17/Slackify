@@ -25,7 +25,7 @@ def test_get_test_name():
 # Assertion:
 # User email is a string
 # Length of user email is larger than 0
-# In user email, there is @ and characters before @
+# In user email, there is @ and prefix before @
 # Make sure the email address is valid
 def test_get_test_email():
     email = usrs._get_test_email()
