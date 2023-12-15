@@ -48,6 +48,19 @@ def test_get_playlists(temp_playlist):
         assert len(name) >= pls.MIN_NAME_LEN
 
 
+def test_already_exist(temp_playlist):
+    email = temp_playlist['email']
+    name = temp_playlist['name']
+    assert pls.already_exist(email, name) is True
+    pls.del_playlist(email, name)
+
+
+def test_already_exist_not_there():
+    new_email = pls._get_test_email()
+    new_name = pls._get_test_name()
+    assert pls.already_exist(new_email, new_name) is False
+
+
 # ---------- ADD FUNCTION TESTS -----------
 def test_add_playlist():
     new_name = pls._get_test_name()

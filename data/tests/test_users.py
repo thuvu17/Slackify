@@ -212,6 +212,7 @@ def test_del_user_not_there():
         usrs.del_user(email)
 
 
+# ---------- AUTHENTICATION FUNCTION TESTS -----------
 # Test matching user email and password
 # Assertion:
 # Only user with the righ email and password is True
