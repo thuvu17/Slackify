@@ -90,7 +90,7 @@ class MainMenu(Resource):
     """
     def get(self):
         """
-        Gets the main SONG menu.
+        Gets the main menu.
         """
         return {TITLE: MAIN_MENU_NM,
                 DEFAULT: 2,
@@ -107,6 +107,7 @@ class MainMenu(Resource):
                 }}
 
 
+# ---------------- USER EPS -----------------
 @api.route(f'{USER_MENU_EP}/<email>')
 class UserMenu(Resource):
     """
@@ -148,7 +149,6 @@ class Users(Resource):
         """
         This method returns all users.
         """
-        # return users.get_users()
         return {
            TYPE: DATA,
            TITLE: 'Current Users',
@@ -198,6 +198,7 @@ class DelUser(Resource):
             raise wz.NotFound(f'{str(e)}')
 
 
+# ---------------- SONG EPS -----------------
 @api.route(f'{DEL_SONG_EP}/<name>/<artist>')
 class DelSong(Resource):
     """
@@ -271,6 +272,7 @@ class Songs(Resource):
             raise wz.NotAcceptable(f'{str(e)}')
 
 
+# ---------------- PLAYLIST EPS -----------------
 @api.route(f'{DEL_PLAYLIST_EP}/<email>/<name>')
 class DelPlaylist(Resource):
     """
@@ -338,6 +340,7 @@ class GetPlaylists(Resource):
         }
 
 
+# ---------------- AUTH EPS -----------------
 @api.route(f'{SIGN_IN_EP}/<email>/<password>')
 class SignIn(Resource):
     """
