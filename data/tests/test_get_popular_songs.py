@@ -3,7 +3,7 @@ import pytest
 import data.get_most_popular_songs as songs
 
 
-# @pytest.fixture(scope='function')
+@pytest.fixture(scope='function')
 def test_get_featured_playlist():
    popular_songs = songs.get_most_popular_songs()
    assert isinstance(popular_songs, list)

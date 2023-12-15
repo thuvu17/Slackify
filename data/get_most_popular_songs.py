@@ -2,6 +2,8 @@ import requests
 import data.get_Spotify_token as get_Spotify_token
 
 # Get top 10 most listened songs on Spotify
+# Songs are taken from Spotify's Most Played All-Time playlist, setting limit to 10 songs
+
 access_token = get_Spotify_token.get_token()
 base_url = 'https://api.spotify.com/v1/'
 
