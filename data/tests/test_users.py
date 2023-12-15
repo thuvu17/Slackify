@@ -31,6 +31,9 @@ def test_get_test_email():
     assert isinstance(email, str)
     assert len(email) > 0
     assert '@' in email
+    email_components = email.split('@')
+    assert len(email_components[0]) >= 1
+    assert '.' in email_components[1]
 
 
 # Assertion:
@@ -59,6 +62,9 @@ def test_get_users():
     for key in users:
         assert isinstance(key, str)
         assert '@' in key
+        email_components = key.split('@')
+        assert len(email_components[0]) >= 1
+        assert '.' in email_components[1]
         user = users[key]
         assert usrs.NAME in user
         assert isinstance(user[usrs.NAME], str)

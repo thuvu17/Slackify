@@ -72,8 +72,13 @@ def add_user(user_data: dict) -> bool:
         raise ValueError("A user with the same email already existed!")
     if len(user_data[NAME]) < 2:
         raise ValueError("Minimum user name length is 2 characters!")
+    # ensure user email is valid
     if '@' not in user_data[EMAIL]:
         raise ValueError("Please enter a valid email!")
+    else:
+        email_components = user_data[EMAIL].split('@')
+        if len(email_components[0]) < 1 or '.' not in email_components[1]:
+            raise ValueError("Please enter a valid email!")
     if len(user_data[PASSWORD]) < MIN_PW_LEN:
         raise ValueError("Minimum password length is 8 characters!")
     dbc.connect_db()

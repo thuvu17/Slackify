@@ -32,6 +32,7 @@ def _get_test_email():
     return name + str(rand_part) + email_suffix
 
 
+# Return a test playlist with random test name and email
 def get_test_playlist():
     test_playlist = {}
     test_playlist[NAME] = _get_test_name()
@@ -44,7 +45,7 @@ def get_playlists(user_email):
     """
     Our contract:
     - No arguments.
-    - Returns a dictionary of playlists keyed on playlist email (a str).
+    - Returns a list of playlist names keyed on playlist email (a str).
     - Each playlist email must be the key for a dictionary.
     - That dictionary must at least include a EMAIL member that is a string
     value.
@@ -53,8 +54,9 @@ def get_playlists(user_email):
     return dbc.fetch_all_as_list(PLAYLISTS_COLLECT, {EMAIL: user_email}, NAME)
 
 
-# Return fetched playlist as doc if found, else return false
-def already_exist(user_email: str, playlist_name: str):
+# Take in the user email and name of a playlist that you want to find in DB
+# Return true if given playlist is found, else return false
+def already_exist(user_email: str, playlist_name: str) -> bool:
     dbc.connect_db()
     fetched_playlist = dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
                                      NAME: playlist_name})
@@ -62,14 +64,20 @@ def already_exist(user_email: str, playlist_name: str):
 
 
 def add_playlist(user_email: str, playlist_name: str) -> bool:
-    # Check if a playlist with same name + playlist
+    # Check if a playlist with same email + name
     # is already in the database
     if already_exist(user_email, playlist_name):
         raise ValueError("A playlist with the same name already existed!")
     if len(playlist_name) < MIN_NAME_LEN:
         raise ValueError("Minimum playlist name length is 1 character!")
+    # ensure user email is valid
+    # can be deleted in the future since user email must be valid here
     if '@' not in user_email:
         raise ValueError("Invalid user email!")
+    else:
+        email_components = user_email.split('@')
+        if len(email_components[0]) < 1 or '.' not in email_components[1]:
+            raise ValueError("Invalid user email!")
     playlist_data = {EMAIL: user_email, NAME: playlist_name, SONGS: []}
     dbc.connect_db()
     _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)

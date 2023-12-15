@@ -23,6 +23,9 @@ def test_get_test_email():
     assert isinstance(email, str)
     assert len(email) > 0
     assert '@' in email
+    email_components = email.split('@')
+    assert len(email_components[0]) >= 1
+    assert '.' in email_components[1]
 
 
 def test_get_test_playlist():
