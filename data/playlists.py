@@ -63,6 +63,10 @@ def already_exist(user_email: str, playlist_name: str) -> bool:
     return fetched_playlist is not None
 
 
+# Take in user email and playlist name to create a playlist and add to DB
+# Return true if successfully added, else return false
+# Raise error if given playlist already exists, or playlist name too short
+# or invalid user email is given
 def add_playlist(user_email: str, playlist_name: str) -> bool:
     # Check if a playlist with same email + name
     # is already in the database
@@ -84,6 +88,9 @@ def add_playlist(user_email: str, playlist_name: str) -> bool:
     return _id is not None
 
 
+# Take in user email and playlist name to delete a playlist from DB
+# Return true if successfully added, else return false
+# Raise error if given playlist does not exist
 def del_playlist(user_email: str, playlist_name: str):
     if already_exist(user_email, playlist_name):
         return dbc.del_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
