@@ -100,9 +100,9 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
 def fetch_all_as_list(collection, filt, key, db=SLACKIFY_DB):
     """
     Find with a filter,
-    with every document found, 
+    with every document found,
     fetch the value corresponding to the given key into a list
-    Return the list of corresponding values. 
+    Return the list of corresponding values.
     """
     ret = []
     for doc in client[db][collection].find(filt):
