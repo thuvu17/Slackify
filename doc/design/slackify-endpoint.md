@@ -124,9 +124,10 @@ This is a Flask application with various endpoints for managing users, songs, an
 - Description: Logs out a user.
 
 ### Spotify end-points in the backend
-## Overview
-- These endpoints are sample data requested from Spotify to store in Slackify's database
-- We haven't designed an implementation for this data and plan to do it next semester
+## OVERVIEW
+
+These endpoints are sample data requested from Spotify to store in Slackify's database
+(We haven't designed an implementation for this data and plan to do it next semester)
 
 ## Get Spotify Token
 - URL: https://accounts.spotify.com/api/token
