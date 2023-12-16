@@ -29,7 +29,7 @@ Down here is all the endpoints that load menus
 
 ### UserMenu EP:
 >Returns the user menu for the user with given email.
->This endpoints will be caleld
+>This endpoints will be called by a successful sign in
 - URL: /user_menu/&lt;email&gt;
 - Input: 
   - Path parameter: **email** (User email)
@@ -38,11 +38,21 @@ Down here is all the endpoints that load menus
 
 ## USER ENDPOINTS
 Down below are all endpoints related to users: GET, POST, DEL
-### Users EP:
->GET returns a list of al users | POST adds a new user
+### GetUser EP:
+>Returns a list of all users
+- URL: /users
+- Input: None
+- Output: JSON response containing a list of current users.
+- Methods: GET
+
+### AddUser EP:
+>Adds a new user
 - URL: /users
 - Input: 
   - JSON payload containing user data (name, email, password).
+  - Must be a valid email (e.g. prefix@domain.com)
+  - Name must have more than 2 characters
+  - Password must have more than 8 characters
 ```cpp
   user_fields = api.model('NewUser', {
     users.NAME: fields.String,
@@ -50,13 +60,8 @@ Down below are all endpoints related to users: GET, POST, DEL
     users.PASSWORD: fields.String,
 }
 ```
-- Output:
-  1. JSON response containing a list of current users.
-  2. JSON response indicating success or failure in adding a user.
-- Methods: GET, POST
-- Description:
-  - GET: Returns a list of all users.
-  - POST: Adds a new user.
+- Output: JSON response indicating success or failure in adding a user.
+- Methods: POST
 
 ### DelUser EP:
 >Deletes a user by email.
@@ -68,8 +73,15 @@ Down below are all endpoints related to users: GET, POST, DEL
 
 ## SONG ENDPOINTS
 Down below are all endpoints related to songs: GET, POST, DEL
-### Songs EP:
->GET: Returns a list of all songs } POST: Adds a new song.
+### ListSong EP:
+>Returns a list of all songs
+- URL: /songs
+- Input: None
+- Output: JSON response containing a list of current songs.
+- Methods: GET
+
+### AddSong EP:
+>Adds a new song.
 - URL: /songs
 - Input:
   - JSON payload containing song data (name, artist, album, genre, bpm)
@@ -82,10 +94,9 @@ song_fields = api.model('NewSong', {
     songs.BPM: fields.Integer,
 }
 ```
-- Output:
-  1. JSON response containing a list of current songs.
-  2. JSON response indicating success or failure in adding a song.
-- Methods: GET, POST
+- Output: JSON response indicating success or failure in adding a song.
+- Methods: POST
+
  
 ### DelSong EP:
 >Deletes a song by name and artist.
@@ -96,12 +107,13 @@ song_fields = api.model('NewSong', {
 - Method: DELETE
 
 ## PLAYLIST ENDPOINTS
-Down below are all endpoints related to playlist: GET, POST, DEL
+Down below are all endpoints related to playlist: GET, POST, DEL. Email will be taken from the session.
 ### Playlists EP:
 >Adds a new playlist.
 - URL: /playlists
 - Input:
   - JSON payload containing playlist data (email, name)
+  - Playlist name cannot be an empty string
 ```cpp
 playlist_fields = api.model('NewPlaylist', {
     plists.EMAIL: fields.String,
