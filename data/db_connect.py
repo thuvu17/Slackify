@@ -30,6 +30,7 @@ def connect_db():
             client = pm.MongoClient()
 
 
+# Compatible with playlists, songs, and users collections
 def insert_one(collection, doc, db=SLACKIFY_DB):
     """
     Insert a single doc into collection.
@@ -38,6 +39,7 @@ def insert_one(collection, doc, db=SLACKIFY_DB):
     return client[db][collection].insert_one(doc)
 
 
+# Compatible with playlists, songs, and users collections
 def fetch_one(collection, filt, db=SLACKIFY_DB):
     """
     Find with a filter and return on the first doc found.
@@ -49,6 +51,7 @@ def fetch_one(collection, filt, db=SLACKIFY_DB):
         return doc
 
 
+# Compatible with playlists, songs, and users collections
 def del_one(collection, filt, db=SLACKIFY_DB):
     """
     Find with a filter and return on the first doc found.
@@ -56,18 +59,19 @@ def del_one(collection, filt, db=SLACKIFY_DB):
     client[db][collection].delete_one(filt)
 
 
+# Compatible with playlists, songs, and users collections
 def update_doc(collection, filters, update_dict, db=SLACKIFY_DB):
     return client[db][collection].update_one(filters, {'$set': update_dict})
 
 
-def fetch_all(collection, db=SLACKIFY_DB):
-    ret = []
-    for doc in client[db][collection].find():
-        ret.append(doc)
-    return ret
-
-
+# Compatible with playlists, songs, and users collections
+# Used only for song collection by 12/15/2023
 def fetch_all_songs_as_dict(collection, db=SLACKIFY_DB):
+    """
+    Fetch all documents in given collection into a dictionary.
+    Each doc will has its MongoDB id as the key in the dict.
+    Return the dict.
+    """
     ret = {}
     for doc in client[db][collection].find():
         id = str(doc[MONGO_ID])
@@ -76,7 +80,14 @@ def fetch_all_songs_as_dict(collection, db=SLACKIFY_DB):
     return ret
 
 
+# Compatible with playlists, songs, and users collections
+# Used only for user collection by 12/15/2023
 def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
+    """
+    Fetch all documents in given collection into a dictionary.
+    Each doc will has given key as the key in the dict.
+    Return the dict.
+    """
     ret = {}
     for doc in client[db][collection].find():
         del doc[MONGO_ID]
@@ -84,9 +95,14 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
     return ret
 
 
+# Compatible with playlists, songs, and users collections
+# Used only for playlist collection by 12/15/2023
 def fetch_all_as_list(collection, filt, key, db=SLACKIFY_DB):
     """
-    Find with a filter and return all docs found with a key as a list.
+    Find with a filter,
+    with every document found,
+    fetch the value corresponding to the given key into a list
+    Return the list of corresponding values.
     """
     ret = []
     for doc in client[db][collection].find(filt):
