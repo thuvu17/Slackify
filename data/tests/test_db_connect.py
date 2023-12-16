@@ -73,7 +73,7 @@ def temp_rec_user():
     dbc.client[TEST_DB][TEST_COLLECT_USR].insert_one(TEST_INSERT_USR)
     # yield to our test function
     yield
-    dbc.client[TEST_DB][TEST_COLLECT_PL].delete_one({EMAIL: TEST_EMAIL})
+    dbc.client[TEST_DB][TEST_COLLECT_USR].delete_one({EMAIL: TEST_EMAIL})
 
 
 # ---------- FETCH FUNCTION TESTS -----------
