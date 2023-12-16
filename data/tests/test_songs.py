@@ -3,6 +3,9 @@ import pytest
 import data.songs as data_songs
 
 
+# Generate a temporary song using the get_test_song function and adds it to the database.
+# Yield the generated song for test cases
+# Delete the song from the database after the test
 @pytest.fixture(scope='function')
 def temp_song():
     song = data_songs.get_test_song()
@@ -12,22 +15,33 @@ def temp_song():
         data_songs.del_song(song['name'], song['artist'])
 
 
+# Assertion:
+# Name is a string
+# Length of name is larger than 0
 def test_get_test_name():
     name = data_songs._get_test_name()
     assert isinstance(name, str)
     assert len(name) > 0
 
 
+# Assertion:
+# Song ID is a string
+# Length of song ID is correct
 def test_gen_id():
     _id = data_songs._gen_id()
     assert isinstance(_id, str)
     assert len(_id) == data_songs.ID_LEN
 
 
+# Assertion:
+# Test song is a disctionary
 def test_get_test_song():
     assert isinstance(data_songs.get_test_song(), dict)
 
 
+# Assertion:
+# Songs is a dictionary
+# The format of songs is correct
 def test_get_songs(temp_song):
     songs = data_songs.get_songs()
     assert isinstance(songs, dict)
@@ -37,6 +51,8 @@ def test_get_songs(temp_song):
         assert isinstance(songs[song], dict)
 
 
+# If the function correctly identifies an existing song,
+# Assert it has already existed, delete the song
 def test_already_exist(temp_song):
     name = temp_song['name']
     artist = temp_song['artist']
@@ -44,6 +60,7 @@ def test_already_exist(temp_song):
     data_songs.del_song(name, artist)
 
 
+# If song does not exist, assertion is false
 def test_already_exist_not_there():
     new_name = data_songs._get_test_name()
     new_song = {
@@ -56,11 +73,16 @@ def test_already_exist_not_there():
     assert data_songs.already_exist(new_song['name'], new_song['artist']) is False
 
 
+# Adding a duplicate song raises a ValueError
 def test_add_song_dup_name_and_artist(temp_song):
     with pytest.raises(ValueError):
         data_songs.add_song(temp_song)
 
 
+# Assertion:
+# New song is new in the database
+# It can be added to the database
+# Delete after testing
 def test_add_song():
     new_name = data_songs._get_test_name()
     new_song = {
@@ -76,6 +98,7 @@ def test_add_song():
     data_songs.del_song(new_song['name'], new_song['artist'])
 
 
+# Test whether it can successfully delete a song from the database
 def test_del_song(temp_song):
     name = temp_song['name']
     artist = temp_song['artist']
@@ -83,6 +106,7 @@ def test_del_song(temp_song):
     assert data_songs.already_exist(name, artist) is False
 
 
+# Trying to delete a non-existing song raises a ValueError
 def test_del_song_not_there():
     name = data_songs._get_test_name()
     artist = "unknown"

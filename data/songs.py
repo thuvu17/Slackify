@@ -35,6 +35,7 @@ def _get_test_name():
     return name + str(rand_part)
 
 
+# Return random test song
 def get_test_song():
     test_song = {}
     test_song[NAME] = _get_test_name()
@@ -45,6 +46,7 @@ def get_test_song():
     return test_song
 
 
+# Return a random ID for a song
 def _gen_id() -> str:
     _id = random.randint(0, BIG_NUM)
     _id = str(_id)
@@ -52,6 +54,7 @@ def _gen_id() -> str:
     return _id
 
 
+# Fetche all songs from the database and returns them as a dictionary.
 def get_songs() -> dict:
     try:
         dbc.connect_db()
@@ -69,6 +72,7 @@ def already_exist(song_name: str, song_artist: str):
     return fetched_song is not None
 
 
+# Delete a song from the database based on its name and artist
 def del_song(song_name: str, song_artist: str):
     if already_exist(song_name, song_artist):
         return dbc.del_one(SONGS_COLLECT,
@@ -78,6 +82,7 @@ def del_song(song_name: str, song_artist: str):
                          + f"{song_artist} not in database.")
 
 
+# Add a new song to the database
 def add_song(song_data: dict) -> bool:
     # Check if a song with same name + artist
     # is already in the database
