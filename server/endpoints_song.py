@@ -95,7 +95,7 @@ class MainMenu(Resource):
         return {TITLE: MAIN_MENU_NM,
                 DEFAULT: 2,
                 'Choices': {
-                    '1': {'url': f'{SIGN_IN_EP/test@gmail.com/testpassword}',
+                    '1': {'url': f'{SIGN_IN_EP}',
                           'method': 'get', 'text': 'Sign in'},
                     '2': {'url': f'{SIGN_UP_EP}',
                           'method': 'get', 'text': 'Sign up'},
