@@ -1,6 +1,5 @@
 from http.client import (
     BAD_REQUEST,
-    FORBIDDEN,
     NOT_ACCEPTABLE,
     NOT_FOUND,
     OK,
@@ -33,7 +32,11 @@ def test_hello():
 
 
 # ---------- USER EP TESTS -----------
-def test_list_users():
+# Get user
+def test_get_users():
+    """
+    Testing if users get ep returns the right type and data
+    """
     resp = TEST_CLIENT.get(ep.USERS_EP)
     assert resp.status_code == OK
     resp_json = resp.get_json()
@@ -41,13 +44,6 @@ def test_list_users():
     assert ep.TITLE in resp_json
     assert ep.TYPE in resp_json
     assert ep.DATA in resp_json
-
-
-def test_users_get():
-    resp = TEST_CLIENT.get(ep.USERS_EP)
-    assert resp.status_code == OK
-    resp_json = resp.get_json()
-    assert isinstance(resp_json, dict)
 
 
 # Delete user
@@ -82,7 +78,7 @@ def test_users_add(mock_add):
 @patch('data.users.add_user', side_effect=ValueError(), autospec=True)
 def test_users_bad_add(mock_add):
     """
-    Testing we do the right thing with a value error from add_user.
+    Testing we do the right thing when deleting a non-existed user.
     """
     resp = TEST_CLIENT.post(ep.USERS_EP, json=usrs.get_test_user())
     assert resp.status_code == NOT_ACCEPTABLE
@@ -91,37 +87,22 @@ def test_users_bad_add(mock_add):
 @patch('data.users.add_user', return_value=None)
 def test_users_add_db_failure(mock_add):
     """
-    Testing we do the right thing with a null ID return from add_user.
+    Testing we do the right thing with a technical problem from add_user.
     """
     resp = TEST_CLIENT.post(ep.USERS_EP, json=usrs.get_test_user())
     assert resp.status_code == SERVICE_UNAVAILABLE
 
 
 # ---------- SONG EP TESTS -----------
+# Get song
 def test_songs_get():
+    """
+    Testing songs_get_ep returns the correct data
+    """
     resp = TEST_CLIENT.get(ep.SONGS_EP)
     assert resp.status_code == OK
     resp_json = resp.get_json()
     assert isinstance(resp_json, dict)
-
-
-# Delete song
-@patch('data.songs.del_song', autospec=True)
-def test_songs_del(mock_del):
-    """
-    Testing we do the right thing with a call to del_song that succeeds.
-    """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
-    assert resp.status_code == OK
-
-
-@patch('data.songs.del_song', side_effect=ValueError(), autospec=True)
-def test_songs_bad_del(mock_del):
-    """
-    Testing we do the right thing with a value error from del_song.
-    """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
-    assert resp.status_code == NOT_FOUND
 
 
 # Add song
@@ -150,6 +131,84 @@ def test_songs_add_db_failure(mock_add):
     """
     resp = TEST_CLIENT.post(ep.SONGS_EP, json=songs.get_test_song())
     assert resp.status_code == SERVICE_UNAVAILABLE
+
+
+# Delete song
+@patch('data.songs.del_song', autospec=True)
+def test_songs_del(mock_del):
+    """
+    Testing we do the right thing with a call to del_song that succeeds.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
+    assert resp.status_code == OK
+
+
+@patch('data.songs.del_song', side_effect=ValueError(), autospec=True)
+def test_songs_bad_del(mock_del):
+    """
+    Testing we do the right thing with a value error from del_song ep.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_SONG_EP}/AnyName/AnyArtist')
+    assert resp.status_code == NOT_FOUND
+
+
+# ---------- PLAYLIST EP TESTS -----------
+# Get playlist
+def test_playlists_get():
+    """
+    Testing get_playlist EP return the correct data.
+    """
+    resp = TEST_CLIENT.get(f'{ep.GET_PLAYLISTS_EP}/AnyEmail')
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
+# Add playlist
+@patch('data.playlists.add_playlist', return_value=plists.MOCK_ID, autospec=True)
+def test_playlists_add(mock_add):
+    """
+    Testing we do the right thing with a good return from add_playlist.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.add_playlist', side_effect=ValueError(), autospec=True)
+def test_playlists_bad_add(mock_add):
+    """
+    Testing we do the right thing with a value error from add_playlist.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == NOT_ACCEPTABLE
+
+
+@patch('data.playlists.add_playlist', return_value=None)
+def test_playlists_add_db_failure(mock_add):
+    """
+    Testing we do the right thing when add_playlist failed.
+    """
+    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
+    assert resp.status_code == SERVICE_UNAVAILABLE
+
+
+# Delete playlist
+@patch('data.playlists.del_playlist', autospec=True)
+def test_playlists_del(mock_del):
+    """
+    Testing we do the right thing with a call to del_playlist that succeeds.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.del_playlist', side_effect=ValueError(), autospec=True)
+def test_playlists_bad_del(mock_del):
+    """
+    Testing we do the right thing when user deletes a non-existent playlist.
+    """
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    assert resp.status_code == NOT_FOUND
 
 
 # ---------- AUTH EP TESTS -----------
@@ -219,61 +278,6 @@ def test_failed_sign_out():
     """
     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/InvalidEmail')
     assert resp.status_code == BAD_REQUEST
-
-
-# ---------- PLAYLIST EP TESTS -----------
-def test_playlists_get():
-    resp = TEST_CLIENT.get(f'{ep.GET_PLAYLISTS_EP}/AnyEmail')
-    assert resp.status_code == OK
-    resp_json = resp.get_json()
-    assert isinstance(resp_json, dict)
-
-
-# Delete playlist
-@patch('data.playlists.del_playlist', autospec=True)
-def test_playlists_del(mock_del):
-    """
-    Testing we do the right thing with a call to del_playlist that succeeds.
-    """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
-    assert resp.status_code == OK
-
-
-@patch('data.playlists.del_playlist', side_effect=ValueError(), autospec=True)
-def test_playlists_bad_del(mock_del):
-    """
-    Testing we do the right thing with a value error from del_playlist.
-    """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
-    assert resp.status_code == NOT_FOUND
-
-
-# Add playlist
-@patch('data.playlists.add_playlist', return_value=plists.MOCK_ID, autospec=True)
-def test_playlists_add(mock_add):
-    """
-    Testing we do the right thing with a good return from add_playlist.
-    """
-    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
-    assert resp.status_code == OK
-
-
-@patch('data.playlists.add_playlist', side_effect=ValueError(), autospec=True)
-def test_playlists_bad_add(mock_add):
-    """
-    Testing we do the right thing with a value error from add_playlist.
-    """
-    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
-    assert resp.status_code == NOT_ACCEPTABLE
-
-
-@patch('data.playlists.add_playlist', return_value=None)
-def test_playlists_add_db_failure(mock_add):
-    """
-    Testing we do the right thing with a null ID return from add_playlist.
-    """
-    resp = TEST_CLIENT.post(ep.PLAYLISTS_EP, json=plists.get_test_playlist())
-    assert resp.status_code == SERVICE_UNAVAILABLE
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
