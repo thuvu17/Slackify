@@ -5,37 +5,41 @@
 This is a Flask application with various endpoints for managing users, songs, and playlists. Here's a brief overview of the endpoints:
 
 ### HelloWorld EP
+>A simple test endpoint to check if the server is running.
 - URL: /hello
 - Input: None
 - Output: JSON response with the message "hello world."
 - Method: GET
-- Description: A simple test endpoint to check if the server is running.
 
 ### Endpoints EP
+>Returns a list of all available endpoints in the server.
 - URL: /endpoints
 - Input: None
 - Output: JSON response containing a list of available endpoints.
 - Method: GET
-- Description: Returns a list of all available endpoints in the server.
 
 ## MENU ENDPOINTS
+Down here is all the endpoints that load menus
 ### MainMenu EP:
+>Returns the main menu with options to sign in, sign up, display most popular songs, etc. (more to come)
 - URL: /MainMenu
 - Input: None
 - Output: JSON response representing the main menu.
 - Method: GET
-- Description: Returns the main menu with options to sign in, sign up, display most popular songs, etc. (more to come)
 
 ### UserMenu EP:
+>Returns the user menu for the user with given email.
+>This endpoints will be caleld
 - URL: /user_menu/&lt;email&gt;
 - Input: 
   - Path parameter: **email** (User email)
 - Output: JSON response representing the user menu.
 - Method: GET
-- Description: Returns the user menu for the user with given email.
 
 ## USER ENDPOINTS
+Down below are all endpoints related to users: GET, POST, DEL
 ### Users EP:
+>GET returns a list of al users | POST adds a new user
 - URL: /users
 - Input: 
   - JSON payload containing user data (name, email, password).
@@ -55,15 +59,17 @@ This is a Flask application with various endpoints for managing users, songs, an
   - POST: Adds a new user.
 
 ### DelUser EP:
+>Deletes a user by email.
 - URL: /users/delete/&lt;email&gt;
 - Input:
   - Path parameter: **email** (User email)
 - Output: JSON response indicating success or failure in deleting a user.
 - Method: DELETE
-- Description: Deletes a user by email.
 
 ## SONG ENDPOINTS
+Down below are all endpoints related to songs: GET, POST, DEL
 ### Songs EP:
+>GET: Returns a list of all songs } POST: Adds a new song.
 - URL: /songs
 - Input:
   - JSON payload containing song data (name, artist, album, genre, bpm)
@@ -80,20 +86,19 @@ song_fields = api.model('NewSong', {
   1. JSON response containing a list of current songs.
   2. JSON response indicating success or failure in adding a song.
 - Methods: GET, POST
-- Description:
-  - GET: Returns a list of all songs.
-  - POST: Adds a new song.
  
 ### DelSong EP:
+>Deletes a song by name and artist.
 - URL: /songs/delete/&lt;name&gt;/&lt;artist&gt;
 - Input:
   - Path parameters: **name** (Song name), **artist** (Song artist)
 - Output: JSON response indicating success or failure in deleting a song.
 - Method: DELETE
-- Description: Deletes a song by name and artist.
 
 ## PLAYLIST ENDPOINTS
+Down below are all endpoints related to playlist: GET, POST, DEL
 ### Playlists EP:
+>Adds a new playlist.
 - URL: /playlists
 - Input:
   - JSON payload containing playlist data (email, name)
@@ -108,48 +113,48 @@ playlist_fields = api.model('NewPlaylist', {
   1. JSON response indicating success or failure in adding a playlist.
   2. JSON response containing a list of current playlists.
 - Method: POST
-- Description: Adds a new playlist.
 
 ### GetPlaylists EP:
+>Returns all playlists for a specified user.
 - URL: /playlists/get/&lt;email&gt;
 - Input:
   - Path parameter: email (User email)
 - Output: JSON response containing a list of playlists for a specific user.
 - Method: GET
-- Description: Returns all playlists for a specific user.
 
 ### DelPlaylist EP:
+>Deletes a playlist by user email and playlist name.
 - URL: /playlists/delete/&lt;email&gt;/&lt;name&gt;
 - Input:
   - Path parameters: **email** (User email), **name** (Playlist name)
 - Output: JSON response indicating success or failure in deleting a playlist.
 - Method: DELETE
-- Description: Deletes a playlist by user email and playlist name.
 
 ## AUTHENTICATION ENDPOINTS
+This takes care of signing in, signing up, and signing out
 ### SignIn EP:
+>Authenticates a user and redirects to the user menu.
 - URL: /sign_in/&lt;email&gt;/&lt;password&gt;
 - Input:
   - Path parameters: **email** (User email), **password** (User password)
 - Output: Redirects to the user menu if authentication is successful. Otherwise, returns an error.
 - Method: GET
-- Description: Authenticates a user and redirects to the user menu.
 
 ### SignUp EP:
+>Adds a new user and redirects to the user menu.
 - URL: /sign_up/&lt;email&gt;/&lt;password&gt;/&lt;username&gt;
 - Input:
   - Path parameters: **email** (User email), **password** (User password), **username** (User name)
 - Output: Redirects to the user menu if user registration is successful. Otherwise, returns an error.
 - Method: GET
-- Description: Adds a new user and redirects to the user menu.
 
 ### SignOut EP:
+>Logs out a user.
 - URL: /sign_out/&lt;email&gt;
 - Input:
   - Path parameter: **email** (User email)
 - Output: JSON response indicating success or failure in signing out.
 - Method: GET
-- Description: Logs out a user.
 
 # Spotify end-points in the backend
 ## OVERVIEW
@@ -158,23 +163,24 @@ These endpoints are sample data requested from Spotify to store in Slackify's da
 (We haven't designed an implementation for this data and plan to do it next semester)
 
 ### Get Spotify Token
+>Send a POST request to the token endpoint URI and return a string of the access token
 - URL: https://accounts.spotify.com/api/token
 - Input:
   - client_id
   - client_secret
 - Method: POST
-- Description: Send a POST request to the token endpoint URI and return a string of the access token
 
 ### Get Spotify Playlists
+>Send a GET request to Spotify to get a list of featured playlists. Limit is set to 50
 - URL: https://api.spotify.com/v1/browse/featured-playlists/?limit=50
 - Input:
   - Access Token
 - Method: GET
-- Description: Send a GET request to Spotify to get a list of featured playlists. Limit is set to 50
 
 ### Get Spotify popular songs
+>Send a GET request to Spotify to get a list of the first ten tracks in Spotify's Most Played All-Time playlist
+
 - URL: https://api.spotify.com/v1/playlists/2YRe7HRKNRvXdJBp9nXFza/tracks?offset=0&limit=10
 - Input:
   - Access Token
 - Method: GET
-- Description: Send a GET request to Spotify to get a list of the first ten tracks in Spotify's Most Played All-Time playlist
