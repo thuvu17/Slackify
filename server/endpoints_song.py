@@ -95,10 +95,10 @@ class MainMenu(Resource):
         return {TITLE: MAIN_MENU_NM,
                 DEFAULT: 2,
                 'Choices': {
-                    '1': {'url': '/', 'method': 'get',
-                          'text': 'List Available Characters'},
-                    '2': {'url': '/',
-                          'method': 'get', 'text': 'List Active Songs'},
+                    '1': {'url': f'{SIGN_IN_EP/test@gmail.com/testpassword}',
+                          'method': 'get', 'text': 'Sign in'},
+                    '2': {'url': f'{SIGN_UP_EP}',
+                          'method': 'get', 'text': 'Sign up'},
                     '3': {'url': f'{SONGS_EP}',
                           'method': 'get', 'text': 'List Songs'},
                     '4': {'url': '/',
@@ -337,6 +337,7 @@ class DelPlaylist(Resource):
             return {f'Playlist {name}': 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
+
 
 # ---------------- AUTH EPS -----------------
 @api.route(f'{SIGN_IN_EP}/<email>/<password>')
