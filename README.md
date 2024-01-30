@@ -4,7 +4,7 @@ Slackify is a web application designed to enhance your workout experience by gen
 
 ## Table of Contents
 - [Project Requirements](README.md#project-requirements)
-- [Progress and Semester Goals](ProgressAndGoals.md)
+- [Progress and Semester Goals](doc/ProgressAndGoals.md)
 - [Our Team](README.md#about-us)
 
 ### Project Requirements
@@ -22,7 +22,7 @@ Slackify is a web application designed to enhance your workout experience by gen
   - Start with simple front end first, make sure it’s functional. We can work on prettify it next semester
 
 
-### Our Team
+### About Us
 - Yongwen Lei
 - Quan Phung
 - Thu Vu
