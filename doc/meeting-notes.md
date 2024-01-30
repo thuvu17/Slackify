@@ -29,3 +29,10 @@
 - Joy
   - Update data/games.py
   - Update data/test/test_games.py
+
+## Jan 29, 2023
+- Update completed tasks
+- Update goals
+- [FINISHED] Update rebuild.sh and deploy.sh
+- Set API_TOKEN in your .bashrc in your PythonAnywhere home directory. (export API_TOKEN=<YOUR_TOKEN>)
+  - API for pythonanywhere: ad23498f33a069e4c4fd181b9c9b67db97d82237
