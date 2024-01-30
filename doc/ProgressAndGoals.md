@@ -68,7 +68,7 @@ This is a markdown document of details what has already been accomplished in Sla
   - Create at least one endpoint that is useful for developers, and is not intended for end-users  
 - Documentation: project proposal, project plans, requirements specification and analysis, design description and implementation
 - Basic Features for users:
-  - Create playlists based on users’ activity
+  - Create playlists based on usersâ€™ activity
   - Add/remove songs from playlist
 - Recommendation algorithm: 
   - Use machine learning to provide better recommendations (optional)
@@ -76,7 +76,7 @@ This is a markdown document of details what has already been accomplished in Sla
 
 ### Detail what the requirement is that each goals will meet & how we expect to meet it
 - Update rebuild.sh and deploy.sh and pull in PythonAnywhere to make the server auto-deployed
-- Create React frontend based on the UI design we did last semester, [here](doc/design/UI-design-doc.md)
+- Create React frontend based on the UI design we did last semester, [here](design/UI-design-doc.md)
 - Connect frontend to the server
 - Developer-only endpoints:
   - Endpoints to retrieve all playlists, all songs, and all users
