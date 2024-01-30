@@ -82,5 +82,5 @@ This is a markdown document of details what has already been accomplished in Sla
   - Endpoints to retrieve all playlists, all songs, and all users
   - Endpoints to delete all songs, all users, and all playlists
 - Dropdown list from backend:
-- Get API, create a function to manipulate your DOM, pass the data to this function so that it renders the content inside the select tag
+  - Get API, create a function to manipulate your DOM, pass the data to this function so that it renders the content inside the select tag
 
