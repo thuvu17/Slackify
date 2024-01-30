@@ -14,7 +14,8 @@ This is a markdown document of details what has already been accomplished in Sla
   - restore.sh: restores the JSON backups to local databases
   - common.sh: holds common code for bkup.sh and restore.sh
 - Run API Server In the Cloud (on Python Anywhere)
-- UI design for frontend completed: Link on Github: https://github.com/thuvu17/slackify/blob/master/doc/design/UI-design-doc.md
+- UI design for frontend completed:
+  - Link on Github: https://github.com/thuvu17/slackify/blob/master/doc/design/UI-design-doc.md
 - 14 endpoints that are working and well-tested
   - MAIN_MENU_EP: deliver menu page. From menu page, user can go to sign in, sign up
   - USER_MENU_EP: deliver user menu (after logged in). From here, user can go to:
