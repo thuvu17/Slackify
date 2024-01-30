@@ -58,6 +58,21 @@ This is a markdown document of details what has already been accomplished in Sla
 
 
 ## Semester Goals
-1. goals
+1. Goals
+- Auto-deploy server
+  - Your server should be auto-deployed by GitHub Actions if all tests pass.
+- React Frontend to API server
+- HATEOAS feature
+  - For example, a pick list (dropdown) that is fetched from the backend.
+- Developer endpoint
+  - Create at least one endpoint that is useful for developers, and is not intended for end-users  
+- Documentation: project proposal, project plans, requirements specification and analysis, design description and implementation
+- Basic Features for users:
+  - Create playlists based on users’ activity
+  - Add/remove songs from playlist
+- Recommendation algorithm: 
+  - Use machine learning to provide better recommendations (optional)
+    - https://youtube.com/shorts/OT_zQpgB7YE?si=oXxe213jzFTBQ7eo
+
 2. detail what the requirement is that each goals will meet
 3. how you expect to meet it.

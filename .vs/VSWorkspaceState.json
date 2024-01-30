@@ -9,6 +9,6 @@
     "\\server",
     "\\server\\tests"
   ],
-  "SelectedNode": "\\data\\get_most_popular_songs.py",
+  "SelectedNode": "\\data\\tests\\test_db_connect.py",
   "PreviewInSolutionExplorer": false
 }
