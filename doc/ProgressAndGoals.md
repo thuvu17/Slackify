@@ -2,7 +2,7 @@
 This is a markdown document of details what has already been accomplished in Slackify and set out goals for the upcoming semester.
 
 ## Completed Project Summary
-1. Detail what you have already completed in your project
+### Detail what you have already completed in your project
 - Development Environment Working
   - python3, pip3 are installed
   - make dev_env, make tests, ./local.sh, make prod, dev.sh are working
@@ -48,7 +48,7 @@ This is a markdown document of details what has already been accomplished in Sla
 
 
 
-2. What requirements were met in completing these bits?
+### What requirements were met in completing these bits?
 - API server created
 - A set of data stored in MongoDB
 - Project deployment to the cloud
@@ -58,7 +58,7 @@ This is a markdown document of details what has already been accomplished in Sla
 
 
 ## Semester Goals
-1. Goals
+### Goals
 - Auto-deploy server
   - Your server should be auto-deployed by GitHub Actions if all tests pass.
 - React Frontend to API server
@@ -74,5 +74,13 @@ This is a markdown document of details what has already been accomplished in Sla
   - Use machine learning to provide better recommendations (optional)
     - https://youtube.com/shorts/OT_zQpgB7YE?si=oXxe213jzFTBQ7eo
 
-2. detail what the requirement is that each goals will meet
-3. how you expect to meet it.
+### Detail what the requirement is that each goals will meet & how we expect to meet it
+- Update rebuild.sh and deploy.sh and pull in PythonAnywhere to make the server auto-deployed
+- Create React frontend based on the UI design we did last semester, [here](doc/design/UI-design-doc.md)
+- Connect frontend to the server
+- Developer-only endpoints:
+  - Endpoints to retrieve all playlists, all songs, and all users
+  - Endpoints to delete all songs, all users, and all playlists
+- Dropdown list from backend:
+- Get API, create a function to manipulate your DOM, pass the data to this function so that it renders the content inside the select tag
+
