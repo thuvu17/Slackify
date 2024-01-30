@@ -33,10 +33,29 @@ This is a markdown document of details what has already been accomplished in Sla
   - PLAYLISTS_EP
   - GET_PLAYLIST
   - DEL_PLAYLISTS_EP
+- Detailed documentation for each endpoint for Swagger
+- Functions and their unit tests
+- Code:
+  - songs.py: interface to song data
+  - users.py: interface to user data
+  - playlists.py: interface to playlist data
+  - endpoints_song.py: 14 endpoints for flask app
+  - get_Spotify_token.py: request to get token from Spotify
+  - get_Spotify_playlists.py: request to get playlists from Spotify
+  - get_most_popular_songs.py: get top 10 most listened songs on Spotify
+  - db_connect.py: connect to MongoDB locally and in the cloud
+  - Tests for songs.py, users.py, playlists.py, endpoints_song.py, get_Spotify_token.py, get_Spotify_playlists.py, get_most_popular_songs.py, db_connect.py
 
 
 
 2. What requirements were met in completing these bits?
+- API server created
+- A set of data stored in MongoDB
+- Project deployment to the cloud
+- A dozen or more endpoints
+- Each endpoint or function has its own test
+- Each endpoint is thoroughly documented for Swagger
+
 
 ## Semester Goals
 1. goals
