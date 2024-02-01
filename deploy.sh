@@ -2,7 +2,7 @@
 # This shell script deploys a new version to a server.
 
 PROJ_DIR=slackify
-VENV=.bashrc
+VENV=slackify
 PA_DOMAIN="slackify.pythonanywhere.com"
 PA_USER='slackify'
 echo "Project dir = $PROJ_DIR"
