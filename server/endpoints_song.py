@@ -9,6 +9,7 @@ from http import HTTPStatus
 
 from flask import Flask, request, redirect, session
 from flask_restx import Resource, Api, fields
+from flask_cors import CORS
 
 import werkzeug.exceptions as wz
 
@@ -17,6 +18,7 @@ import data.users as users
 import data.playlists as plists
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 app.secret_key = 'random_test_secret_key'
 
