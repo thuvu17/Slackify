@@ -19,8 +19,8 @@ This is a markdown document of details what has already been accomplished in Sla
 - 14 endpoints that are working and well-tested
   - MAIN_MENU_EP: deliver menu page. From menu page, user can go to sign in, sign up
   - USER_MENU_EP: deliver user menu (after logged in). From here, user can go to:
-  - their playlist
-  - sign_out
+    - their playlist
+    - sign_out
   - SIGN_IN: authenticate
   - SIGN_UP: add user
   - SIGN_OUT: pop session (DONE but missing test)
