@@ -217,7 +217,7 @@ def test_playlist_name_update(mock_update):
     """
     Testing we do the right thing with a call to update_playlist_name that succeeds.
     """
-    resp = TEST_CLIENT.put(f'{ep.PLAYLISTS_EP}/AnyEmail/AnyName/AnyNewName')
+    resp = TEST_CLIENT.put(f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
     assert resp.status_code == OK
 
 
@@ -226,7 +226,7 @@ def test_playlist_name_bad_update(mock_update):
     """
     Testing we do the right thing with a call to update_playlist_name that fails.
     """
-    resp = TEST_CLIENT.put(f'{ep.PLAYLISTS_EP}/AnyEmail/AnyName/AnyNewName')
+    resp = TEST_CLIENT.put(f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
     assert resp.status_code == NOT_FOUND
 
 
