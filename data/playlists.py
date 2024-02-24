@@ -59,7 +59,7 @@ def get_playlists(user_email):
 def get_playlist(user_email: str, playlist_name: str) -> dict:
     dbc.connect_db()
     return dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
-                                     NAME: playlist_name})
+                         NAME: playlist_name})
 
 
 # Take in the user email and name of a playlist that you want to find in DB
@@ -105,7 +105,7 @@ def del_playlist(user_email: str, playlist_name: str):
                          "not in database.")
 
 
-def update_playlist_name(user_email: str, playlist_name: str, 
+def update_playlist_name(user_email: str, playlist_name: str,
                          new_playlist_name: str) -> bool:
     if not already_exist(user_email, playlist_name):
         raise ValueError(f'Update failure: {playlist_name} not in database.')
