@@ -108,7 +108,7 @@ def del_playlist(user_email: str, playlist_name: str):
 def update_playlist_name(user_email: str, playlist_name: str,
                          new_playlist_name: str) -> bool:
     if not already_exist(user_email, playlist_name):
-        raise ValueError(f'Update failure: {playlist_name} not in database.')
+        raise ValueError(f"Update failure: {playlist_name} not in database.")
     if already_exist(user_email, new_playlist_name):
         raise ValueError("A playlist with the same name already existed!")
     if len(new_playlist_name) < MIN_NAME_LEN:
@@ -128,9 +128,11 @@ def song_exists_in_playlist(user_email: str, playlist_name: str,
 def update_songs_in_playlist(user_email: str, playlist_name: str,
                              song_id: str) -> bool:
     if not already_exist(user_email, playlist_name):
-        raise ValueError(f'Failed to add a song: {playlist_name} not in database.')
+        raise ValueError(f"Failed to add a song: {playlist_name}"
+                         "not in database.")
     elif song_exists_in_playlist(user_email, playlist_name, song_id):
-        raise ValueError(f'Failed to add a song: the song is already in the playlist.')
+        raise ValueError("Failed to add a song: the song"
+                         "is already in the playlist.")
     else:
         playlist = get_playlist(user_email, playlist_name)
         songs_in = playlist[SONGS]
