@@ -121,3 +121,21 @@ def test_del_playlist_not_there():
     name = pls._get_test_name()
     with pytest.raises(ValueError):
         pls.del_playlist(email, name)
+
+
+# ---------- UPDATE FUNCTION TESTS -----------
+def test_update_playlist_name(temp_playlist):
+    NEW_PLAYLIST_NAME = "thisisnew"
+    email = temp_playlist['email']
+    name = temp_playlist['name']
+    pls.update_playlist_name(email, name, NEW_PLAYLIST_NAME)
+    updated_playlist = pls.get_playlist(email, NEW_PLAYLIST_NAME)
+    assert updated_playlist is not None
+    assert updated_playlist.get("name") == NEW_PLAYLIST_NAME
+
+
+def test_get_playlist(temp_playlist):
+    email = temp_playlist['email']
+    name = temp_playlist['name']
+    playlist = pls.get_playlist(email, name)
+    assert isinstance(playlist, dict)
