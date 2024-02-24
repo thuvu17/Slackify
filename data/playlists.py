@@ -125,8 +125,8 @@ def song_exists_in_playlist(user_email: str, playlist_name: str,
     return song_id in playlist.get(SONGS)
 
 
-def update_songs_in_playlist(user_email: str, playlist_name: str,
-                             song_id: str) -> bool:
+def update_add_songs_in_playlist(user_email: str, playlist_name: str,
+                                 song_id: str) -> bool:
     if not already_exist(user_email, playlist_name):
         raise ValueError(f"Failed to add a song: {playlist_name}"
                          "not in database.")
