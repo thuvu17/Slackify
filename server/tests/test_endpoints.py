@@ -211,6 +211,25 @@ def test_playlists_bad_del(mock_del):
     assert resp.status_code == NOT_FOUND
 
 
+# Update playlist
+@patch('data.playlists.update_playlist_name', autospec=True)
+def test_playlist_name_update(mock_update):
+    """
+    Testing we do the right thing with a call to update_playlist_name that succeeds.
+    """
+    resp = TEST_CLIENT.put(f'{ep.PLAYLISTS_EP}/AnyEmail/AnyName/AnyNewName')
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.update_playlist_name', side_effect=ValueError(), autospec=True)
+def test_playlist_name_bad_update(mock_update):
+    """
+    Testing we do the right thing with a call to update_playlist_name that fails.
+    """
+    resp = TEST_CLIENT.put(f'{ep.PLAYLISTS_EP}/AnyEmail/AnyName/AnyNewName')
+    assert resp.status_code == NOT_FOUND
+
+
 # ---------- AUTH EP TESTS -----------
 # Sign in
 @patch('data.users.auth_user', autospec=True)

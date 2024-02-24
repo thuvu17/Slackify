@@ -323,6 +323,24 @@ class Playlists(Resource):
             raise wz.NotAcceptable(f'{str(e)}')
 
 
+@api.route(f'{PLAYLISTS_EP}/<email>/<name>/<new_name>')
+class Playlists(Resource):
+    """
+    Updates the name of a playlist.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def put(self, email, name, new_name):
+        """
+        Updates the name of a playlist.
+        """
+        try:
+            plists.update_playlist_name(email, name, new_name)
+            return {f'Playlist {name}': f'renamed to {new_name}' }
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
 @api.route(f'{DEL_PLAYLIST_EP}/<email>/<name>')
 class DelPlaylist(Resource):
     """
