@@ -43,6 +43,7 @@ def insert_one(collection, doc, db=SLACKIFY_DB):
 def fetch_one(collection, filt, db=SLACKIFY_DB):
     """
     Find with a filter and return on the first doc found.
+    Return None if not found.
     """
     for doc in client[db][collection].find(filt):
         if MONGO_ID in doc:

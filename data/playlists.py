@@ -55,12 +55,17 @@ def get_playlists(user_email):
 
 
 # Take in the user email and name of a playlist that you want to find in DB
+# Return the associated playlist if it exists, None if not
+def get_playlist(user_email: str, playlist_name: str) -> dict:
+    dbc.connect_db()
+    return dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
+                         NAME: playlist_name})
+
+
+# Take in the user email and name of a playlist that you want to find in DB
 # Return true if given playlist is found, else return false
 def already_exist(user_email: str, playlist_name: str) -> bool:
-    dbc.connect_db()
-    fetched_playlist = dbc.fetch_one(PLAYLISTS_COLLECT, {EMAIL: user_email,
-                                     NAME: playlist_name})
-    return fetched_playlist is not None
+    return get_playlist(user_email, playlist_name) is not None
 
 
 # Take in user email and playlist name to create a playlist and add to DB
@@ -98,3 +103,42 @@ def del_playlist(user_email: str, playlist_name: str):
     else:
         raise ValueError(f"Delete failure: Playlist {playlist_name} "
                          "not in database.")
+
+
+def update_playlist_name(user_email: str, playlist_name: str,
+                         new_playlist_name: str) -> bool:
+    if not already_exist(user_email, playlist_name):
+        raise ValueError(f"Update failure: {playlist_name} not in database.")
+    if already_exist(user_email, new_playlist_name):
+        raise ValueError("A playlist with the same name already existed!")
+    if len(new_playlist_name) < MIN_NAME_LEN:
+        raise ValueError("Minimum playlist name length is 1 character!")
+    else:
+        dbc.connect_db()
+        return dbc.update_doc(PLAYLISTS_COLLECT, {EMAIL: user_email,
+                              NAME: playlist_name}, {NAME: new_playlist_name})
+
+
+def song_exists_in_playlist(user_email: str, playlist_name: str,
+                            song_id: str) -> bool:
+    playlist = get_playlist(user_email, playlist_name)
+    return song_id in playlist.get(SONGS)
+
+
+def update_add_songs_in_playlist(user_email: str, playlist_name: str,
+                                 song_id: str) -> bool:
+    if not already_exist(user_email, playlist_name):
+        raise ValueError(f"Failed to add a song: {playlist_name}"
+                         "not in database.")
+    elif song_exists_in_playlist(user_email, playlist_name, song_id):
+        raise ValueError("Failed to add a song: the song"
+                         "is already in the playlist.")
+    else:
+        playlist = get_playlist(user_email, playlist_name)
+        songs_in = playlist[SONGS]
+        print(songs_in)
+        songs_in.append(song_id)
+        print(songs_in)
+        dbc.connect_db()
+        return dbc.update_doc(PLAYLISTS_COLLECT, {EMAIL: user_email,
+                              NAME: playlist_name}, {SONGS: songs_in})
