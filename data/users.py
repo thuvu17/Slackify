@@ -8,6 +8,7 @@ import data.db_connect as dbc
 NAME = 'name'
 EMAIL = 'email'
 PASSWORD = 'password'
+PLAYLISTS = 'playlists'
 BIG_NUM = 100000000000000
 MIN_USER_NAME_LEN = 2
 MIN_PW_LEN = 8

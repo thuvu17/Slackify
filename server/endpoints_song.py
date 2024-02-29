@@ -141,6 +141,7 @@ user_fields = api.model('NewUser', {
     users.NAME: fields.String,
     users.EMAIL: fields.String,
     users.PASSWORD: fields.String,
+    users.PLAYLISTS: fields.List,
 })
 
 
@@ -174,7 +175,7 @@ class Users(Resource):
             'name': name,
             'email': email,
             'password': password,
-            'playlists': {},
+            'playlists': [],
         }
         try:
             user_added = users.add_user(new_user)
