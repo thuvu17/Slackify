@@ -172,6 +172,7 @@ class Users(Resource):
             'name': name,
             'email': email,
             'password': password,
+            'playlists': {},
         }
         try:
             user_added = users.add_user(new_user)
