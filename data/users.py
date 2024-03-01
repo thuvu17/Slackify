@@ -67,6 +67,13 @@ def already_exist(user_email: str):
     return fetched_user is not None
 
 
+# Return fetched user as doc if found, else return false
+def already_exist_playlist(user_email: str, playlist_name: str):
+    dbc.connect_db()
+    fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
+    return fetched_user is not None
+
+
 # Check if a user with same email is already in the database
 def add_user(user_data: dict) -> bool:
     if already_exist(user_data[EMAIL]):
