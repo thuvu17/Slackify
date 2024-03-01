@@ -24,7 +24,11 @@ def connect_db():
             print("Connecting to Mongo in the cloud.")
             client = pm.MongoClient(f'mongodb+srv://tnv2002:{password}'
                                     + '@cluster0.r9gin96.mongodb.net/'
-                                    + '?retryWrites=true&w=majority')
+                                    + '?retryWrites=true&w=majority'
+                                    + '&connectTimeoutMS=30000'
+                                    + '&socketTimeoutMS=None'
+                                    + '&connect=false'
+                                    + '&maxPoolsize=1')
         else:
             print("Connecting to Mongo locally.")
             client = pm.MongoClient()
