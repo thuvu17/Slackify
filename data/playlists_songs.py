@@ -10,7 +10,8 @@ SONG_ID_LIST = 'song_ids'
 # Returns the list of song_ids that belongs to a given playlist_id
 def get_song_ids_list(playlist_id: str):
     dbc.connect_db()
-    ret_obj = dbc.fetch_one(PLAYLISTS_SONGS_COLLECT, {PLAYLIST_ID: playlist_id})
+    ret_obj = dbc.fetch_one(PLAYLISTS_SONGS_COLLECT,
+                            {PLAYLIST_ID: playlist_id})
     return ret_obj[SONG_ID_LIST]
 
 
