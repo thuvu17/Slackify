@@ -51,7 +51,8 @@ def get_playlists(user_email):
     value.
     """
     dbc.connect_db()
-    return dbc.fetch_all_as_list(PLAYLISTS_COLLECT, {EMAIL: user_email}, NAME)
+    return dbc.fetch_all_as_list(PLAYLISTS_COLLECT, {EMAIL: user_email},
+                                 NAME)
 
 
 # Take in the user email and name of a playlist that you want to find in DB
@@ -116,7 +117,8 @@ def update_playlist_name(user_email: str, playlist_name: str,
     else:
         dbc.connect_db()
         return dbc.update_doc(PLAYLISTS_COLLECT, {EMAIL: user_email,
-                              NAME: playlist_name}, {NAME: new_playlist_name})
+                              NAME: playlist_name},
+                              {NAME: new_playlist_name})
 
 
 def song_exists_in_playlist(user_email: str, playlist_name: str,
@@ -152,8 +154,7 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 # MONGO_ID = '_id'
 # NAME = 'name'
 # DATE = 'date_created'
-# # EMAIL = 'email'
-# # SONGS = 'songs'
+
 # MIN_NAME_LEN = 1
 
 # ID_LEN = 24
@@ -168,19 +169,29 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 #     return name + str(rand_part)
 
 
+# def _gen_id() -> str:
+#     _id = random.randint(0, BIG_NUM)
+#     _id = str(_id)
+#     _id = _id.rjust(ID_LEN, '0')
+#     return _id
+
+
 # # Return real time date
 # def get_date():
-#     return datetime.date.today()
+#     return str(datetime.date.today())
 
 
 # # Return a test playlist with random test name and email
 # def get_test_playlist():
 #     test_playlist = {}
+#     test_playlist[MONGO_ID] = _gen_id()
 #     test_playlist[NAME] = _get_test_name()
-#     # test_playlist[EMAIL] = _get_test_email()
-#     # test_playlist[SONGS] = []
 #     test_playlist[DATE] = get_date()
 #     return test_playlist
+
+
+# def already_exist(playlist_id: str) -> bool:
+#     return get_playlist(playlist_id) is not None
 
 
 # # Take in the user email and name of a playlist that you want to find in DB
@@ -206,13 +217,16 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 #         playlist_data = {NAME: playlist_name, DATE: date}
 #         dbc.connect_db()
 #         _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)
-#         return _id is not None
+#         return _id
 
 
 # # Take in user email and playlist name to delete a playlist from DB
 # # Return true if successfully added, else return false
 # # Raise error if given playlist does not exist
 # def del_playlist(playlist_id: str):
+#     if not already_exist(playlist_id):
+#         raise ValueError(f"Delete Fail: Playlist with id {playlist_id} "
+#                          "not in database")
 #     return dbc.del_one(PLAYLISTS_COLLECT, {MONGO_ID:  playlist_id})
 
 
