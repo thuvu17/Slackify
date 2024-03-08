@@ -147,6 +147,7 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 
 # import random
 # import datetime
+# from bson import ObjectId
 # import data.db_connect as dbc
 
 # PLAYLISTS_COLLECT = 'playlists'
@@ -184,7 +185,6 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 # # Return a test playlist with random test name and email
 # def get_test_playlist():
 #     test_playlist = {}
-#     test_playlist[MONGO_ID] = _gen_id()
 #     test_playlist[NAME] = _get_test_name()
 #     test_playlist[DATE] = get_date()
 #     return test_playlist
@@ -198,7 +198,8 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 # # Return the associated playlist if it exists, None if not
 # def get_playlist(playlist_id: str) -> dict:
 #     dbc.connect_db()
-#     return dbc.fetch_one(PLAYLISTS_COLLECT, {MONGO_ID: playlist_id})
+#     return dbc.fetch_one(PLAYLISTS_COLLECT,
+# {MONGO_ID: ObjectId(playlist_id)})
 
 
 # # Take in user email and playlist name to create a playlist and add to DB
@@ -217,7 +218,9 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 #         playlist_data = {NAME: playlist_name, DATE: date}
 #         dbc.connect_db()
 #         _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)
-#         return _id
+#         if _id is not None:
+#             return str(_id.inserted_id)
+#         return None
 
 
 # # Take in user email and playlist name to delete a playlist from DB
@@ -227,7 +230,7 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 #     if not already_exist(playlist_id):
 #         raise ValueError(f"Delete Fail: Playlist with id {playlist_id} "
 #                          "not in database")
-#     return dbc.del_one(PLAYLISTS_COLLECT, {MONGO_ID:  playlist_id})
+#     return dbc.del_one(PLAYLISTS_COLLECT, {MONGO_ID:  ObjectId(playlist_id)})
 
 
 # # def update_playlist_name(playlist_id: str, playlist_name: str,

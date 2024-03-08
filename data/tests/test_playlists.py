@@ -204,10 +204,10 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 # def temp_playlist():
 #     playlist = pls.get_test_playlist()
 #     ret = pls.add_playlist(playlist['name'])
-#     playlist[pls.MONGO_ID] = ret.inserted_id
-#     yield playlist
-#     if pls.already_exist(ret.inserted_id):
-#         pls.del_playlist(ret.inserted_id)
+#     # playlist[pls.MONGO_ID] = pls.ObjectId(ret)
+#     yield pls.get_playlist(ret)
+#     if pls.already_exist(ret):
+#         pls.del_playlist(ret)
 
 
 # # ---------- GET FUNCTION TESTS -----------
@@ -243,7 +243,7 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 # def test_get_test_playlist():
 #     playlist = pls.get_test_playlist()
 #     assert isinstance(playlist, dict)
-#     assert pls.MONGO_ID in playlist
+#     # assert pls.MONGO_ID in playlist
 #     assert pls.NAME in playlist
 #     assert pls.DATE in playlist
 
@@ -272,6 +272,9 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 #     _id = temp_playlist['_id']
 #     playlist = pls.get_playlist(_id)
 #     assert isinstance(playlist, dict)
+#     assert pls.MONGO_ID in playlist
+#     assert pls.NAME in playlist
+#     assert pls.DATE in playlist
 
 
 # def test_get_playlist_not_there():
@@ -300,10 +303,8 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 # def test_add_playlist():
 #     new_name = pls._get_test_name()
 #     ret = pls.add_playlist(new_name)
-#     _id = ret.inserted_id
-#     assert pls.already_exist(_id)
-#     assert isinstance(ret.acknowledged, bool)
-#     pls.del_playlist(_id)
+#     assert pls.already_exist(ret)
+#     pls.del_playlist(ret)
 
 
 # # def test_add_playlist_dup_name(temp_playlist):
