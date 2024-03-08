@@ -69,6 +69,11 @@ def update_doc(collection, filters, update_dict, db=SLACKIFY_DB):
     return client[db][collection].update_one(filters, {'$set': update_dict})
 
 
+def append_doc(collection, filters, append_dict, db=SLACKIFY_DB):
+    # append_dict = { where_to: what_to_append }
+    return client[db][collection].update_one(filters, {'$push': append_dict})
+
+
 # Compatible with playlists, songs, and users collections
 # Used only for song collection by 12/15/2023
 def fetch_all_songs_as_dict(collection, db=SLACKIFY_DB):

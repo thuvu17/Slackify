@@ -2,9 +2,33 @@
 playlists_songs.py: the interface to our playlist-song interaction data.
 """
 import data.db_connect as dbc
+import random
+
 PLAYLISTS_SONGS_COLLECT = 'playlists_songs'
 PLAYLIST_ID = '_id'     # playlist_id is the key
 SONG_ID_LIST = 'song_ids'
+BIG_NUM = 1000000
+
+
+# Return random playlist id
+def _get_test_playlist_id():
+    name = 'test_playlist_id'
+    return name + str(random.randint(0, BIG_NUM))
+
+
+# Return random song id
+def _get_test_song_id():
+    name = 'test_song_id'
+    return name + str(random.randint(0, BIG_NUM))
+
+
+# Return a test playlist with random test name and email
+def get_test_playlists_songs():
+    test_playlists_songs = {}
+    test_playlists_songs[PLAYLIST_ID] = _get_test_playlist_id()
+    test_playlists_songs[SONG_ID_LIST] = [_get_test_song_id(),
+                                          _get_test_song_id()]
+    return test_playlists_songs
 
 
 # Returns the list of song_ids that belongs to a given playlist_id
