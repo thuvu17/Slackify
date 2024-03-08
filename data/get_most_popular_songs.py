@@ -18,10 +18,10 @@ featured_playlists_url = ''.join([base_url, featured_playlists_endpoint])
 def get_most_popular_songs():
     response = requests.get(featured_playlists_url, headers=headers)
     songs = response.json().get('items')
-    print(songs[0].get('track').get('id'))
-    print(songs[0].get('track').get('name'))
-    print(songs[0].get('track').get('album').get('name'))
-    print(songs[0].get('track').get('artists'))
+    # print(songs[0].get('track').get('id'))
+    # print(songs[0].get('track').get('name'))
+    # print(songs[0].get('track').get('album').get('name'))
+    # print(songs[0].get('track').get('artists'))
     return songs
 
 def get_most_popular_songs_data(song):
