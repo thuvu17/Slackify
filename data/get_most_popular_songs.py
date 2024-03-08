@@ -24,9 +24,12 @@ def get_most_popular_songs():
     # print(songs[0].get('track').get('artists'))
     return songs
 
+
 def get_most_popular_songs_data(song):
     track_id = song.get('track').get('id')
     track_name = song.get('track').get('name')
     track_album = song.get('track').get('album').get('name')
-    track_artists = [artist.get('name') for artist in song.get('track').get('artists')]
-    return {'id' : track_id, 'name' : track_name, 'album' : track_album, 'artists' : track_artists}
+    track_artists = [artist.get('name') for artist in \
+                     song.get('track').get('artists')]
+    return {'id': track_id, 'name': track_name, \
+            'album': track_album, 'artists': track_artists}
