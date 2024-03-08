@@ -25,6 +25,7 @@ app.secret_key = 'random_test_secret_key'
 DELETE = 'delete'
 GET = 'get'
 DEFAULT = 'Default'
+UPDATE = 'Update'
 MENU = 'menu'
 SONG_ID = 'Song ID'
 TYPE = 'Type'
@@ -52,6 +53,7 @@ PLAYLIST_MENU_EP = '/playlist_menu'
 PLAYLISTS_EP = '/playlists'
 GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
 DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
+UPDATE_PLAYLIST_EP = f'{PLAYLISTS_EP}/{UPDATE}'
 SIGN_IN_EP = '/sign_in'
 SIGN_UP_EP = '/sign_up'
 SIGN_OUT_EP = '/sign_out'
@@ -139,6 +141,7 @@ user_fields = api.model('NewUser', {
     users.NAME: fields.String,
     users.EMAIL: fields.String,
     users.PASSWORD: fields.String,
+    users.PLAYLISTS: fields.List(fields.String),
 })
 
 
@@ -172,6 +175,7 @@ class Users(Resource):
             'name': name,
             'email': email,
             'password': password,
+            'playlists': [],
         }
         try:
             user_added = users.add_user(new_user)
@@ -337,6 +341,24 @@ class DelPlaylist(Resource):
         try:
             plists.del_playlist(email, name)
             return {f'Playlist {name}': 'Deleted'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
+@api.route(f'{UPDATE_PLAYLIST_EP}/<email>/<name>/<new_name>')
+class PlaylistsName(Resource):
+    """
+    Updates the name of a playlist.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def put(self, email, name, new_name):
+        """
+        Updates the name of a playlist.
+        """
+        try:
+            plists.update_playlist_name(email, name, new_name)
+            return {f'Playlist {name}': f'renamed to {new_name}'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 

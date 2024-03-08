@@ -58,7 +58,8 @@ Down below are all endpoints related to users: GET, POST, DEL
     users.NAME: fields.String,
     users.EMAIL: fields.String,
     users.PASSWORD: fields.String,
-}
+    users.PLAYLIST: {},   // Initialize an empty playlist dictionary
+})
 ```
 - Output: JSON response indicating success or failure in adding a user.
 - Methods: POST

@@ -9,7 +9,9 @@ NAME = 'name'
 ARTIST = 'artist'
 TEST_NAME = 'name'
 TEST_ARTIST = 'Hello'
+TEST_LIST = 'test_list'
 UPDATE = 'Update'
+APPEND = 'Append'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
@@ -41,6 +43,7 @@ TEST_INSERT_USR = {
     NAME: TEST_NAME,
     EMAIL: TEST_EMAIL,
     PASSWORD: TEST_PASSWORD,
+    TEST_LIST: [],
     }
 
 
@@ -134,4 +137,18 @@ def test_update_doc(temp_rec):
     dbc.del_one(TEST_COLLECT, {TEST_NAME: UPDATE})
     # check if doc successfully deleted
     ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: UPDATE})
+    assert ret is None
+
+
+def test_append_doc(temp_rec):
+    # check if doc successfully added
+    ret = dbc.fetch_one(TEST_COLLECT, {TEST_NAME: TEST_NAME})
+    assert ret is not None
+    dbc.append_doc(TEST_COLLECT, {TEST_NAME: TEST_NAME}, {TEST_LIST: APPEND})
+    # check if doc successfully updated
+    ret = dbc.fetch_one(TEST_COLLECT, {TEST_LIST: APPEND})
+    assert ret is not None
+    dbc.del_one(TEST_COLLECT, {TEST_LIST: APPEND})
+    # check if doc successfully deleted
+    ret = dbc.fetch_one(TEST_COLLECT, {TEST_LIST: APPEND})
     assert ret is None

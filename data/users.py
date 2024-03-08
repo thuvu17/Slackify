@@ -8,6 +8,7 @@ import data.db_connect as dbc
 NAME = 'name'
 EMAIL = 'email'
 PASSWORD = 'password'
+PLAYLISTS = 'playlists'
 BIG_NUM = 100000000000000
 MIN_USER_NAME_LEN = 2
 MIN_PW_LEN = 8
@@ -61,6 +62,13 @@ def get_users():
 
 # Return fetched user as doc if found, else return false
 def already_exist(user_email: str):
+    dbc.connect_db()
+    fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
+    return fetched_user is not None
+
+
+# Return fetched user as doc if found, else return false
+def already_exist_playlist(user_email: str, playlist_name: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     return fetched_user is not None

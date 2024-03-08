@@ -24,7 +24,11 @@ def connect_db():
             print("Connecting to Mongo in the cloud.")
             client = pm.MongoClient(f'mongodb+srv://tnv2002:{password}'
                                     + '@cluster0.r9gin96.mongodb.net/'
-                                    + '?retryWrites=true&w=majority')
+                                    + '?retryWrites=true&w=majority'
+                                    + '&connectTimeoutMS=30000'
+                                    + '&socketTimeoutMS=None'
+                                    + '&connect=false'
+                                    + '&maxPoolsize=1')
         else:
             print("Connecting to Mongo locally.")
             client = pm.MongoClient()
@@ -43,6 +47,7 @@ def insert_one(collection, doc, db=SLACKIFY_DB):
 def fetch_one(collection, filt, db=SLACKIFY_DB):
     """
     Find with a filter and return on the first doc found.
+    Return None if not found.
     """
     for doc in client[db][collection].find(filt):
         if MONGO_ID in doc:
@@ -62,6 +67,11 @@ def del_one(collection, filt, db=SLACKIFY_DB):
 # Compatible with playlists, songs, and users collections
 def update_doc(collection, filters, update_dict, db=SLACKIFY_DB):
     return client[db][collection].update_one(filters, {'$set': update_dict})
+
+
+def append_doc(collection, filters, append_dict, db=SLACKIFY_DB):
+    # append_dict = { where_to: what_to_append }
+    return client[db][collection].update_one(filters, {'$push': append_dict})
 
 
 # Compatible with playlists, songs, and users collections
