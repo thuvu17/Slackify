@@ -21,4 +21,4 @@ then
 fi
 
 
-declare -a slackify_collections=("songs" "users")
+declare -a slackify_collections=("songs" "users" "users_playlists" "playlists_songs")
