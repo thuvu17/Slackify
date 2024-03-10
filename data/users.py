@@ -116,3 +116,17 @@ def auth_user(user_email: str, password: str):
     if fetched_user:
         return fetched_user['password'] == password
     return False
+
+
+# Get user id
+def get_id(user_email: str, password: str):
+    if len(password) < MIN_PW_LEN:
+        raise ValueError("Minimum password length is 8 characters!")
+    dbc.connect_db()
+    fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
+    if fetched_user:
+        if fetched_user['password'] == password:
+            return fetched_user['_id']
+        else:
+            raise ValueError("Password is incorrect!")
+    raise ValueError("Email is incorrect!")

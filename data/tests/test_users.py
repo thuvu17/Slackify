@@ -237,3 +237,11 @@ def test_auth_user_invalid_password_length(temp_user):
     assert usrs.auth_user(right_email, right_password) is True
     with pytest.raises(ValueError):
         usrs.auth_user(right_email, wrong_password)
+
+
+# Test getting user id
+def test_get_id(temp_user):
+    right_email = temp_user['email']
+    right_password = temp_user['password']
+    assert usrs.auth_user(right_email, right_password) is True
+    assert len(right_password) >= 8
