@@ -1,5 +1,4 @@
 import requests
-import json
 import data.get_Spotify_token as get_Spotify_token
 import data.songs as song
 
@@ -20,9 +19,6 @@ def get_specific_track(track_id):
 
     info = requests.get(info_url, headers=headers).json()
     audio_feature = requests.get(feature_url, headers=headers).json()
-    print('Song info:', json.dumps(info, indent=2))
-    print('===========================')
-    print('Song audio feature:', json.dumps(audio_feature, indent=2))
 
     song_name = info.get('name')
     artist = info.get('artists')[0]['name']
@@ -37,6 +33,3 @@ def get_specific_track(track_id):
         song.ENERGY: energy,
     }
     return track
-
-
-get_specific_track("11dFghVXANMlKmJXsNCbNl")
