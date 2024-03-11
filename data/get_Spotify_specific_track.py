@@ -12,7 +12,10 @@ headers = {
 
 def get_specific_track(track_id):
     track_id_endpoint = 'tracks/' + track_id
-    featured_playlists_url = ''.join([base_url, track_id_endpoint])
-    response = requests.get(featured_playlists_url, headers=headers)
+    track_url = ''.join([base_url, track_id_endpoint])
+    response = requests.get(track_url, headers=headers)
     track = response.json().get('name')
+    print(track)
     return track
+
+get_specific_track("11dFghVXANMlKmJXsNCbNl")
