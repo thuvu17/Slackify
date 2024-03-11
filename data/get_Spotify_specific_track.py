@@ -1,5 +1,5 @@
 import requests
-import get_Spotify_token as get_Spotify_token
+import data.get_Spotify_token as get_Spotify_token
 
 # Requesting featured playlists from Spotify
 access_token = get_Spotify_token.get_token()
@@ -15,7 +15,8 @@ def get_specific_track(track_id):
     track_url = ''.join([base_url, track_id_endpoint])
     response = requests.get(track_url, headers=headers)
     track = response.json().get('name')
-    print(track)
+    print(response.json())
     return track
+
 
 get_specific_track("11dFghVXANMlKmJXsNCbNl")
