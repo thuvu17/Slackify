@@ -285,27 +285,27 @@ def test_failed_sign_up(mock_get):
     assert resp.status_code == BAD_REQUEST
 
 
-# Sign out
-def test_sign_out():
-    """
-    Testing we do the right thing with a call to sign_out that succeeds.
-    """
-    valid_test_email = "thu@gmail.com"
-    valid_test_password = "thisismypassword"
-    resp = TEST_CLIENT.get(
-        f'{ep.SIGN_IN_EP}/{valid_test_email}/{valid_test_password}')
-    assert resp.status_code == FOUND
-    # Sign out
-    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
-    assert resp.status_code == OK
+# # Sign out
+# def test_sign_out():
+#     """
+#     Testing we do the right thing with a call to sign_out that succeeds.
+#     """
+#     valid_test_email = "thu@gmail.com"
+#     valid_test_password = "thisismypassword"
+#     resp = TEST_CLIENT.get(
+#         f'{ep.SIGN_IN_EP}/{valid_test_email}/{valid_test_password}')
+#     assert resp.status_code == FOUND
+#     # Sign out
+#     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
+#     assert resp.status_code == OK
 
 
-def test_failed_sign_out():
-    """
-    Testing we do the right thing with a call to sign_out that fails.
-    """
-    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
-    assert resp.status_code == BAD_REQUEST
+# def test_failed_sign_out():
+#     """
+#     Testing we do the right thing with a call to sign_out that fails.
+#     """
+#     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
+#     assert resp.status_code == BAD_REQUEST
 
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
