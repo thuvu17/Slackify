@@ -112,28 +112,19 @@ class MainMenu(Resource):
 
 
 # ---------------- USER EPS -----------------
-@api.route(f'{USER_MENU_EP}/<email>')
+@api.route(f'{USER_MENU_EP}/<user_id>')
 class UserMenu(Resource):
     """
     This will deliver our user menu.
     """
-    def get(self, email):
+    def get(self, user_id):
         """
         Gets the user menu.
         """
         return {
                    TITLE: USER_MENU_NM,
                    DEFAULT: '0',
-                   'Choices': {
-                       '1': {
-                            'url': '/',
-                            'method': 'get',
-                            'text': 'Get User Details',
-                       },
-                       '0': {
-                            'text': 'Return',
-                       },
-                   },
+                   users.ID: user_id,
                }
 
 
@@ -376,8 +367,9 @@ class SignIn(Resource):
             valid_user = users.auth_user(email, password)
             if not valid_user:
                 raise wz.Unauthorized('Invalid credentials')
-            session[users.EMAIL] = email
-            return redirect(f'{USER_MENU_EP}/{email}')
+            user_id = users.get_id(email, password)
+            session[users.ID] = user_id
+            return redirect(f'{USER_MENU_EP}/{user_id}')
         except ValueError as e:
             raise wz.NotAcceptable(f'{str(e)}')
 
@@ -405,16 +397,23 @@ class SignUp(Resource):
             raise wz.BadRequest(f'{str(e)}')
 
 
-@api.route(f'{SIGN_OUT_EP}/<email>')
+@api.route(f'{SIGN_OUT_EP}')
 class SignOut(Resource):
     """
     This class takes care of signing out for users
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.BAD_REQUEST, 'Bad Request')
-    def get(self, email):
+    def get(self):
         try:
-            session.pop(users.EMAIL)
-            return "Successfully logged out"
+            if users.ID not in session:
+                return "User is not logged in", HTTPStatus.BAD_REQUEST
+            session.pop(users.ID)
+            if users.ID in session:
+                return "User was not logged out properly",
+            HTTPStatus.INTERNAL_SERVER_ERROR
+
+            return "Successfully logged out", HTTPStatus.OK
+
         except KeyError as e:
             raise wz.BadRequest(f'{str(e)}')

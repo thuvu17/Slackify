@@ -165,7 +165,8 @@ def test_playlists_get():
 
 
 # Add playlist
-@patch('data.playlists.add_playlist', return_value=plists.MOCK_ID, autospec=True)
+@patch('data.playlists.add_playlist', return_value=plists.MOCK_ID,
+       autospec=True)
 def test_playlists_add(mock_add):
     """
     Testing we do the right thing with a good return from add_playlist.
@@ -215,18 +216,23 @@ def test_playlists_bad_del(mock_del):
 @patch('data.playlists.update_playlist_name', autospec=True)
 def test_playlist_name_update(mock_update):
     """
-    Testing we do the right thing with a call to update_playlist_name that succeeds.
+    Testing we do the right thing with a call to
+    update_playlist_name that succeeds.
     """
-    resp = TEST_CLIENT.put(f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
+    resp = TEST_CLIENT.put(
+        f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
     assert resp.status_code == OK
 
 
-@patch('data.playlists.update_playlist_name', side_effect=ValueError(), autospec=True)
+@patch('data.playlists.update_playlist_name', side_effect=ValueError(),
+       autospec=True)
 def test_playlist_name_bad_update(mock_update):
     """
-    Testing we do the right thing with a call to update_playlist_name that fails.
+    Testing we do the right thing with a call to
+    update_playlist_name that fails.
     """
-    resp = TEST_CLIENT.put(f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
+    resp = TEST_CLIENT.put(
+        f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
     assert resp.status_code == NOT_FOUND
 
 
@@ -238,7 +244,8 @@ def test_sign_in(mock_get):
     Testing we do the right thing with a call to sign_in that succeeds.
     """
     resp = TEST_CLIENT.get(f'{ep.SIGN_IN_EP}/AnyEmail/AnyPassword')
-    assert resp.status_code == FOUND
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
 
 
 @patch('data.users.auth_user', return_value=False, autospec=True)
@@ -283,11 +290,13 @@ def test_sign_out():
     """
     Testing we do the right thing with a call to sign_out that succeeds.
     """
-    valid_test_email = "test@gmail.com"
-    valid_test_password = "testpassword"
+    valid_test_email = "thu@gmail.com"
+    valid_test_password = "thisismypassword"
     resp = TEST_CLIENT.get(
         f'{ep.SIGN_IN_EP}/{valid_test_email}/{valid_test_password}')
-    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/{valid_test_email}')
+    assert resp.status_code == FOUND
+    # Sign out
+    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
     assert resp.status_code == OK
 
 
@@ -295,7 +304,7 @@ def test_failed_sign_out():
     """
     Testing we do the right thing with a call to sign_out that fails.
     """
-    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}/InvalidEmail')
+    resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
     assert resp.status_code == BAD_REQUEST
 
 

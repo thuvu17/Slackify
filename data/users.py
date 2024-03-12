@@ -7,6 +7,7 @@ import data.db_connect as dbc
 
 NAME = 'name'
 EMAIL = 'email'
+ID = '_id'
 PASSWORD = 'password'
 PLAYLISTS = 'playlists'
 BIG_NUM = 100000000000000
@@ -125,8 +126,8 @@ def get_id(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     if fetched_user:
-        if fetched_user['password'] == password:
-            return fetched_user['_id']
+        if fetched_user[PASSWORD] == password:
+            return fetched_user[ID]
         else:
             raise ValueError("Password is incorrect!")
     raise ValueError("Email is incorrect!")
