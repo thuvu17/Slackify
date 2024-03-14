@@ -121,10 +121,15 @@ class UserMenu(Resource):
         """
         Gets the user menu.
         """
+        user_data = users.get_user_info(user_id)
+        print(user_data)
         return {
                    TITLE: USER_MENU_NM,
-                   DEFAULT: '0',
-                   users.ID: user_id,
+                   users.ID: user_data[users.ID],
+                   users.NAME: user_data[users.NAME],
+                   users.EMAIL: user_data[users.EMAIL],
+                   users.PASSWORD: user_data[users.PASSWORD],
+                   users.PLAYLISTS: user_data[users.PLAYLISTS],
                }
 
 

@@ -20,7 +20,6 @@ import data.playlists as plists
 
 import server.endpoints_song as ep
 
-from flask import session
 
 TEST_CLIENT = ep.app.test_client()
 

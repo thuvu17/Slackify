@@ -2,7 +2,7 @@
 This module interfaces to our user data.
 """
 import random
-
+from bson import ObjectId
 import data.db_connect as dbc
 
 NAME = 'name'
@@ -131,3 +131,11 @@ def get_id(user_email: str, password: str):
         else:
             raise ValueError("Password is incorrect!")
     raise ValueError("Email is incorrect!")
+
+
+# Get user info dict(name, email, id, password, playlist..)
+def get_user_info(user_id):
+    dbc.connect_db()
+    user_id = ObjectId(user_id)
+    fetch_user_info = dbc.fetch_one(USER_COLLECT, {ID: user_id})
+    return fetch_user_info
