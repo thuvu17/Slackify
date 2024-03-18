@@ -39,7 +39,7 @@ def insert_one(collection, doc, db=SLACKIFY_DB):
     """
     Insert a single doc into collection.
     """
-    print(f'{db=}')
+    print(f'Inserting into collection: {collection}')
     return client[db][collection].insert_one(doc)
 
 

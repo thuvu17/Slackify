@@ -2,11 +2,12 @@
 This module interfaces to our user data.
 """
 import random
-
+from bson import ObjectId
 import data.db_connect as dbc
 
 NAME = 'name'
 EMAIL = 'email'
+ID = '_id'
 PASSWORD = 'password'
 PLAYLISTS = 'playlists'
 BIG_NUM = 100000000000000
@@ -125,8 +126,16 @@ def get_id(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     if fetched_user:
-        if fetched_user['password'] == password:
-            return fetched_user['_id']
+        if fetched_user[PASSWORD] == password:
+            return fetched_user[ID]
         else:
             raise ValueError("Password is incorrect!")
     raise ValueError("Email is incorrect!")
+
+
+# Get user info dict(name, email, id, password, playlist..)
+def get_user_info(user_id):
+    dbc.connect_db()
+    user_id = ObjectId(user_id)
+    fetch_user_info = dbc.fetch_one(USER_COLLECT, {ID: user_id})
+    return fetch_user_info

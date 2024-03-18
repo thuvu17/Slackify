@@ -13,13 +13,13 @@ TEST_LIST = 'test_list'
 UPDATE = 'Update'
 APPEND = 'Append'
 ALBUM = 'album'
-GENRE = 'genre'
+ENERGY = 'energy'
 BPM = 'bpm'
 TEST_INSERT = {
     NAME: TEST_NAME,
     ARTIST: TEST_ARTIST,
     ALBUM: 'unknown',
-    GENRE: 'unknown',
+    ENERGY: 'unknown',
     BPM: 0,
     }
 
@@ -101,7 +101,7 @@ def test_fetch_all_songs_as_dict(temp_rec):
         assert NAME in song
         assert ARTIST in song
         assert ALBUM in song
-        assert GENRE in song
+        assert ENERGY in song
         assert BPM in song
 
 

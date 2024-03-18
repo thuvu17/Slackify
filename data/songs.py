@@ -15,6 +15,7 @@ ARTIST = 'artist'
 ALBUM = 'album'
 GENRE = 'genre'
 BPM = 'bpm'
+ENERGY = 'energy'
 
 # db = slackifyDB
 # collection = songs
