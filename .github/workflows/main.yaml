@@ -49,6 +49,8 @@ jobs:
         run: make all_tests
         env:
           SLACKIFY_DB_PW: ${{ secrets.SLACKIFY_DB_PW }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
   
       - name: Deploy to PythonAnywhere
         run: ./deploy.sh
