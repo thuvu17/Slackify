@@ -55,6 +55,13 @@ def get_playlists(user_email):
                                  NAME)
 
 
+# Connect to MongoDB and get users from MongoDB database
+def get_all_playlists():
+    dbc.connect_db()
+    return dbc.fetch_all_songs_as_dict(PLAYLISTS_COLLECT)
+    # name to be changed
+
+
 # Take in the user email and name of a playlist that you want to find in DB
 # Return the associated playlist if it exists, None if not
 def get_playlist(user_email: str, playlist_name: str) -> dict:
@@ -144,6 +151,7 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
         dbc.connect_db()
         return dbc.update_doc(PLAYLISTS_COLLECT, {EMAIL: user_email,
                               NAME: playlist_name}, {SONGS: songs_in})
+
 
 # import random
 # import datetime

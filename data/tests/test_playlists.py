@@ -49,6 +49,15 @@ def test_get_playlists(temp_playlist):
         assert len(name) >= pls.MIN_NAME_LEN
 
 
+def test_get_all_playlists(temp_playlist):
+    playlists = pls.get_all_playlists()
+    assert isinstance(playlists, dict)
+    assert len(playlists) >= 0
+    for playlist in playlists:
+        assert isinstance(playlist, str)
+        assert isinstance(playlists[playlist], dict)
+
+
 def test_get_playlist(temp_playlist):
     email = temp_playlist['email']
     name = temp_playlist['name']
