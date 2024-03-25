@@ -163,6 +163,17 @@ def test_playlists_get():
     assert isinstance(resp_json, dict)
 
 
+# Get all playlists
+def test_all_playlists_get():
+    """
+    Testing songs_get_ep returns the correct data
+    """
+    resp = TEST_CLIENT.get(ep.GET_PLAYLISTS_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
 # Add playlist
 @patch('data.playlists.add_playlist', return_value=plists.MOCK_ID,
        autospec=True)

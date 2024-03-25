@@ -299,6 +299,24 @@ class GetPlaylists(Resource):
         }
 
 
+@api.route(f'{GET_PLAYLISTS_EP}')
+class GetAllPlaylists(Resource):
+    """
+    This class lists all playlists.
+    """
+    def get(self):
+        """
+        This method returns all playlists.
+        """
+        return {
+            TYPE: DATA,
+            TITLE: 'Current Playlists',
+            DATA: plists.get_all_playlists(),
+            MENU: PLAYLIST_MENU_EP,
+            RETURN: MAIN_MENU_EP,
+        }
+
+
 @api.route(f'{PLAYLISTS_EP}')
 class Playlists(Resource):
     """
