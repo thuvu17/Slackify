@@ -83,6 +83,11 @@ def del_song(song_name: str, song_artist: str):
                          + f"{song_artist} not in database.")
 
 
+# developer use only
+def develop_del_song(field: str, val: str):
+    return dbc.del_one(SONGS_COLLECT, {field: val})
+
+
 # Add a new song to the database
 def add_song(song_data: dict) -> bool:
     # Check if a song with same name + artist
