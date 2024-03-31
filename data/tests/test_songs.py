@@ -3,7 +3,8 @@ import pytest
 import data.songs as data_songs
 
 
-# Generate a temporary song using the get_test_song function and adds it to the database.
+# Generate a temporary song using the get_test_song function and
+# adds it to the database.
 # Yield the generated song for test cases
 # Delete the song from the database after the test
 @pytest.fixture(scope='function')
@@ -70,7 +71,8 @@ def test_already_exist_not_there():
         'genre': 'Some genre',
         'bpm': 10000,
     }
-    assert data_songs.already_exist(new_song['name'], new_song['artist']) is False
+    assert data_songs.already_exist(new_song['name'],
+                                    new_song['artist']) is False
 
 
 # Adding a duplicate song raises a ValueError
@@ -112,3 +114,11 @@ def test_del_song_not_there():
     artist = "unknown"
     with pytest.raises(ValueError):
         data_songs.del_song(name, artist)
+
+
+def test_develope_del_song(temp_song):
+    name = temp_song['name']
+    artist = temp_song['artist']
+    data_songs.develop_del_song(data_songs.NAME, name,
+                                data_songs.ARTIST, artist)
+    assert data_songs.already_exist(name, artist) is False

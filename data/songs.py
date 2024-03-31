@@ -84,8 +84,10 @@ def del_song(song_name: str, song_artist: str):
 
 
 # developer use only
-def develop_del_song(field: str, val: str):
-    return dbc.del_one(SONGS_COLLECT, {field: val})
+def develop_del_song(field1: str, val1: str, field2=None, val2=None):
+    if field2 and val2:
+        return dbc.del_one(SONGS_COLLECT, {field1: val1, field2: val2})
+    return dbc.del_one(SONGS_COLLECT, {field1: val1})
 
 
 # Add a new song to the database
