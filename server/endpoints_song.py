@@ -7,7 +7,7 @@ https://github.com/thuvu17/slackify/blob/master/doc/design/slackify-endpoint.md
 """
 from http import HTTPStatus
 
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, jsonify
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 
@@ -16,6 +16,7 @@ import werkzeug.exceptions as wz
 import data.songs as songs
 import data.users as users
 import data.playlists as plists
+import examples.form as form
 # import data.users_playlists as userplist
 
 app = Flask(__name__)
@@ -44,6 +45,7 @@ HELLO_RESP = 'hello'
 # Endpoints
 HELLO_EP = '/hello'
 MAIN_MENU_EP = '/MainMenu'
+FORM_EP = '/form'
 USERS_EP = '/users'
 SONGS_EP = '/songs'
 DEL_USER_EP = f'{USERS_EP}/{DELETE}'
@@ -441,3 +443,17 @@ class SignOut(Resource):
 
         except KeyError as e:
             raise wz.BadRequest(f'{str(e)}')
+
+
+# @api.route('/form')
+# def get_login_form():
+#     return jsonify(form.LOGIN_FORM_FLDS)
+
+
+@api.route(FORM_EP)
+class Form(Resource):
+    """
+    This class is for form
+    """
+    def get(self):
+        return jsonify(form.LOGIN_FORM_FLDS)
