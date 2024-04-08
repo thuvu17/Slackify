@@ -206,8 +206,7 @@ def update_add_songs_in_playlist(user_email: str, playlist_name: str,
 # # Return the associated playlist if it exists, None if not
 # def get_playlist(playlist_id: str) -> dict:
 #     dbc.connect_db()
-#     return dbc.fetch_one(PLAYLISTS_COLLECT,
-# {MONGO_ID: ObjectId(playlist_id)})
+#     return dbc.fetch_one(PLAYLISTS_COLLECT, {MONGO_ID: ObjectId(playlist_id)})
 
 
 # # Take in user email and playlist name to create a playlist and add to DB

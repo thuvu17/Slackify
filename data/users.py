@@ -2,6 +2,7 @@
 This module interfaces to our user data.
 """
 import random
+import hashlib
 from bson import ObjectId
 import data.db_connect as dbc
 
@@ -90,6 +91,8 @@ def add_user(user_data: dict) -> bool:
             raise ValueError("Please enter a valid email!")
     if len(user_data[PASSWORD]) < MIN_PW_LEN:
         raise ValueError("Minimum password length is 8 characters!")
+    encrypted = hashlib.md5(user_data[PASSWORD].encode('utf-8')).hexdigest()
+    user_data[PASSWORD] = encrypted
     dbc.connect_db()
     _id = dbc.insert_one(USER_COLLECT, user_data)
     return _id is not None

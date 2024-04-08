@@ -48,7 +48,7 @@
 #     print(f'already pid {type(playlist_id)}: {playlist_id}')
 #     return dbc.fetch_one(USERS_PLAYLISTS_COLLECT,
 #                          {USER_ID: ObjectId(user_id),
-#                          PLAYLIST_ID: ObjectId(playlist_id)}) is not None
+#                           PLAYLIST_ID: ObjectId(playlist_id)}) is not None
 
 
 # # # Take in the user email and name of a playlist that you want to find in DB
