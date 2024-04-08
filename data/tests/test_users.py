@@ -7,7 +7,9 @@ import data.users as usrs
 @pytest.fixture(scope='function')
 def temp_user():
     user = usrs.get_test_user()
+    password = user[usrs.PASSWORD]
     ret = usrs.add_user(user)
+    user[usrs.PASSWORD] = password
     yield user
     if usrs.already_exist(user['email']):
         usrs.del_user(user['email'])
@@ -219,6 +221,7 @@ def test_del_user_not_there():
 def test_auth_user(temp_user):
     right_email = temp_user['email']
     right_password = temp_user['password']
+    print(right_password)
     wrong_email = "somewrongemail"
     wrong_password = "songwrongpassword"
     assert usrs.auth_user(right_email, right_password) is True
@@ -228,7 +231,7 @@ def test_auth_user(temp_user):
     assert len(right_password) >= 8
 
 
-# Test matching user email and password with password length 
+# Test matching user email and password with password length
 # smaller than required minimum length
 def test_auth_user_invalid_password_length(temp_user):
     right_email = temp_user['email']
