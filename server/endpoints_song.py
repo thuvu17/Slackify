@@ -16,7 +16,7 @@ import werkzeug.exceptions as wz
 import data.songs as songs
 import data.users as users
 import data.playlists as plists
-import data.users_playlists as userplist
+# import data.users_playlists as userplist
 
 app = Flask(__name__)
 CORS(app)
