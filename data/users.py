@@ -118,11 +118,7 @@ def auth_user(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     if fetched_user:
-        print(f'fectched: {fetched_user[PASSWORD]}')
         encrypted = hashlib.md5(password.encode('utf-8')).hexdigest()
-        print(f'encrypted: {encrypted}')
-        te = hashlib.md5(fetched_user[PASSWORD].encode('utf-8')).hexdigest()
-        print(f'encrypted fectched: {te}')
         return fetched_user['password'] == encrypted
     return False
 
@@ -134,7 +130,8 @@ def get_id(user_email: str, password: str):
     dbc.connect_db()
     fetched_user = dbc.fetch_one(USER_COLLECT, {EMAIL: user_email})
     if fetched_user:
-        if fetched_user[PASSWORD] == password:
+        encrypted = hashlib.md5(password.encode('utf-8')).hexdigest()
+        if fetched_user[PASSWORD] == encrypted:
             return fetched_user[ID]
         else:
             raise ValueError("Password is incorrect!")
