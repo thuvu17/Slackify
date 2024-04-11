@@ -7,7 +7,7 @@ https://github.com/thuvu17/slackify/blob/master/doc/design/slackify-endpoint.md
 """
 from http import HTTPStatus
 
-from flask import Flask, request, redirect, session, jsonify
+from flask import Flask, request, redirect, session
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 
