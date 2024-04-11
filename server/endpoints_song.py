@@ -451,4 +451,9 @@ class Form(Resource):
     This class is for form
     """
     def get(self):
-        return jsonify(form.LOGIN_FORM_FLDS)
+        form_descr = form.get_form_descr()
+        field_names = form.get_fld_names()
+        return {
+            'form_description': form_descr,
+            'field_names': field_names,
+        }
