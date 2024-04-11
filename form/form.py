@@ -2,9 +2,9 @@
 This module provides the glossary query form
 """
 
-import examples.form_filler as ff
+import form.form_filler as ff
 
-from examples.form_filler import FLD_NM  # for tests
+from form.form_filler import FLD_NM  # for tests
 
 USERNAME = 'username'
 PASSWORD = 'password'

@@ -16,7 +16,7 @@ import werkzeug.exceptions as wz
 import data.songs as songs
 import data.users as users
 import data.playlists as plists
-import examples.form as form
+import form.form as form
 # import data.users_playlists as userplist
 
 app = Flask(__name__)
@@ -443,11 +443,6 @@ class SignOut(Resource):
 
         except KeyError as e:
             raise wz.BadRequest(f'{str(e)}')
-
-
-# @api.route('/form')
-# def get_login_form():
-#     return jsonify(form.LOGIN_FORM_FLDS)
 
 
 @api.route(FORM_EP)
