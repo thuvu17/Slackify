@@ -6,7 +6,7 @@ import form.form_filler as ff
 
 from form.form_filler import FLD_NM  # for tests
 
-USERNAME = 'username'
+EMAIL = 'email'
 PASSWORD = 'password'
 
 LOGIN_FORM_FLDS = [
@@ -16,8 +16,8 @@ LOGIN_FORM_FLDS = [
         ff.INSTRUCTIONS: True,
     },
     {
-        FLD_NM: USERNAME,
-        ff.QSTN: 'Username:',
+        FLD_NM: EMAIL,
+        ff.QSTN: 'Email:',
         ff.PARAM_TYPE: ff.QUERY_STR,
         ff.OPT: False,
     },
