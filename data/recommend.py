@@ -1,3 +1,8 @@
+import db_connect as dbc
+import songs
+
+SONGS_COLLECT = 'songs'
+
 AVG_STRIDE_WOMAN_FT = 2.2
 AVG_STRIDE_MAN_FT = 2.5
 AVG_STRIDE_OVER_HEIGHT_IN_WOMAN = 0.413
@@ -33,3 +38,9 @@ def get_bpm_from_speed_height(mph, height_in, gender):
         stride_in = height_in * AVG_STRIDE_OVER_HEIGHT_IN_WOMAN
     stride_ft = stride_in / IN_PER_FT
     return get_bpm_from_speed_stride(mph, stride_ft)
+
+
+# Return song based on suitable bpm
+def rec_song_from_bpm(bpm):
+    filter = {songs.BPM: bpm}   # need to be a range!!!
+    return dbc.fetch_one(SONGS_COLLECT, filter)
