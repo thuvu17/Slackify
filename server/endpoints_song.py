@@ -17,6 +17,7 @@ import data.songs as songs
 import data.users as users
 import data.playlists as plists
 import form.form as form
+import data.recommend as rec
 # import data.users_playlists as userplist
 
 app = Flask(__name__)
@@ -60,6 +61,10 @@ UPDATE_PLAYLIST_EP = f'{PLAYLISTS_EP}/{UPDATE}'
 SIGN_IN_EP = '/sign_in'
 SIGN_UP_EP = '/sign_up'
 SIGN_OUT_EP = '/sign_out'
+SONG_REC_EP = '/rec'
+SONG_REC_AVG_STRIDE_EP = f'{SONG_REC_EP}/avg_stride'    # avg stride length
+SONG_REC_STRIDE_EP = f'{SONG_REC_EP}/stride'       # provided stride length
+SONG_REC_HEIGHT_EP = f'{SONG_REC_EP}/height'
 
 
 @api.route(HELLO_EP)
@@ -457,3 +462,10 @@ class Form(Resource):
             'form_description': form_descr,
             'field_names': field_names,
         }
+
+
+@api.route(f'{SONG_REC_AVG_STRIDE_EP}/<speed>/<gender>')
+class RecommendSongFromAvgStride(Resource):
+    def get(self, speed, gender):
+        rec_bpm = rec.get_bpm_from_speed_avg_stride(speed, gender)
+        return rec.rec_song_from_bpm(rec_bpm)
