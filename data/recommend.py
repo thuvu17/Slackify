@@ -1,5 +1,5 @@
-import db_connect as dbc
-import songs
+import data.db_connect as dbc
+import data.songs as songs
 
 SONGS_COLLECT = 'songs'
 
