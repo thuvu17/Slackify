@@ -1,3 +1,6 @@
+"""
+recommend.py: the interface to song recommendation interaction data.
+"""
 import data.db_connect as dbc
 import data.songs as songs
 
