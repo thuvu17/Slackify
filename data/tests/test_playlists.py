@@ -8,10 +8,10 @@ import data.songs as songs
 @pytest.fixture(scope='function')
 def temp_playlist():
     playlist = pls.get_test_playlist()
-    ret = pls.add_playlist(playlist['email'], playlist['name'])
+    ret = pls.add_playlist(playlist['user_id'], playlist['name'])
     yield playlist
-    if pls.already_exist(playlist['email'], playlist['name']):
-        pls.del_playlist(playlist['email'], playlist['name'])
+    if pls.already_exist(playlist['user_id'], playlist['name']):
+        pls.del_playlist(playlist['user_id'], playlist['name'])
 
 
 # ---------- GET FUNCTION TESTS -----------
@@ -21,15 +21,10 @@ def test_get_test_name():
     assert len(name) > pls.MIN_NAME_LEN
 
 
-def test_get_test_email():
-    email = pls._get_test_email()
-    assert isinstance(email, str)
-    assert len(email) > 0
-    # checking for email address validity
-    assert '@' in email
-    email_components = email.split('@')
-    assert len(email_components[0]) >= 1
-    assert '.' in email_components[1]
+def test_get_test_user_id():
+    user_id = pls._get_test_user_id()
+    assert isinstance(user_id, str)
+    assert len(user_id) > 0
 
 
 def test_get_date():
@@ -41,14 +36,14 @@ def test_get_date():
 def test_get_test_playlist():
     playlist = pls.get_test_playlist()
     assert isinstance(playlist, dict)
-    assert pls.EMAIL in playlist
+    assert pls.USER_ID in playlist
     assert pls.DATE in playlist
     assert pls.NAME in playlist
     assert pls.SONGS in playlist
 
 
 def test_get_playlists(temp_playlist):
-    playlists = pls.get_playlists(temp_playlist['email'])
+    playlists = pls.get_playlists(temp_playlist['user_id'])
     assert isinstance(playlists, list)
     assert len(playlists) > 0
     for name in playlists:
@@ -66,150 +61,126 @@ def test_get_all_playlists(temp_playlist):
 
 
 def test_get_playlist(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
-    playlist = pls.get_playlist(email, name)
+    playlist = pls.get_playlist(user_id, name)
     assert isinstance(playlist, dict)
 
 
 def test_already_exist(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
-    assert pls.already_exist(email, name) is True
-    pls.del_playlist(email, name)
+    assert pls.already_exist(user_id, name) is True
+    pls.del_playlist(user_id, name)
 
 
 def test_already_exist_not_there():
-    new_email = pls._get_test_email()
+    new_user_id = pls._get_test_user_id()
     new_name = pls._get_test_name()
-    assert pls.already_exist(new_email, new_name) is False
+    assert pls.already_exist(new_user_id, new_name) is False
 
 
 def test_song_exists_in_playlist(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     song_id = songs._gen_id()
-    assert pls.song_exists_in_playlist(email, name, song_id) is False
-    pls.update_add_songs_in_playlist(email, name, song_id)
-    assert pls.song_exists_in_playlist(email, name, song_id)
+    assert pls.song_exists_in_playlist(user_id, name, song_id) is False
+    pls.update_add_songs_in_playlist(user_id, name, song_id)
+    assert pls.song_exists_in_playlist(user_id, name, song_id)
 
 
 def test_song_exists_in_playlist_not_there(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     song_id = songs._gen_id()
-    assert pls.song_exists_in_playlist(email, name, song_id) is False
+    assert pls.song_exists_in_playlist(user_id, name, song_id) is False
 
 
 # ---------- ADD FUNCTION TESTS -----------
 def test_add_playlist():
     new_name = pls._get_test_name()
-    new_email = pls._get_test_email()
-    ret = pls.add_playlist(new_email, new_name)
-    assert pls.already_exist(new_email, new_name)
+    new_user_id = pls._get_test_user_id()
+    ret = pls.add_playlist(new_user_id, new_name)
+    assert pls.already_exist(new_user_id, new_name)
     assert isinstance(ret, bool)
-    pls.del_playlist(new_email, new_name)
+    pls.del_playlist(new_user_id, new_name)
 
 
 def test_add_playlist_dup_name(temp_playlist):
     with pytest.raises(ValueError):
-        pls.add_playlist(temp_playlist['email'], temp_playlist['name'])
+        pls.add_playlist(temp_playlist['user_id'], temp_playlist['name'])
 
 
 # Testing for adding a playlist with empty name
 def test_add_playlist_lt_1_char():
     new_name = ''
-    new_email = pls._get_test_email()
+    new_user_id = pls._get_test_user_id()
     with pytest.raises(ValueError):
-        pls.add_playlist(new_email, new_name)
-
-
-# Testing for adding a playlist with invalid email containing no '@'
-def test_add_playlist_invalid_email_v1():
-    new_name = pls._get_test_name()
-    new_email = 'randomstring'
-    with pytest.raises(ValueError):
-        pls.add_playlist(new_email, new_name)
-
-
-# Testing for adding a playlist with email containing invalid domain
-def test_add_playlist_invalid_email_v2():
-    new_name = pls._get_test_name()
-    new_email = 'random@string'
-    with pytest.raises(ValueError):
-        pls.add_playlist(new_email, new_name)
-
-
-# Testing for adding a playlist with email containing invalid prefix
-def test_add_playlist_invalid_email_v3():
-    new_name = pls._get_test_name()
-    new_email = '@randomstring.com'
-    with pytest.raises(ValueError):
-        pls.add_playlist(new_email, new_name)
+        pls.add_playlist(new_user_id, new_name)
 
 
 # ---------- DELETE FUNCTION TESTS -----------
 def test_del_playlist(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
-    pls.del_playlist(email, name)
-    assert pls.already_exist(email, name) is False
+    pls.del_playlist(user_id, name)
+    assert pls.already_exist(user_id, name) is False
 
 
 def test_del_playlist_not_there():
-    email = pls._get_test_email()
+    user_id = pls._get_test_user_id()
     name = pls._get_test_name()
     with pytest.raises(ValueError):
-        pls.del_playlist(email, name)
+        pls.del_playlist(user_id, name)
 
 
 # ---------- UPDATE FUNCTION TESTS -----------
 def test_update_playlist_name(temp_playlist):
     new_playlist_name = "thisisnew"
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
-    pls.update_playlist_name(email, name, new_playlist_name)
-    updated_playlist = pls.get_playlist(email, new_playlist_name)
+    pls.update_playlist_name(user_id, name, new_playlist_name)
+    updated_playlist = pls.get_playlist(user_id, new_playlist_name)
     assert updated_playlist is not None
     assert updated_playlist.get("name") == new_playlist_name
-    pls.del_playlist(email, new_playlist_name)
+    pls.del_playlist(user_id, new_playlist_name)
 
 
 def test_update_playlist_name_dup_name(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     with pytest.raises(ValueError):
-        pls.update_playlist_name(email, name, name)
+        pls.update_playlist_name(user_id, name, name)
 
 
 def test_update_playlist_name_lt_1_char(temp_playlist):
     new_name = ''
     with pytest.raises(ValueError):
-        pls.update_playlist_name(temp_playlist['email'],
+        pls.update_playlist_name(temp_playlist['user_id'],
                                  temp_playlist['name'], new_name)
 
 
 def test_update_add_songs_in_playlist(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     new_song_id = songs._gen_id()
     assert isinstance(new_song_id, str)
     assert new_song_id not in temp_playlist[pls.SONGS]
-    pls.update_add_songs_in_playlist(email, name, new_song_id)
-    new_playlist = pls.get_playlist(email, name)
+    pls.update_add_songs_in_playlist(user_id, name, new_song_id)
+    new_playlist = pls.get_playlist(user_id, name)
     assert new_song_id in new_playlist[pls.SONGS]
 
 
 def test_update_add_songs_in_playlist_dup_song(temp_playlist):
-    email = temp_playlist['email']
+    user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     new_song_id = songs._gen_id()
     assert new_song_id not in temp_playlist[pls.SONGS]
-    pls.update_add_songs_in_playlist(email, name, new_song_id)
-    new_playlist = pls.get_playlist(email, name)
+    pls.update_add_songs_in_playlist(user_id, name, new_song_id)
+    new_playlist = pls.get_playlist(user_id, name)
     assert new_song_id in new_playlist[pls.SONGS]
     with pytest.raises(ValueError):
-        pls.update_add_songs_in_playlist(email, name, new_song_id)
+        pls.update_add_songs_in_playlist(user_id, name, new_song_id)
 
 # import pytest
 
@@ -249,7 +220,6 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 # #     email_components = email.split('@')
 # #     assert len(email_components[0]) >= 1
 # #     assert '.' in email_components[1]
-
 
 
 # def test_get_test_playlist():

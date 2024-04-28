@@ -285,25 +285,25 @@ class DelSong(Resource):
 
 # ---------------- PLAYLIST EPS -----------------
 playlist_fields = api.model('NewPlaylist', {
-    plists.EMAIL: fields.String,
+    plists.USER_ID: fields.String,
     plists.NAME: fields.String,
     plists.SONGS: fields.List(fields.String),
 })
 
 
-@api.route(f'{GET_PLAYLISTS_EP}/<email>')
+@api.route(f'{GET_PLAYLISTS_EP}/<user_id>')
 class GetPlaylists(Resource):
     """
     This class lists all playlists belong to a user with given email.
     """
-    def get(self, email):
+    def get(self, user_id):
         """
         This method returns all playlists for a user.
         """
         return {
             TYPE: DATA,
-            TITLE: f'Current Playlists for {email}',
-            DATA: plists.get_playlists(email),
+            TITLE: f'Current Playlists for {user_id}',
+            DATA: plists.get_playlists(user_id),
             MENU: PLAYLIST_MENU_EP,
             RETURN: MAIN_MENU_EP,
         }
@@ -340,10 +340,10 @@ class Playlists(Resource):
         """
         Add a playlist.
         """
-        email = request.json[plists.EMAIL]
+        user_id = request.json[plists.USER_ID]
         name = request.json[plists.NAME]
         try:
-            playlist_added = plists.add_playlist(email, name)
+            playlist_added = plists.add_playlist(user_id, name)
             if not playlist_added:
                 raise wz.ServiceUnavailable('We have a technical problem.')
             return {f'Playlist {name} added': f'{playlist_added}'}
@@ -351,37 +351,37 @@ class Playlists(Resource):
             raise wz.NotAcceptable(f'{str(e)}')
 
 
-@api.route(f'{DEL_PLAYLIST_EP}/<email>/<name>')
+@api.route(f'{DEL_PLAYLIST_EP}/<user_id>/<name>')
 class DelPlaylist(Resource):
     """
-    Deletes a playlist by user email and playlist name.
+    Deletes a playlist by user id and playlist name.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_FOUND, 'Not Found')
-    def delete(self, email, name):
+    def delete(self, user_id, name):
         """
-        Deletes a playlist by user_email and playlist name.
+        Deletes a playlist by user id and playlist name.
         """
         try:
-            plists.del_playlist(email, name)
+            plists.del_playlist(user_id, name)
             return {f'Playlist {name}': 'Deleted'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 
 
-@api.route(f'{UPDATE_PLAYLIST_EP}/<email>/<name>/<new_name>')
+@api.route(f'{UPDATE_PLAYLIST_EP}/<user_id>/<name>/<new_name>')
 class PlaylistsName(Resource):
     """
     Updates the name of a playlist.
     """
     @api.response(HTTPStatus.OK, 'Success')
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
-    def put(self, email, name, new_name):
+    def put(self, user_id, name, new_name):
         """
         Updates the name of a playlist.
         """
         try:
-            plists.update_playlist_name(email, name, new_name)
+            plists.update_playlist_name(user_id, name, new_name)
             return {f'Playlist {name}': f'renamed to {new_name}'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')

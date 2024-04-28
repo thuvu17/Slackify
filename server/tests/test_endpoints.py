@@ -157,7 +157,7 @@ def test_playlists_get():
     """
     Testing get_playlist EP return the correct data.
     """
-    resp = TEST_CLIENT.get(f'{ep.GET_PLAYLISTS_EP}/AnyEmail')
+    resp = TEST_CLIENT.get(f'{ep.GET_PLAYLISTS_EP}/AnyID')
     assert resp.status_code == OK
     resp_json = resp.get_json()
     assert isinstance(resp_json, dict)
@@ -209,7 +209,7 @@ def test_playlists_del(mock_del):
     """
     Testing we do the right thing with a call to del_playlist that succeeds.
     """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyID/AnyName')
     assert resp.status_code == OK
 
 
@@ -218,7 +218,7 @@ def test_playlists_bad_del(mock_del):
     """
     Testing we do the right thing when user deletes a non-existent playlist.
     """
-    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyEmail/AnyName')
+    resp = TEST_CLIENT.delete(f'{ep.DEL_PLAYLIST_EP}/AnyID/AnyName')
     assert resp.status_code == NOT_FOUND
 
 
@@ -230,7 +230,7 @@ def test_playlist_name_update(mock_update):
     update_playlist_name that succeeds.
     """
     resp = TEST_CLIENT.put(
-        f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
+        f'{ep.UPDATE_PLAYLIST_EP}/AnyID/AnyName/AnyNewName')
     assert resp.status_code == OK
 
 
@@ -242,7 +242,7 @@ def test_playlist_name_bad_update(mock_update):
     update_playlist_name that fails.
     """
     resp = TEST_CLIENT.put(
-        f'{ep.UPDATE_PLAYLIST_EP}/AnyEmail/AnyName/AnyNewName')
+        f'{ep.UPDATE_PLAYLIST_EP}/AnyID/AnyName/AnyNewName')
     assert resp.status_code == NOT_FOUND
 
 
