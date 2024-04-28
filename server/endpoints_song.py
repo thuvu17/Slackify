@@ -49,6 +49,7 @@ MAIN_MENU_EP = '/MainMenu'
 FORM_EP = '/form'
 USERS_EP = '/users'
 SONGS_EP = '/songs'
+TOKEN_EP = '/token'
 DEL_USER_EP = f'{USERS_EP}/{DELETE}'
 USER_MENU_EP = '/user_menu'
 DEL_SONG_EP = f'{SONGS_EP}/{DELETE}'
@@ -450,6 +451,7 @@ class SignOut(Resource):
             raise wz.BadRequest(f'{str(e)}')
 
 
+# ---------------- FORM EP ------------------
 @api.route(FORM_EP)
 class Form(Resource):
     """
@@ -464,8 +466,12 @@ class Form(Resource):
         }
 
 
+# -------------- RECOMMENDATION EPS -----------------
 @api.route(f'{SONG_REC_AVG_STRIDE_EP}/<speed>/<gender>')
 class RecommendSongFromAvgStride(Resource):
     def get(self, speed, gender):
         rec_bpm = rec.get_bpm_from_speed_avg_stride(speed, gender)
         return rec.rec_song_from_bpm(rec_bpm)
+
+
+# -------------------- TOKEN EPS -----------------------
