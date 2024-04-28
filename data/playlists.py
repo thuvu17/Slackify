@@ -103,9 +103,10 @@ def add_playlist(user_email: str, playlist_name: str) -> bool:
         email_components = user_email.split('@')
         if len(email_components[0]) < 1 or '.' not in email_components[1]:
             raise ValueError("Invalid user email!")
-        
+
     date = get_date()
-    playlist_data = {EMAIL: user_email, NAME: playlist_name, DATE: date, SONGS: []}
+    playlist_data = {EMAIL: user_email, NAME: playlist_name,
+                     DATE: date, SONGS: []}
     dbc.connect_db()
     _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)
     return _id is not None
