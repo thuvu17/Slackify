@@ -32,10 +32,17 @@ def test_get_test_email():
     assert '.' in email_components[1]
 
 
+def test_get_date():
+    date = pls.get_date()
+    assert isinstance(date, str)
+    assert len(date) == 10
+
+
 def test_get_test_playlist():
     playlist = pls.get_test_playlist()
     assert isinstance(playlist, dict)
     assert pls.EMAIL in playlist
+    assert pls.DATE in playlist
     assert pls.NAME in playlist
     assert pls.SONGS in playlist
 
@@ -158,13 +165,14 @@ def test_del_playlist_not_there():
 
 # ---------- UPDATE FUNCTION TESTS -----------
 def test_update_playlist_name(temp_playlist):
-    NEW_PLAYLIST_NAME = "thisisnew"
+    new_playlist_name = "thisisnew"
     email = temp_playlist['email']
     name = temp_playlist['name']
-    pls.update_playlist_name(email, name, NEW_PLAYLIST_NAME)
-    updated_playlist = pls.get_playlist(email, NEW_PLAYLIST_NAME)
+    pls.update_playlist_name(email, name, new_playlist_name)
+    updated_playlist = pls.get_playlist(email, new_playlist_name)
     assert updated_playlist is not None
-    assert updated_playlist.get("name") == NEW_PLAYLIST_NAME
+    assert updated_playlist.get("name") == new_playlist_name
+    pls.del_playlist(email, new_playlist_name)
 
 
 def test_update_playlist_name_dup_name(temp_playlist):
@@ -242,11 +250,6 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 # #     assert len(email_components[0]) >= 1
 # #     assert '.' in email_components[1]
 
-
-# def test_get_date():
-#     date = pls.get_date()
-#     assert isinstance(date, str)
-#     assert len(date) == 10
 
 
 # def test_get_test_playlist():
@@ -368,13 +371,13 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
 
 # # # ---------- UPDATE FUNCTION TESTS -----------
 # # def test_update_playlist_name(temp_playlist):
-# #     NEW_PLAYLIST_NAME = "thisisnew"
+# #     new_playlist_name = "thisisnew"
 # #     email = temp_playlist['email']
 # #     name = temp_playlist['name']
-# #     pls.update_playlist_name(email, name, NEW_PLAYLIST_NAME)
-# #     updated_playlist = pls.get_playlist(email, NEW_PLAYLIST_NAME)
+# #     pls.update_playlist_name(email, name, new_playlist_name)
+# #     updated_playlist = pls.get_playlist(email, new_playlist_name)
 # #     assert updated_playlist is not None
-# #     assert updated_playlist.get("name") == NEW_PLAYLIST_NAME
+# #     assert updated_playlist.get("name") == new_playlist_name
 
 
 # # def test_update_playlist_name_dup_name(temp_playlist):

@@ -2,6 +2,7 @@
 playlists.py: the interface to our playlist data.
 """
 import random
+import datetime
 
 import data.db_connect as dbc
 
@@ -9,6 +10,7 @@ PLAYLISTS_COLLECT = 'playlists'
 
 NAME = 'name'
 EMAIL = 'email'
+DATE = 'date_created'
 SONGS = 'songs'
 MIN_NAME_LEN = 1
 
@@ -32,11 +34,17 @@ def _get_test_email():
     return name + str(rand_part) + email_suffix
 
 
+# Return real time date
+def get_date():
+    return str(datetime.date.today())
+
+
 # Return a test playlist with random test name and email
 def get_test_playlist():
     test_playlist = {}
     test_playlist[NAME] = _get_test_name()
     test_playlist[EMAIL] = _get_test_email()
+    test_playlist[DATE] = get_date()
     test_playlist[SONGS] = []
     return test_playlist
 
@@ -95,7 +103,9 @@ def add_playlist(user_email: str, playlist_name: str) -> bool:
         email_components = user_email.split('@')
         if len(email_components[0]) < 1 or '.' not in email_components[1]:
             raise ValueError("Invalid user email!")
-    playlist_data = {EMAIL: user_email, NAME: playlist_name, SONGS: []}
+        
+    date = get_date()
+    playlist_data = {EMAIL: user_email, NAME: playlist_name, DATE: date, SONGS: []}
     dbc.connect_db()
     _id = dbc.insert_one(PLAYLISTS_COLLECT, playlist_data)
     return _id is not None
