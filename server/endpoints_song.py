@@ -18,6 +18,7 @@ import data.users as users
 import data.playlists as plists
 import form.form as form
 import data.recommend as rec
+import data.get_Spotify_token as get_spotify_token
 # import data.users_playlists as userplist
 
 app = Flask(__name__)
@@ -475,3 +476,13 @@ class RecommendSongFromAvgStride(Resource):
 
 
 # -------------------- TOKEN EPS -----------------------
+@api.route(f'{TOKEN_EP}')
+class Token(Resource):
+    """
+    This class supports functionalities token-related
+    """
+    def get(self):
+        """
+        This method returns a Spotify token
+        """
+        return get_spotify_token.get_token()
