@@ -19,7 +19,6 @@ import data.playlists as plists
 import form.form as form
 import data.recommend as rec
 import data.get_Spotify_token as get_spotify_token
-# import data.users_playlists as userplist
 
 app = Flask(__name__)
 CORS(app)
@@ -139,7 +138,6 @@ class UserMenu(Resource):
                    users.NAME: user_data[users.NAME],
                    users.EMAIL: user_data[users.EMAIL],
                    users.PASSWORD: user_data[users.PASSWORD],
-                   users.PLAYLISTS: user_data[users.PLAYLISTS],
                }
 
 
@@ -147,7 +145,6 @@ user_fields = api.model('NewUser', {
     users.NAME: fields.String,
     users.EMAIL: fields.String,
     users.PASSWORD: fields.String,
-    users.PLAYLISTS: fields.List(fields.String),
 })
 
 
@@ -181,7 +178,6 @@ class Users(Resource):
             'name': name,
             'email': email,
             'password': password,
-            'playlists': [],
         }
         try:
             user_added = users.add_user(new_user)
