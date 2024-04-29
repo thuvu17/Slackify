@@ -105,6 +105,22 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
     return ret
 
 
+# Compatible with playlists
+def fetch_all_as_dict_with_filter(collection, filt, key, db=SLACKIFY_DB):
+    """
+    Find with a filter,
+    with every document found,
+    fetch the value corresponding to the given key into a list
+    Return the list of corresponding values.
+    """
+    ret = {}
+    for doc in client[db][collection].find(filt):
+        id = str(doc[MONGO_ID])
+        del doc[MONGO_ID]
+        ret[id] = doc
+    return ret
+
+
 # Compatible with playlists, songs, and users collections
 # Used only for playlist collection by 12/15/2023
 def fetch_all_as_list(collection, filt, key, db=SLACKIFY_DB):

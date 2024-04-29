@@ -3,7 +3,6 @@ playlists.py: the interface to our playlist data.
 """
 import random
 import datetime
-
 import data.db_connect as dbc
 
 PLAYLISTS_COLLECT = 'playlists'
@@ -58,14 +57,17 @@ def get_playlists(user_id):
     value.
     """
     dbc.connect_db()
-    return dbc.fetch_all_as_list(PLAYLISTS_COLLECT, {USER_ID: user_id},
-                                 NAME)
+    return dbc.fetch_all_as_dict_with_filter(PLAYLISTS_COLLECT,
+                                             {USER_ID: user_id}, NAME)
 
 
 # Connect to MongoDB and get users from MongoDB database
 def get_all_playlists():
     dbc.connect_db()
-    return dbc.fetch_all_songs_as_dict(PLAYLISTS_COLLECT)
+
+    ret = dbc.fetch_all_songs_as_dict(PLAYLISTS_COLLECT)
+    print(ret)
+    return ret
     # name to be changed
 
 

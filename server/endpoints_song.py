@@ -287,7 +287,6 @@ class DelSong(Resource):
 playlist_fields = api.model('NewPlaylist', {
     plists.USER_ID: fields.String,
     plists.NAME: fields.String,
-    plists.SONGS: fields.List(fields.String),
 })
 
 
