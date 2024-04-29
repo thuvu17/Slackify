@@ -44,11 +44,11 @@ def test_get_test_playlist():
 
 def test_get_playlists(temp_playlist):
     playlists = pls.get_playlists(temp_playlist['user_id'])
-    assert isinstance(playlists, list)
+    assert isinstance(playlists, dict)
     assert len(playlists) > 0
     for name in playlists:
         assert isinstance(name, str)
-        assert len(name) >= pls.MIN_NAME_LEN
+        assert isinstance(playlists[name], dict)
 
 
 def test_get_all_playlists(temp_playlist):

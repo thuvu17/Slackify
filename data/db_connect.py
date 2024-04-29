@@ -106,7 +106,7 @@ def fetch_all_as_dict(key, collection, db=SLACKIFY_DB):
 
 
 # Compatible with playlists
-def fetch_all_as_dict_with_filter(collection, filt, key, db=SLACKIFY_DB):
+def fetch_all_as_dict_with_filter(collection, filt, db=SLACKIFY_DB):
     """
     Find with a filter,
     with every document found,

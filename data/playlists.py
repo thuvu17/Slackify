@@ -58,7 +58,7 @@ def get_playlists(user_id):
     """
     dbc.connect_db()
     return dbc.fetch_all_as_dict_with_filter(PLAYLISTS_COLLECT,
-                                             {USER_ID: user_id}, NAME)
+                                             {USER_ID: user_id})
 
 
 # Connect to MongoDB and get users from MongoDB database
