@@ -11,7 +11,6 @@ from flask import Flask, request, redirect, session
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
 import pymongo as pm
-import os
 from pymongo.errors import ConnectionFailure
 
 import werkzeug.exceptions as wz
