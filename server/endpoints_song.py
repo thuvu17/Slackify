@@ -10,6 +10,9 @@ from http import HTTPStatus
 from flask import Flask, request, redirect, session
 from flask_restx import Resource, Api, fields
 from flask_cors import CORS
+import pymongo as pm
+import os
+from pymongo.errors import ConnectionFailure
 
 import werkzeug.exceptions as wz
 
@@ -481,3 +484,23 @@ class Token(Resource):
         This method returns a Spotify token
         """
         return get_spotify_token.get_token()
+
+
+# -------------------- DEV EPS -----------------------
+@api.route('/dev/check-mongodb-connection')
+class CheckMongoDBConnection(Resource):
+    """
+    This class provides functionality to check the MongoDB connection.
+    """
+    def get(self):
+        """
+        Checks the MongoDB connection and returns the status.
+        """
+        try:
+            client = client = pm.MongoClient()
+            db = client["slackifyDB"]
+            db.list_collection_names()
+            client.close()
+            return {"status": "Connection to MongoDB successful."}
+        except ConnectionFailure:
+            return {"status": "Failed to connect to MongoDB."}
