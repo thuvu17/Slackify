@@ -31,13 +31,20 @@ def test_get_test_name():
 def test_gen_id():
     _id = data_songs._gen_id()
     assert isinstance(_id, str)
-    assert len(_id) == data_songs.ID_LEN
+    assert len(str(_id)) == data_songs.ID_LEN
 
 
 # Assertion:
 # Test song is a disctionary
 def test_get_test_song():
-    assert isinstance(data_songs.get_test_song(), dict)
+    song = data_songs.get_test_song()
+    assert isinstance(song, dict)
+    assert data_songs.SONG_ID in song
+    assert data_songs.NAME in song
+    assert data_songs.ARTIST in song
+    assert data_songs.ALBUM in song
+    assert data_songs.ENERGY in song
+    assert data_songs.BPM in song
 
 
 # Assertion:
@@ -87,7 +94,9 @@ def test_add_song_dup_name_and_artist(temp_song):
 # Delete after testing
 def test_add_song():
     new_name = data_songs._get_test_name()
+    new_id = data_songs._gen_id()
     new_song = {
+        '_id': new_id,
         'name': new_name,
         'artist': 'Some artist',
         'album': 'Some album',
@@ -122,3 +131,16 @@ def test_develope_del_song(temp_song):
     data_songs.develop_del_song(data_songs.NAME, name,
                                 data_songs.ARTIST, artist)
     assert data_songs.already_exist(name, artist) is False
+
+
+def test_get_song(temp_song):
+    song_id = temp_song[data_songs.SONG_ID]
+    song_data = data_songs.get_song(song_id)
+    print("song data", song_data)
+    assert isinstance(song_data, dict)
+    assert data_songs.SONG_ID in song_data
+    assert data_songs.NAME in song_data
+    assert data_songs.ARTIST in song_data
+    assert data_songs.ALBUM in song_data
+    assert data_songs.ENERGY in song_data
+    assert data_songs.BPM in song_data

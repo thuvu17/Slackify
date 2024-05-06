@@ -61,6 +61,8 @@ PLAYLISTS_EP = '/playlists'
 GET_PLAYLISTS_EP = f'{PLAYLISTS_EP}/{GET}'
 DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
 UPDATE_PLAYLIST_EP = f'{PLAYLISTS_EP}/{UPDATE}'
+PLAYLIST_EP = '/playlist'
+ADD_SONG_PLAYLIST_EP = f'{PLAYLIST_EP}/{UPDATE}'
 SIGN_IN_EP = '/sign_in'
 SIGN_UP_EP = '/sign_up'
 SIGN_OUT_EP = '/sign_out'
@@ -380,6 +382,45 @@ class PlaylistsName(Resource):
         try:
             plists.update_playlist_name(user_id, name, new_name)
             return {f'Playlist {name}': f'renamed to {new_name}'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
+@api.route(f'{PLAYLIST_EP}/<user_id>/<name>')
+class PlaylistSongs(Resource):
+    """
+    Get all songs in a playlist.
+    """
+    def get(self, user_id, name):
+        """
+        Get all songs in a playlist.
+        """
+        try:
+            return {
+                TYPE: DATA,
+                TITLE: f'Current Songs for Playlist {name} by {user_id}',
+                DATA: plists.playlist_get_all_song(user_id, name),
+                MENU: PLAYLIST_MENU_EP,
+                RETURN: MAIN_MENU_EP,
+            }
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
+@api.route(f'{ADD_SONG_PLAYLIST_EP}/<user_id>/<name>/<song_id>')
+class PlaylistAddSong(Resource):
+    """
+    Add a song to a playlist.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def put(self, user_id, name, song_id):
+        """
+        Updates the songs of a playlist.
+        """
+        try:
+            plists.update_add_songs_in_playlist(user_id, name, song_id)
+            return {f'Song {song_id}': f'added to playlist {name}'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 

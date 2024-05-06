@@ -4,12 +4,14 @@ songs.py: the interface to our song data.
 import random
 
 import data.db_connect as dbc
+from bson import ObjectId
 
 SONGS_COLLECT = 'songs'
 
 ID_LEN = 24
 BIG_NUM = 100000000000000
 MOCK_ID = '0'*ID_LEN
+SONG_ID = '_id'
 NAME = 'name'
 ARTIST = 'artist'
 ALBUM = 'album'
@@ -38,6 +40,7 @@ def _get_test_name():
 # Return random test song
 def get_test_song():
     test_song = {}
+    test_song[SONG_ID] = _gen_id()
     test_song[NAME] = _get_test_name()
     test_song[ARTIST] = "Popular artist"
     test_song[ALBUM] = "Some album"
@@ -48,10 +51,10 @@ def get_test_song():
 
 # Return a random ID for a song
 def _gen_id() -> str:
-    _id = random.randint(0, BIG_NUM)
-    _id = str(_id)
-    _id = _id.rjust(ID_LEN, '0')
-    return _id
+    # _id = random.randint(0, BIG_NUM)
+    # _id = str(_id)
+    # _id = _id.rjust(ID_LEN, '0')
+    return str(ObjectId())
 
 
 # Fetche all songs from the database and returns them as a dictionary.
@@ -97,8 +100,16 @@ def add_song(song_data: dict) -> bool:
         raise ValueError("A song with the same name "
                          + "and artist already existed!")
     dbc.connect_db()
+    if SONG_ID in song_data.keys():
+        song_data[SONG_ID] = ObjectId(song_data[SONG_ID])
     _id = dbc.insert_one(SONGS_COLLECT, song_data)
     return _id is not None
+
+
+def get_song(song_id):
+    dbc.connect_db()
+    print("get song", song_id)
+    return dbc.fetch_one(SONGS_COLLECT, {SONG_ID: ObjectId(song_id)})
 
 
 def main():

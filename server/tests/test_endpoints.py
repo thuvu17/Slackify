@@ -166,9 +166,17 @@ def test_playlists_get():
 # Get all playlists
 def test_all_playlists_get():
     """
-    Testing songs_get_ep returns the correct data
+    Testing playlists_get_ep returns the correct data
     """
     resp = TEST_CLIENT.get(ep.GET_PLAYLISTS_EP)
+    assert resp.status_code == OK
+    resp_json = resp.get_json()
+    assert isinstance(resp_json, dict)
+
+
+# Get all songs in a playlist
+def test_all_songs_in_playlist_get():
+    resp = TEST_CLIENT.get(f"{ep.PLAYLIST_EP}/AnyUser_id/AnyName")
     assert resp.status_code == OK
     resp_json = resp.get_json()
     assert isinstance(resp_json, dict)
@@ -243,6 +251,29 @@ def test_playlist_name_bad_update(mock_update):
     """
     resp = TEST_CLIENT.put(
         f'{ep.UPDATE_PLAYLIST_EP}/AnyID/AnyName/AnyNewName')
+    assert resp.status_code == NOT_FOUND
+
+
+@patch('data.playlists.update_add_songs_in_playlist', autospec=True)
+def test_update_add_songs_in_playlist(mock_update):
+    """
+    Testing we do the right thing with a call to
+    update_add_songs_in_playlist that succeeds.
+    """
+    resp = TEST_CLIENT.put(
+        f'{ep.ADD_SONG_PLAYLIST_EP}/AnyUserId/AnyName/AnySongId')
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.update_add_songs_in_playlist', side_effect=ValueError(),
+       autospec=True)
+def test_update_add_songs_in_playlist_bad(mock_update):
+    """
+    Testing we do the right thing with a call to
+    update_add_songs_in_playlist that fails.
+    """
+    resp = TEST_CLIENT.put(
+        f'{ep.ADD_SONG_PLAYLIST_EP}/AnyUserId/AnyName/AnySongId')
     assert resp.status_code == NOT_FOUND
 
 
