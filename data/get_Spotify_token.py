@@ -1,15 +1,15 @@
 import requests
-from dotenv import load_dotenv
 
 # Requesting Token from Spotify
-load_dotenv()
 client_id = '7641947490644dc6a87899c4e8878443'
 client_secret = '91e7d14c7c73474a838497faeaae3723'
 auth_url = 'https://accounts.spotify.com/api/token'
+scope = 'streaming user-read-email user-read-private'
 data = {
     'grant_type': 'client_credentials',
     'client_id': client_id,
     'client_secret': client_secret,
+    'scope': scope
 }
 
 
