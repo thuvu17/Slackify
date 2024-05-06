@@ -41,7 +41,7 @@ def get_test_song():
     test_song[NAME] = _get_test_name()
     test_song[ARTIST] = "Popular artist"
     test_song[ALBUM] = "Some album"
-    test_song[GENRE] = "Some genre"
+    test_song[ENERGY] = "Some energy"
     test_song[BPM] = 116
     return test_song
 
