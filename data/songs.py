@@ -13,7 +13,6 @@ MOCK_ID = '0'*ID_LEN
 NAME = 'name'
 ARTIST = 'artist'
 ALBUM = 'album'
-GENRE = 'genre'
 BPM = 'bpm'
 ENERGY = 'energy'
 

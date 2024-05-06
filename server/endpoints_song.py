@@ -213,8 +213,8 @@ song_fields = api.model('NewSong', {
     songs.NAME: fields.String,
     songs.ARTIST: fields.String,
     songs.ALBUM: fields.String,
-    songs.GENRE: fields.String,
     songs.BPM: fields.Integer,
+    songs.ENERGY: fields.Integer,
 })
 
 
@@ -240,18 +240,18 @@ class Songs(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def post(self):
         """
-        Add a song with provided name, artist, album, genre, bpm.
+        Add a song with provided name, artist, album, engergy, bpm.
         """
         name = request.json[songs.NAME]
         artist = request.json[songs.ARTIST]
         album = request.json[songs.ALBUM]
-        genre = request.json[songs.GENRE]
+        energy = request.json[songs.ENERGY]
         bpm = request.json[songs.BPM]
         new_song = {
             'name': name,
             'artist': artist,
             'album': album,
-            'genre': genre,
+            'energy': energy,
             'bpm': bpm,
         }
         try:
