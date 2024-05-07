@@ -417,7 +417,7 @@ class PlaylistAddSong(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def put(self, user_id, name, song_id):
         """
-        Updates the songs of a playlist.
+        Updates the songs of a playlist by adding a song
         """
         try:
             plists.update_add_songs_in_playlist(user_id, name, song_id)
@@ -435,7 +435,7 @@ class PlaylistDeleteSong(Resource):
     @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
     def put(self, user_id, name, song_id):
         """
-        Updates the songs of a playlist.
+        Updates the songs of a playlist by deleting a song
         """
         try:
             plists.update_delete_songs_in_playlist(user_id, name, song_id)
