@@ -15,12 +15,14 @@ featured_playlists_endpoint = \
 featured_playlists_url = ''.join([base_url, featured_playlists_endpoint])
 
 
+# Retrieve the top 10 most popular songs from a featured playlist on Spotify
 def get_most_popular_songs():
     response = requests.get(featured_playlists_url, headers=headers)
     songs = response.json().get('items')
     return songs
 
 
+# Extract relevant data from a song object obtained from Spotify API response
 def get_most_popular_songs_data(song):
     track_id = song.get('track').get('id')
     track_name = song.get('track').get('name')

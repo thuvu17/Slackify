@@ -13,6 +13,7 @@ featured_playlists_endpoint = 'browse/featured-playlists/?limit=50'
 featured_playlists_url = ''.join([base_url, featured_playlists_endpoint])
 
 
+# Retrieve featured playlists from Spotify API
 def get_featured_playlists():
     response = requests.get(featured_playlists_url, headers=headers)
     playlists = response.json().get('playlists').get('items')

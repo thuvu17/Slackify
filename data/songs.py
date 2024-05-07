@@ -106,6 +106,7 @@ def add_song(song_data: dict) -> bool:
     return _id is not None
 
 
+# Retrieve a song from the database by its ID.
 def get_song(song_id):
     dbc.connect_db()
     print("get song", song_id)

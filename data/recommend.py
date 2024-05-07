@@ -14,6 +14,8 @@ FT_PER_MILE = 5280
 IN_PER_FT = 12
 
 
+# Calculate the BPM (Beats Per Minute) based on running speed
+# and stride length
 def get_bpm_from_speed_stride(mph, stride_ft):
     steps_per_mile = 1/stride_ft * FT_PER_MILE
     return mph / 60 * steps_per_mile

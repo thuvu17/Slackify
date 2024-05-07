@@ -64,21 +64,3 @@ def add_playlist_song(playlist_id: str, song_id: str):
     else:
         raise ValueError("Playlist already exists!")
     return dbc.insert_one(PLAYLISTS_SONGS_COLLECT, insert_doc)
-
-
-# Updates the playlists_songs schema when user adds a song to playlist
-# def update_add_songs_in_playlist(playlist_id: str, song_id: str) -> bool:
-#     if playlist_already_exist(playlist_id):
-#         # If song is not already in playlist, add it
-#         if not song_exists_in_playlist(playlist_id, song_id):
-#             dbc.connect_db()
-#             old_song_ids_list = get_song_ids_list(playlist_id)
-#             updated_song_ids_list = old_song_ids_list.append(song_id)
-#             return dbc.update_doc(PLAYLISTS_SONGS_COLLECT,
-#                                   {PLAYLIST_ID: playlist_id},
-#                                   updated_song_ids_list)
-#         # If song already in playlist, raise value error
-#         else:
-#             raise ValueError("Song is already in the playlist.")
-#     else:
-#         raise ValueError("Playlist does not exist!")

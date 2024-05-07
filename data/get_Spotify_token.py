@@ -13,6 +13,7 @@ data = {
 }
 
 
+# Sends a POST request to Spotify's token endpoint to obtain an access token.
 def get_token():
     auth_response = requests.post(auth_url, data=data)
     token = auth_response.json().get('access_token')

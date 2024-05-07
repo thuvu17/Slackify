@@ -14,6 +14,7 @@ def temp_playlist():
         pls.del_playlist(playlist['user_id'], playlist['name'])
 
 
+# Yield a temporary song for testing
 @pytest.fixture(scope='function')
 def temp_song():
     song = songs.get_test_song()
@@ -83,6 +84,7 @@ def test_already_exist(temp_playlist):
     pls.del_playlist(user_id, name)
 
 
+# Test already_exist function for a non-existent playlist
 def test_already_exist_not_there():
     new_user_id = pls._get_test_user_id()
     new_name = pls._get_test_name()
@@ -100,6 +102,7 @@ def test_song_exists_in_playlist(temp_playlist):
     assert pls.song_exists_in_playlist(user_id, name, song_id)
 
 
+# Test song_exists_in_playlist function for a non-existent song
 def test_song_exists_in_playlist_not_there(temp_playlist):
     user_id = temp_playlist['user_id']
     name = temp_playlist['name']
@@ -138,6 +141,7 @@ def test_del_playlist(temp_playlist):
     assert pls.already_exist(user_id, name) is False
 
 
+# Test del_playlist function for a non-existent playlist
 def test_del_playlist_not_there():
     user_id = pls._get_test_user_id()
     name = pls._get_test_name()
@@ -164,6 +168,7 @@ def test_update_playlist_name_dup_name(temp_playlist):
         pls.update_playlist_name(user_id, name, name)
 
 
+# Test update_playlist_name function with empty new name
 def test_update_playlist_name_lt_1_char(temp_playlist):
     new_name = ''
     with pytest.raises(ValueError):

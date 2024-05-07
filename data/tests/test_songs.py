@@ -125,6 +125,7 @@ def test_del_song_not_there():
         data_songs.del_song(name, artist)
 
 
+# Test to delete a developed song from the database
 def test_develope_del_song(temp_song):
     name = temp_song['name']
     artist = temp_song['artist']
@@ -133,6 +134,7 @@ def test_develope_del_song(temp_song):
     assert data_songs.already_exist(name, artist) is False
 
 
+# Test to retrieve a song from the database by its ID
 def test_get_song(temp_song):
     song_id = temp_song[data_songs.SONG_ID]
     song_data = data_songs.get_song(song_id)

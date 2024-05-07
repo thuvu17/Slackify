@@ -131,12 +131,14 @@ def update_playlist_name(user_id: str, playlist_name: str,
                               {NAME: new_playlist_name})
 
 
+# Check if a song exists in a specified playlist for a user
 def song_exists_in_playlist(user_id: str, playlist_name: str,
                             song_id: str) -> bool:
     playlist = get_playlist(user_id, playlist_name)
     return song_id in playlist.get(SONGS)
 
 
+# Update a playlist by adding a new song
 def update_add_songs_in_playlist(user_id: str, playlist_name: str,
                                  song_id: str) -> bool:
     if not already_exist(user_id, playlist_name):
@@ -154,6 +156,7 @@ def update_add_songs_in_playlist(user_id: str, playlist_name: str,
                               NAME: playlist_name}, {SONGS: songs_in})
 
 
+# Retrieve a playlist with all associated song data
 def get_playlist_with_all_song(user_id: str, playlist_name: str):
     playlist = get_playlist(user_id, playlist_name)
     song_data = {}
