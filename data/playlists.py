@@ -156,6 +156,26 @@ def update_add_songs_in_playlist(user_id: str, playlist_name: str,
                               NAME: playlist_name}, {SONGS: songs_in})
 
 
+# Update a playlist by deleting a song
+def update_delete_songs_in_playlist(user_id: str, playlist_name: str,
+                                    song_id: str) -> bool:
+    if not already_exist(user_id, playlist_name):
+        raise ValueError(f"Failed to add a song: {playlist_name}"
+                         "not in database.")
+    elif not song_exists_in_playlist(user_id, playlist_name, song_id):
+        raise ValueError("Failed to add a song: the song"
+                         "is not in the playlist.")
+    else:
+        playlist = get_playlist(user_id, playlist_name)
+        songs_in = playlist[SONGS]
+        print(songs_in)
+        songs_in.remove(song_id)
+        print(songs_in)
+        dbc.connect_db()
+        return dbc.update_doc(PLAYLISTS_COLLECT, {USER_ID: user_id,
+                              NAME: playlist_name}, {SONGS: songs_in})
+
+
 # Retrieve a playlist with all associated song data
 def get_playlist_with_all_song(user_id: str, playlist_name: str):
     playlist = get_playlist(user_id, playlist_name)

@@ -183,10 +183,9 @@ def test_update_add_songs_in_playlist(temp_playlist):
     assert isinstance(new_song_id, str)
     assert new_song_id not in temp_playlist[pls.SONGS]
     pls.update_add_songs_in_playlist(user_id, name,
-                                     songs.ObjectId(new_song_id))
+                                     new_song_id)
     new_playlist = pls.get_playlist(user_id, name)
-    print(new_playlist)
-    assert songs.ObjectId(new_song_id) in new_playlist[pls.SONGS]
+    assert new_song_id in new_playlist[pls.SONGS]
     assert len(new_playlist[pls.SONGS]) >= 1
 
 
@@ -196,12 +195,39 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
     new_song_id = songs._gen_id()
     assert new_song_id not in temp_playlist[pls.SONGS]
     pls.update_add_songs_in_playlist(user_id, name,
-                                     songs.ObjectId(new_song_id))
+                                     new_song_id)
     new_playlist = pls.get_playlist(user_id, name)
-    assert songs.ObjectId(new_song_id) in new_playlist[pls.SONGS]
+    assert new_song_id in new_playlist[pls.SONGS]
     with pytest.raises(ValueError):
         pls.update_add_songs_in_playlist(user_id, name,
-                                         songs.ObjectId(new_song_id))
+                                         new_song_id)
+
+
+def test_update_delete_songs_in_playlist(temp_playlist):
+    user_id = temp_playlist['user_id']
+    name = temp_playlist['name']
+    new_song_id = songs._gen_id()
+    pls.update_add_songs_in_playlist(user_id, name,
+                                     new_song_id)
+    new_playlist = pls.get_playlist(user_id, name)
+    assert new_song_id in new_playlist[pls.SONGS]
+    assert len(new_playlist[pls.SONGS]) >= 1
+    pls.update_delete_songs_in_playlist(user_id, name,
+                                        new_song_id)
+    new_playlist = pls.get_playlist(user_id, name)
+    assert new_song_id not in new_playlist[pls.SONGS]
+    assert len(new_playlist[pls.SONGS]) >= 0
+
+
+def test_update_delete_songs_in_playlist_not_there(temp_playlist):
+    user_id = temp_playlist['user_id']
+    name = temp_playlist['name']
+    new_song_id = songs._gen_id()
+    print(temp_playlist)
+    assert new_song_id not in temp_playlist[pls.SONGS]
+    with pytest.raises(ValueError):
+        pls.update_delete_songs_in_playlist(user_id, name,
+                                            new_song_id)
 
 
 def test_get_playlist_with_all_song(temp_playlist, temp_song):
