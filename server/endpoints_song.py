@@ -399,7 +399,7 @@ class PlaylistSongs(Resource):
             return {
                 TYPE: DATA,
                 TITLE: f'Current Songs for Playlist {name} by {user_id}',
-                DATA: plists.playlist_get_all_song(user_id, name),
+                DATA: plists.get_playlist_with_all_song(user_id, name),
                 MENU: PLAYLIST_MENU_EP,
                 RETURN: MAIN_MENU_EP,
             }

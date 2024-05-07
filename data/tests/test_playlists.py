@@ -199,11 +199,15 @@ def test_update_add_songs_in_playlist_dup_song(temp_playlist):
                                          songs.ObjectId(new_song_id))
 
 
-def test_playlist_get_all_song(temp_playlist, temp_song):
+def test_get_playlist_with_all_song(temp_playlist, temp_song):
     user_id = temp_playlist['user_id']
     name = temp_playlist['name']
     pls.update_add_songs_in_playlist(user_id, name,
                                      songs.ObjectId(temp_song['_id']))
-    song_data = pls.playlist_get_all_song(user_id, name)
-    assert isinstance(song_data, dict)
-    assert songs.ObjectId(temp_song['_id']) in song_data
+    playlist = pls.get_playlist_with_all_song(user_id, name)
+    assert isinstance(playlist, dict)
+    assert pls.NAME in playlist
+    assert pls.DATE in playlist
+    assert pls.SONGS in playlist
+    assert isinstance(playlist[pls.SONGS], dict)
+    assert songs.ObjectId(temp_song['_id']) in playlist[pls.SONGS]

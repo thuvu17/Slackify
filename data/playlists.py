@@ -154,11 +154,14 @@ def update_add_songs_in_playlist(user_id: str, playlist_name: str,
                               NAME: playlist_name}, {SONGS: songs_in})
 
 
-def playlist_get_all_song(user_id: str, playlist_name: str):
+def get_playlist_with_all_song(user_id: str, playlist_name: str):
     playlist = get_playlist(user_id, playlist_name)
     song_data = {}
     if playlist:
         for song_id in playlist[SONGS]:
             this_song = songs.get_song(song_id)
             song_data[song_id] = this_song
-    return song_data
+        playlist[SONGS] = song_data
+        return playlist
+    else:
+        return song_data

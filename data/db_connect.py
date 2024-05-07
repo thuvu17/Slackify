@@ -116,7 +116,7 @@ def fetch_all_as_dict_with_filter(collection, filt, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find(filt):
         id = str(doc[MONGO_ID])
-        del doc[MONGO_ID]
+        doc[MONGO_ID] = id
         ret[id] = doc
     return ret
 
