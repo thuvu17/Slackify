@@ -85,7 +85,7 @@ def fetch_all_songs_as_dict(collection, db=SLACKIFY_DB):
     ret = {}
     for doc in client[db][collection].find():
         id = str(doc[MONGO_ID])
-        del doc[MONGO_ID]
+        doc[MONGO_ID] = id
         ret[id] = doc
     return ret
 
