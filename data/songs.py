@@ -18,15 +18,6 @@ ALBUM = 'album'
 BPM = 'bpm'
 ENERGY = 'energy'
 
-# db = slackifyDB
-# collection = songs
-# {
-#     'name'
-#     'artist'
-#     'bpm'
-# }
-
-# Test songs
 songs = {}
 
 
@@ -51,9 +42,6 @@ def get_test_song():
 
 # Return a random ID for a song
 def _gen_id() -> str:
-    # _id = random.randint(0, BIG_NUM)
-    # _id = str(_id)
-    # _id = _id.rjust(ID_LEN, '0')
     return str(ObjectId())
 
 

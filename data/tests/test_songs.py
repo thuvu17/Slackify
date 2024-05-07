@@ -31,7 +31,6 @@ def test_get_test_name():
 def test_gen_id():
     _id = data_songs._gen_id()
     assert isinstance(_id, str)
-    assert len(str(_id)) == data_songs.ID_LEN
 
 
 # Assertion:
