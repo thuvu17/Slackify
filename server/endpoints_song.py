@@ -63,6 +63,7 @@ DEL_PLAYLIST_EP = f'{PLAYLISTS_EP}/{DELETE}'
 UPDATE_PLAYLIST_EP = f'{PLAYLISTS_EP}/{UPDATE}'
 PLAYLIST_EP = '/playlist'
 ADD_SONG_PLAYLIST_EP = f'{PLAYLIST_EP}/{UPDATE}'
+DELETE_SONG_PLAYLIST_EP = f'{PLAYLIST_EP}/{UPDATE}/{DELETE}'
 SIGN_IN_EP = '/sign_in'
 SIGN_UP_EP = '/sign_up'
 SIGN_OUT_EP = '/sign_out'
@@ -421,6 +422,24 @@ class PlaylistAddSong(Resource):
         try:
             plists.update_add_songs_in_playlist(user_id, name, song_id)
             return {f'Song {song_id}': f'added to playlist {name}'}
+        except ValueError as e:
+            raise wz.NotFound(f'{str(e)}')
+
+
+@api.route(f'{DELETE_SONG_PLAYLIST_EP}/<user_id>/<name>/<song_id>')
+class PlaylistDeleteSong(Resource):
+    """
+    Add a song to a playlist.
+    """
+    @api.response(HTTPStatus.OK, 'Success')
+    @api.response(HTTPStatus.NOT_ACCEPTABLE, 'Not Acceptable')
+    def put(self, user_id, name, song_id):
+        """
+        Updates the songs of a playlist.
+        """
+        try:
+            plists.update_delete_songs_in_playlist(user_id, name, song_id)
+            return {f'Song {song_id}': f'deleted from playlist {name}'}
         except ValueError as e:
             raise wz.NotFound(f'{str(e)}')
 

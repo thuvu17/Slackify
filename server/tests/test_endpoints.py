@@ -277,6 +277,29 @@ def test_update_add_songs_in_playlist_bad(mock_update):
     assert resp.status_code == NOT_FOUND
 
 
+@patch('data.playlists.update_delete_songs_in_playlist', autospec=True)
+def test_update_delete_songs_in_playlist(mock_update):
+    """
+    Testing we do the right thing with a call to
+    update_add_songs_in_playlist that succeeds.
+    """
+    resp = TEST_CLIENT.put(
+        f'{ep.DELETE_SONG_PLAYLIST_EP}/AnyUserId/AnyName/AnySongId')
+    assert resp.status_code == OK
+
+
+@patch('data.playlists.update_delete_songs_in_playlist',
+       side_effect=ValueError(), autospec=True)
+def test_update_delete_songs_in_playlist_bad(mock_update):
+    """
+    Testing we do the right thing with a call to
+    update_add_songs_in_playlist that fails.
+    """
+    resp = TEST_CLIENT.put(
+        f'{ep.DELETE_SONG_PLAYLIST_EP}/AnyUserId/AnyName/AnySongId')
+    assert resp.status_code == NOT_FOUND
+
+
 # ---------- AUTH EP TESTS -----------
 # Sign in
 @patch('data.users.auth_user', autospec=True)
