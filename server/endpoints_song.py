@@ -71,6 +71,7 @@ SONG_REC_EP = '/rec'
 SONG_REC_AVG_STRIDE_EP = f'{SONG_REC_EP}/avg_stride'    # avg stride length
 SONG_REC_STRIDE_EP = f'{SONG_REC_EP}/stride'       # provided stride length
 SONG_REC_HEIGHT_EP = f'{SONG_REC_EP}/height'
+SONG_REC_ENERGY_EP = f'{SONG_REC_EP}/workout'
 
 
 @api.route(HELLO_EP)
@@ -527,9 +528,35 @@ class Form(Resource):
 # -------------- RECOMMENDATION EPS -----------------
 @api.route(f'{SONG_REC_AVG_STRIDE_EP}/<speed>/<gender>')
 class RecommendSongFromAvgStride(Resource):
+    """
+    This class recommends a song based on running speed using avg stride
+    Used for when user does not provide specific height
+    """
     def get(self, speed, gender):
-        rec_bpm = rec.get_bpm_from_speed_avg_stride(speed, gender)
+        rec_bpm = rec.get_bpm_from_speed_avg_stride(float(speed), gender)
         return rec.rec_song_from_bpm(rec_bpm)
+
+
+@api.route(f'{SONG_REC_HEIGHT_EP}/<height>/<speed>/<gender>')
+class RecommendSongFromStride(Resource):
+    """
+    This class recommends a song based on running speed
+    using user-provided height
+    """
+    def get(self, height, speed, gender):
+        rec_bpm = rec.get_bpm_from_speed_height(float(speed),
+                                                float(height), gender)
+        return rec.rec_song_from_bpm(rec_bpm)
+
+
+@api.route(f'{SONG_REC_ENERGY_EP}/<exercise>')
+class RecommendSongFromExercise(Resource):
+    """
+    This class recommends a song based on the type of exercise
+    if not jogging/running/walking
+    """
+    def get(self, exercise):
+        return rec.rec_song_from_exercise(exercise)
 
 
 # -------------------- TOKEN EPS -----------------------
