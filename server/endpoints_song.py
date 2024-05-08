@@ -537,13 +537,13 @@ class RecommendSongFromAvgStride(Resource):
         return rec.rec_song_from_bpm(rec_bpm)
 
 
-@api.route(f'{SONG_REC_HEIGHT_EP}/<height>/<speed>/<gender>')
-class RecommendSongFromStride(Resource):
+@api.route(f'{SONG_REC_HEIGHT_EP}/<speed>/<height>/<gender>')
+class RecommendSongFromSpeedHeight(Resource):
     """
     This class recommends a song based on running speed
-    using user-provided height
+    and user-provided height
     """
-    def get(self, height, speed, gender):
+    def get(self, speed, height, gender):
         rec_bpm = rec.get_bpm_from_speed_height(float(speed),
                                                 float(height), gender)
         return rec.rec_song_from_bpm(rec_bpm)

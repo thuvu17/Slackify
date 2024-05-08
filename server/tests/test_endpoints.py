@@ -349,28 +349,51 @@ def test_failed_sign_up(mock_get):
     assert resp.status_code == BAD_REQUEST
 
 
-# # Sign out
-# def test_sign_out():
-#     """
-#     Testing we do the right thing with a call to sign_out that succeeds.
-#     """
-#     valid_test_email = "thu@gmail.com"
-#     valid_test_password = "thisismypassword"
-#     resp = TEST_CLIENT.get(
-#         f'{ep.SIGN_IN_EP}/{valid_test_email}/{valid_test_password}')
-#     assert resp.status_code == FOUND
-#     # Sign out
-#     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
-#     assert resp.status_code == OK
+# -------------- RECOMMENDATION EPS -----------------
+def test_rec_song_from_avg_stride():
+    speed_found = '2.4'
+    gender_found = 'F'
+    speed_notfound = '3.0'
+    gender_notfound = 'M'
+    # Make a GET request with the parameters
+    resp_found = TEST_CLIENT.get(
+        f'{ep.SONG_REC_AVG_STRIDE_EP}/{speed_found}/{gender_found}')
+    resp_notfound = TEST_CLIENT.get(
+        f'{ep.SONG_REC_AVG_STRIDE_EP}/{speed_notfound}/{gender_notfound}')
+    assert resp_found.get_json() is not None
+    assert resp_notfound.get_json() is None
 
 
-# def test_failed_sign_out():
-#     """
-#     Testing we do the right thing with a call to sign_out that fails.
-#     """
-#     resp = TEST_CLIENT.get(f'{ep.SIGN_OUT_EP}')
-#     assert resp.status_code == BAD_REQUEST
+def test_rec_song_from_speed_height():
+    speed = '3.1'
+    gender = 'M'
+    height_found = '63'
+    height_notfound = '73'
+    # Make a GET request with the parameters
+    resp_found = TEST_CLIENT.get(
+        f'{ep.SONG_REC_HEIGHT_EP}/{speed}/{height_found}/{gender}')
+    resp_notfound = TEST_CLIENT.get(
+        f'{ep.SONG_REC_HEIGHT_EP}/{speed}/{height_notfound}/{gender}')
+    assert resp_found.get_json() is not None
+    assert resp_notfound.get_json() is None
 
+
+def test_rec_song_from_exercise():
+    exercise_notfound = "yoga"
+    exercise_found = "boxing"
+    # Make a GET request with the parameters
+    resp_found = TEST_CLIENT.get(
+        f'{ep.SONG_REC_ENERGY_EP}/{exercise_found}')
+    resp_notfound = TEST_CLIENT.get(
+        f'{ep.SONG_REC_ENERGY_EP}/{exercise_notfound}')
+    assert resp_found.get_json() is not None
+    assert resp_notfound.get_json() is None
+
+
+# -------------------- TOKEN EPS -----------------------
+def test_get_token():
+    resp = TEST_CLIENT.get(f'{ep.TOKEN_EP}')
+    assert resp is not None
 
 @pytest.mark.skip('This test is failing, but it is just an example of using '
                   + 'skip')
