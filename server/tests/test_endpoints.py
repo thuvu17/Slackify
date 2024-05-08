@@ -360,7 +360,7 @@ def test_rec_song_from_avg_stride():
         f'{ep.SONG_REC_AVG_STRIDE_EP}/{speed_found}/{gender_found}')
     resp_notfound = TEST_CLIENT.get(
         f'{ep.SONG_REC_AVG_STRIDE_EP}/{speed_notfound}/{gender_notfound}')
-    assert resp_found.get_json() is not None
+    assert resp_found.status_code == 200
     assert resp_notfound.get_json() is None
 
 
@@ -374,7 +374,7 @@ def test_rec_song_from_speed_height():
         f'{ep.SONG_REC_HEIGHT_EP}/{speed}/{height_found}/{gender}')
     resp_notfound = TEST_CLIENT.get(
         f'{ep.SONG_REC_HEIGHT_EP}/{speed}/{height_notfound}/{gender}')
-    assert resp_found.get_json() is not None
+    assert resp_found.status_code == 200
     assert resp_notfound.get_json() is None
 
 
@@ -386,7 +386,7 @@ def test_rec_song_from_exercise():
         f'{ep.SONG_REC_ENERGY_EP}/{exercise_found}')
     resp_notfound = TEST_CLIENT.get(
         f'{ep.SONG_REC_ENERGY_EP}/{exercise_notfound}')
-    assert resp_found.get_json() is not None
+    assert resp_found.status_code == 200
     assert resp_notfound.get_json() is None
 
 
