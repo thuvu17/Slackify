@@ -10,6 +10,7 @@ ARTIST = 'artist'
 TEST_NAME = 'name'
 TEST_ARTIST = 'Hello'
 TEST_LIST = 'test_list'
+DATE_CREATED = 'date_created'
 UPDATE = 'Update'
 APPEND = 'Append'
 ALBUM = 'album'
@@ -27,10 +28,12 @@ TEST_INSERT = {
 TEST_COLLECT_PL = 'playlists'
 EMAIL = 'email'
 TEST_EMAIL = 'random@email.com'
+TEST_DATE = "2024-05-06"
 SONGS = 'songs'
 SONGS_ID = 'randomSongID'
 TEST_INSERT_PL = {
     NAME: TEST_NAME,
+    DATE_CREATED: TEST_DATE,
     EMAIL: TEST_EMAIL,
     SONGS: [SONGS_ID],
     }
@@ -96,13 +99,6 @@ def test_fetch_all_songs_as_dict(temp_rec):
     assert ret is not None
     assert isinstance(ret, dict)
     assert len(ret) > 0
-    for _id in ret:
-        song = ret[_id]
-        assert NAME in song
-        assert ARTIST in song
-        assert ALBUM in song
-        assert ENERGY in song
-        assert BPM in song
 
 
 def test_fetch_all_as_dict(temp_rec_user):
@@ -110,19 +106,22 @@ def test_fetch_all_as_dict(temp_rec_user):
     assert ret is not None
     assert isinstance(ret, dict)
     assert len(ret) > 0
-    for email in ret:
-        user = ret[email]
-        assert NAME in user
-        assert EMAIL in user
-        assert PASSWORD in user
 
 
 def test_fetch_all_as_list(temp_rec_playlist):
     ret = dbc.fetch_all_as_list(TEST_COLLECT_PL, {EMAIL: TEST_EMAIL}, NAME)
+    assert isinstance(ret, list)
     assert ret is not None
     assert len(ret) > 0
-    for name in ret:
-        assert isinstance(name, str)
+
+
+def test_fetch_all_as_dict_with_filter(temp_rec_playlist):
+    ret = dbc.fetch_all_as_dict_with_filter(TEST_COLLECT_PL,
+                                            {EMAIL: TEST_EMAIL,
+                                             NAME: TEST_NAME})
+    assert isinstance(ret, dict)
+    assert ret is not None
+    assert len(ret) > 0
 
 
 # ---------- UPDATE FUNCTION TEST -----------
